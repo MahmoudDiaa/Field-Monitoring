@@ -1,6 +1,6 @@
 import 'package:boilerplate/data/local/constants/db_constants.dart';
-import 'package:boilerplate/models/PriorityLevels%20/Priority_level_list.dart';
-import 'package:boilerplate/models/PriorityLevels%20/priorrity_level.dart';
+import 'package:boilerplate/models/PriorityLevels/Priority_level_list.dart';
+import 'package:boilerplate/models/PriorityLevels/priorrity_level.dart';
 
 import 'package:sembast/sembast.dart';
 

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import '../constants/enums.dart';
-import '../models/PriorityLevels /priorrity_level.dart';
+import '../models/PriorityLevels/priorrity_level.dart';
 import '../models/priority/priority.dart';
 import '../stores/priority/priority_store.dart';
 import 'progress_indicator/progress_indicator_text_widget.dart';

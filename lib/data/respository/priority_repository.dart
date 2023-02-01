@@ -1,7 +1,7 @@
 import 'package:boilerplate/data/local/datasources/priorities/priority_datasource.dart';
 import 'package:boilerplate/data/network/apis/priorities/priorities_api.dart';
-import 'package:boilerplate/models/PriorityLevels%20/Priority_level_list.dart';
-import 'package:boilerplate/models/PriorityLevels%20/priorrity_level.dart';
+import 'package:boilerplate/models/PriorityLevels/Priority_level_list.dart';
+import 'package:boilerplate/models/PriorityLevels/priorrity_level.dart';
 import 'package:sembast/sembast.dart';
 import '../local/constants/db_constants.dart';
 
