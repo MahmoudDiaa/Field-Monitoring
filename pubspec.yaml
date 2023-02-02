@@ -23,7 +23,7 @@ dependencies:
   video_player: ^2.4.5
   google_maps_place_picker_mb: ^3.0.0
   geolocator: ^9.0.2
-  cached_network_image: ^3.2.1
+  cached_network_image: ^3.2.3
   carousel_slider: ^4.1.1
   url_launcher: ^6.1.5
   rxdart: ^0.27.5
@@ -81,6 +81,7 @@ dependencies:
   # An helper to easily exposes a value using InheritedWidget without having to write one.
   sembast: ^3.1.0+2
   path_provider: ^2.0.2
+
 
   # for dependency injection
   get_it: ^7.1.3

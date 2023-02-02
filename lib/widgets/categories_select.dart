@@ -8,6 +8,7 @@ import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:boilerplate/stores/post/post_store.dart';
 import 'package:boilerplate/stores/theme/theme_store.dart';
 import 'package:boilerplate/utils/locale/app_localization.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -272,18 +273,33 @@ class _CategoryListWidgetState extends State<_CategoryListWidget> {
   Widget gridItem(List<SubCategory> subCategories, int index) {
     return Card(
       child: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            //I assumed you want to occupy the entire space of the card
-
-            image: NetworkImage(
-              'http://51.15.23.9:8085/Uploads/SubCategories/${subCategories[index].icon ?? ''}',
-            ),
-          ),
-        ),
+        // decoration: BoxDecoration(
+        //   image: DecorationImage(
+        //     fit: BoxFit.cover,
+        //     //I assumed you want to occupy the entire space of the card
+        //
+        //     image: CachedNetworkImageProvider(
+        //       'http://51.15.23.9:8085/Uploads/SubCategories/${subCategories[index].icon ?? ''}',
+        //     ),
+        //   ),
+        // ),
         child: Stack(
           children: [
+            CachedNetworkImage(
+              imageBuilder: (context, imageProvider) => Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                ),
+              ),
+              imageUrl:
+                  'http://51.15.23.9:8085/Uploads/SubCategories/${subCategories[index].icon ?? ''}',
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+              errorWidget: (context, url, error) => Center(child: Icon(Icons.broken_image_rounded,size: 100,color: Colors.black,)),
+            ),
             Positioned(
               bottom: 2,
               right: 1,
