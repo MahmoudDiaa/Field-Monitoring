@@ -1,3 +1,5 @@
+import 'package:boilerplate/data/local/entities/incident/incident_entity.dart';
+import 'package:boilerplate/data/local/mappers/mappers.dart';
 import 'package:boilerplate/models/incident/incident.dart';
 import 'package:sembast/sembast.dart';
 
@@ -5,17 +7,17 @@ import '../../constants/enums.dart';
 import '../../models/incident/incident_filter.dart';
 import '../../models/incident/incident_list.dart';
 import '../local/constants/db_constants.dart';
-import '../local/datasources/incident/incident_datasource.dart';
+import '../local/dao/incident/incident_dao.dart';
 import '../network/apis/incident/incident_api.dart';
 
 class IncidentRepository {
   // data source object
-  final IncidentDataSource _incidentDataSource;
+  final IncidentDao _incidentDao;
 
   // api objects
   final IncidentApi _incidentApi;
 
-  IncidentRepository(this._incidentDataSource, this._incidentApi);
+  IncidentRepository(this._incidentDao, this._incidentApi);
 
   Future<IncidentList> getIncidents(
       {required int pageNumber,
@@ -27,7 +29,7 @@ class IncidentRepository {
         .getIncidents(pageNumber, incidentFilter)
         .then((incidentsList) {
       incidentsList.incidents?.forEach((incident) {
-        _incidentDataSource.insert(incident);
+        _incidentDao.insertIncident(IncidentEntity.fromRemote(incident));
       });
 
       return incidentsList;
@@ -49,9 +51,9 @@ class IncidentRepository {
     filters.add(dataLogTypeFilter);
 
     //making db call
-    return _incidentDataSource
-        .getAllSortedByFilter(filters: filters)
-        .then((incidents) => incidents)
+    return _incidentDao
+        .findAllCategoriesSortedById()
+        .then((incidents) => Mappers().mapListIncidents(incidents))
         .catchError((error) => throw error);
   }
 
@@ -75,18 +77,18 @@ class IncidentRepository {
       .then((id) => id)
       .catchError((error) => throw error);
 
-  Future<int> insert(Incident incident) => _incidentDataSource
-      .insert(incident)
+  Future<int> insert(Incident incident) => _incidentDao
+      .insertIncident(IncidentEntity.fromRemote(incident))
       .then((id) => id)
       .catchError((error) => throw error);
 
-  Future<int> update(Incident incident) => _incidentDataSource
-      .update(incident)
+  Future<int> update(Incident incident) => _incidentDao
+      .updateIncident(IncidentEntity.fromRemote(incident))
       .then((id) => id)
       .catchError((error) => throw error);
 
-  Future<int> delete(Incident incident) => _incidentDataSource
-      .update(incident)
+  Future<int> delete(Incident incident) => _incidentDao
+      .updateIncident(IncidentEntity.fromRemote(incident))
       .then((id) => id)
       .catchError((error) => throw error);
 }

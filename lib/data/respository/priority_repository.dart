@@ -1,4 +1,6 @@
-import 'package:boilerplate/data/local/datasources/priorities/priority_datasource.dart';
+import 'package:boilerplate/data/local/dao/priorities/priorities_dao.dart';
+import 'package:boilerplate/data/local/entities/priorities/priority_entity.dart';
+import 'package:boilerplate/data/local/mappers/mappers.dart';
 import 'package:boilerplate/data/network/apis/priorities/priorities_api.dart';
 import 'package:boilerplate/models/PriorityLevels/Priority_level_list.dart';
 import 'package:boilerplate/models/PriorityLevels/priorrity_level.dart';
@@ -19,12 +21,12 @@ class PriorityRepository {
 
 
   //data source priorities
-  final PrioritiesDataSource _priorityDataSource;
+  final PriorityDao _priorityDao;
   //api priorities
   final prioritiesApi _prioritiesApi;
 
 
-  PriorityRepository(this._priorityDataSource, this._prioritiesApi);
+  PriorityRepository(this._priorityDao, this._prioritiesApi);
 //priorities
 
   // priorities: ---------------------------------------------------------------------
@@ -34,7 +36,7 @@ class PriorityRepository {
     // later use
     return await _prioritiesApi.getPriorities().then((prioritiesList) {
       prioritiesList.priorities?.forEach((priority) {
-        _priorityDataSource.insert(priority);
+        _priorityDao.insertPriority(PriorityEntity.fromRemote(priority));
       });
 
       return prioritiesList;
@@ -50,24 +52,24 @@ class PriorityRepository {
     filters.add(dataLogTypeFilter);
 
     //making db call
-    return _priorityDataSource
-        .getAllSortedByFilter(filters: filters)
-        .then((priorities) => priorities)
+    return _priorityDao
+        .findAllCategoriesSortedById()
+        .then((priorities) =>Mappers().mapListPriorities(priorities))
         .catchError((error) => throw error);
   }
 
-  Future<int> insertPriority(PriorityLevel priorityLevel) => _priorityDataSource
-      .insert(priorityLevel)
+  Future<int> insertPriority(PriorityLevel priorityLevel) => _priorityDao
+      .insertPriority(PriorityEntity.fromRemote(priorityLevel))
       .then((id) => id)
       .catchError((error) => throw error);
 
-  Future<int> updatePriority(PriorityLevel priorityLevel) => _priorityDataSource
-      .update(priorityLevel)
+  Future<int> updatePriority(PriorityLevel priorityLevel) => _priorityDao
+      .updatePriority(PriorityEntity.fromRemote(priorityLevel))
       .then((id) => id)
       .catchError((error) => throw error);
 
-  Future<int> deletePriority(PriorityLevel priorityLevel) => _priorityDataSource
-      .update(priorityLevel)
+  Future<int> deletePriority(PriorityLevel priorityLevel) => _priorityDao
+      .updatePriority(PriorityEntity.fromRemote(priorityLevel))
       .then((id) => id)
       .catchError((error) => throw error);
 }

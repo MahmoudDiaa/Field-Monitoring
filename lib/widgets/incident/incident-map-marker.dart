@@ -14,7 +14,7 @@ class IncidentMarker extends Marker {
       : super(
           markerId: MarkerId(incident.id!),
           position:
-              LatLng(double.parse(incident.lat!), double.parse(incident.long!)),
+              LatLng(double.parse(incident.lat!=null?incident.lat!:"27.510952"), double.parse(incident.long!=null?incident.long!:"41.703672")),
           infoWindow: InfoWindow(
             onTap: () {
               if (InfoWindowOnTap != null) InfoWindowOnTap();

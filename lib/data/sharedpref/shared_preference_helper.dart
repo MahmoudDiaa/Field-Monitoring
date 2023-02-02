@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:boilerplate/models/user/auth_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../network/api_response_new_entity.dart';
 import 'constants/preferences.dart';
 
 class SharedPreferenceHelper {
@@ -36,8 +37,8 @@ class SharedPreferenceHelper {
   }
 
   // User:----------------------------------------------------------------
-  Future<bool> saveLoggedInUser(AuthUser authUser) async {
-    Map<String, dynamic> user = authUser.toMap();
+  Future<bool> saveLoggedInUser(LoginResponseEntity authUser) async {
+    Map<String, dynamic> user = authUser.toJson();
 
     return _sharedPreference.setString(Preferences.auth_user, jsonEncode(user));
   }

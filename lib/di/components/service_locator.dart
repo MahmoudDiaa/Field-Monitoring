@@ -1,3 +1,8 @@
+import 'package:boilerplate/data/local/dao/category/category_dao.dart';
+import 'package:boilerplate/data/local/dao/incident/incident_dao.dart';
+import 'package:boilerplate/data/local/dao/priorities/priorities_dao.dart';
+import 'package:boilerplate/data/local/dao/subcategory/subcategory_dao.dart';
+import 'package:boilerplate/data/local/database.dart';
 import 'package:boilerplate/data/local/datasources/incident/incident_datasource.dart';
 import 'package:boilerplate/data/local/datasources/post/post_datasource.dart';
 import 'package:boilerplate/data/local/datasources/priorities/priority_datasource.dart';
@@ -45,7 +50,8 @@ Future<void> setupLocator() async {
   getIt.registerFactory(() => ErrorStore());
 
   // async singletons:----------------------------------------------------------
-  getIt.registerSingletonAsync<Database>(() => LocalModule.provideDatabase());
+  getIt
+      .registerSingletonAsync<AppDatabase>(() => LocalModule.provideDatabase());
   getIt.registerSingletonAsync<SharedPreferences>(
       () => LocalModule.provideSharedPreferences());
 
@@ -55,49 +61,50 @@ Future<void> setupLocator() async {
   getIt.registerSingleton<Dio>(
       NetworkModule.provideDio(getIt<SharedPreferenceHelper>()));
   getIt.registerSingleton(DioClient(getIt<Dio>()));
-  getIt.registerSingleton(RestClient());
+  // getIt.registerSingleton(RestClient());
 
   // api's:---------------------------------------------------------------------
   getIt.registerSingleton(
       UserApi(getIt<DioClient>(), getIt<SharedPreferenceHelper>()));
-  getIt.registerSingleton(PostApi(getIt<DioClient>(), getIt<RestClient>()));
+  // getIt.registerSingleton(PostApi(getIt<DioClient>(), getIt<RestClient>()));
   getIt.registerSingleton(
       CategoryApi(getIt<DioClient>(), getIt<SharedPreferenceHelper>()));
   getIt.registerSingleton(
       SubCategoryApi(getIt<DioClient>(), getIt<SharedPreferenceHelper>()));
   getIt.registerSingleton(
       IncidentApi(getIt<DioClient>(), getIt<SharedPreferenceHelper>()));
-  getIt.registerSingleton(prioritiesApi(getIt<DioClient>(), getIt<SharedPreferenceHelper>()));
-
-  // data sources
-  getIt.registerSingleton(PostDataSource(await getIt.getAsync<Database>()));
-  getIt.registerSingleton(PrioritiesDataSource(await getIt.getAsync<Database>()));
-  getIt.registerSingleton(CategoryDataSource(await getIt.getAsync<Database>()));
   getIt.registerSingleton(
-      SubCategoryDataSource(await getIt.getAsync<Database>()));
-  getIt.registerSingleton(IncidentDataSource(await getIt.getAsync<Database>()));
+      prioritiesApi(getIt<DioClient>(), getIt<SharedPreferenceHelper>()));
+  //
+  // // data sources
+  // getIt.registerSingleton(PostDataSource(await getIt.getAsync<AppDatabase>()));
+  // getIt.registerSingleton(PrioritiesDataSource(await getIt.getAsync<AppDatabase>()));
+  // getIt.registerSingleton(CategoryDataSource(await getIt.getAsync<AppDatabase>()));
+  // getIt.registerSingleton(
+  //     SubCategoryDataSource(await getIt.getAsync<AppDatabase>()));
+  // getIt.registerSingleton(IncidentDataSource(await getIt.getAsync<AppDatabase>()));
 
   // repository:----------------------------------------------------------------
   getIt.registerSingleton(Repository(
-    getIt<PostApi>(),
-    getIt<SharedPreferenceHelper>(),
-    getIt<PostDataSource>(),
+
+    getIt<SharedPreferenceHelper>()
   ));
-  getIt.registerSingleton(
-      CategoryRepository(getIt<CategoryDataSource>(), getIt<CategoryApi>()));
+  getIt.registerSingleton(CategoryRepository(
+      (await getIt.getAsync<AppDatabase>()).categoryDao, getIt<CategoryApi>()));
   getIt.registerSingleton(SubCategoryRepository(
-      getIt<SubCategoryDataSource>(), getIt<SubCategoryApi>()));
+      (await getIt.getAsync<AppDatabase>()).subCategoryDao, getIt<SubCategoryApi>()));
   getIt.registerSingleton(UserRepository(
     getIt<UserApi>(),
     getIt<SharedPreferenceHelper>(),
   ));
-  getIt.registerSingleton(
-      IncidentRepository(getIt<IncidentDataSource>(), getIt<IncidentApi>()));
-  getIt.registerSingleton(PriorityRepository(getIt<PrioritiesDataSource>(),getIt<prioritiesApi>()));
+  getIt.registerSingleton(IncidentRepository(
+      (await getIt.getAsync<AppDatabase>()).incidentDao, getIt<IncidentApi>()));
+  getIt.registerSingleton(PriorityRepository(
+      (await getIt.getAsync<AppDatabase>()).priorityDao, getIt<prioritiesApi>()));
 
   // stores:--------------------------------------------------------------------
   getIt.registerSingleton(LanguageStore(getIt<Repository>()));
-  getIt.registerSingleton(PostStore(getIt<Repository>()));
+  // getIt.registerSingleton(PostStore(getIt<Repository>()));
   getIt.registerSingleton(CategoryStore(getIt<CategoryRepository>()));
   getIt.registerSingleton(SubCategoryStore(getIt<SubCategoryRepository>()));
   getIt.registerSingleton(ThemeStore(getIt<Repository>()));
@@ -108,5 +115,4 @@ Future<void> setupLocator() async {
 
   getIt.registerFactory(() => LoginFormStore(getIt<UserRepository>()));
   getIt.registerFactory(() => ForgetPasswordFormStore(getIt<UserRepository>()));
-
 }

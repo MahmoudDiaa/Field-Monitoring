@@ -4,8 +4,8 @@ class Strings {
   //General
   static const String appName = "Orbits";
 
-  static String androidApiKey = 'AIzaSyCtGgda_ZsOaBPInGgy1sUJonfdCMvxHGg';
-  static String iosApiKey = 'AIzaSyCtGgda_ZsOaBPInGgy1sUJonfdCMvxHGg';
+  static String androidApiKey = 'AIzaSyBBek1t8M1zQ6TJtFV405GCUBcj_zTjwCs';
+  static String iosApiKey = 'AIzaSyBBek1t8M1zQ6TJtFV405GCUBcj_zTjwCs';
   static const String englishCode = 'en';
   static const String arabicCode = 'ar';
 }

@@ -10,7 +10,7 @@ abstract class NetworkModule {
     final dio = Dio();
 
     dio
-      ..options.baseUrl = Endpoints.baseUrl
+      ..options.baseUrl = Endpoints.baseUrl1
       ..options.connectTimeout = Endpoints.connectionTimeout
       ..options.receiveTimeout = Endpoints.receiveTimeout
       ..options.headers = {'Content-Type': 'application/json; charset=utf-8'}

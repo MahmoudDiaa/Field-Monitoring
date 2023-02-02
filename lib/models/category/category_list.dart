@@ -1,5 +1,7 @@
-import 'category.dart';
+import 'package:floor/floor.dart';
 
+import 'category.dart';
+@entity
 class CategoryList {
   final List<Category>? categories;
 

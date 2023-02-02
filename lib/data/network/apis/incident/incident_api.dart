@@ -3,22 +3,18 @@ import 'dart:convert';
 import 'package:boilerplate/data/network/dio_client.dart';
 import 'package:boilerplate/models/incident/incident_list.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 
 import '../../../../constants/enums.dart';
-import '../../../../models/category/category_list.dart';
 import '../../../../models/incident/incident.dart';
 import '../../../../models/incident/incident_filter.dart';
-import '../../../../models/user/auth_user.dart';
-import '../../../../models/user/user.dart';
 import '../../../sharedpref/shared_preference_helper.dart';
-import '../../api_response.dart';
+import '../../api_response_new_entity.dart';
 import '../../constants/endpoints.dart';
 
 class IncidentApi {
   final DioClient _dioClient;
   SharedPreferenceHelper sharedPreferenceHelper;
-  ApiResponse? apiResponse;
+  LoginResponseEntity? apiResponse;
 
   IncidentApi(
       this._dioClient, SharedPreferenceHelper this.sharedPreferenceHelper);
@@ -68,7 +64,7 @@ class IncidentApi {
                   'Bearer ${sharedPreferenceHelper.authUser?.access_token ?? ''}',
             },
           ));
-      apiResponse = ApiResponse.fromMap(res);
+      apiResponse = LoginResponseEntity.fromJson(res);
       return apiResponse?.success;
     } catch (e) {
       print(e.toString());
@@ -90,7 +86,7 @@ class IncidentApi {
                   'Bearer ${sharedPreferenceHelper.authUser?.access_token ?? ''}',
             },
           ));
-      apiResponse = ApiResponse.fromMap(res);
+      apiResponse = LoginResponseEntity.fromJson(res);
       return apiResponse?.success;
     } catch (e) {
       print(e.toString());

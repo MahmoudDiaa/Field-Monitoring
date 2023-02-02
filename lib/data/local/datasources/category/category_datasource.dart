@@ -4,6 +4,7 @@ import 'package:sembast/sembast.dart';
 
 import '../../../../models/category/category.dart';
 import '../../../../models/category/category_list.dart';
+import '../../database.dart';
 
 class CategoryDataSource {
   // A Store with int keys and Map<String, dynamic> values.

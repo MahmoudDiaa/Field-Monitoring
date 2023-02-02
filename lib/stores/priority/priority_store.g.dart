@@ -6,7 +6,7 @@ part of 'priority_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$PriorityStore on _PriorityStore, Store {
   Computed<bool>? _$loadingComputed;
@@ -16,8 +16,8 @@ mixin _$PriorityStore on _PriorityStore, Store {
           Computed<bool>(() => super.loading, name: '_PriorityStore.loading'))
       .value;
 
-  final _$fetchPrioritiesFutureAtom =
-      Atom(name: '_PriorityStore.fetchPrioritiesFuture');
+  late final _$fetchPrioritiesFutureAtom =
+      Atom(name: '_PriorityStore.fetchPrioritiesFuture', context: context);
 
   @override
   ObservableFuture<PriorityLevelList?> get fetchPrioritiesFuture {
@@ -33,7 +33,8 @@ mixin _$PriorityStore on _PriorityStore, Store {
     });
   }
 
-  final _$priorityListAtom = Atom(name: '_PriorityStore.priorityList');
+  late final _$priorityListAtom =
+      Atom(name: '_PriorityStore.priorityList', context: context);
 
   @override
   PriorityLevelList? get priorityList {
@@ -48,7 +49,8 @@ mixin _$PriorityStore on _PriorityStore, Store {
     });
   }
 
-  final _$successAtom = Atom(name: '_PriorityStore.success');
+  late final _$successAtom =
+      Atom(name: '_PriorityStore.success', context: context);
 
   @override
   bool get success {
@@ -63,8 +65,8 @@ mixin _$PriorityStore on _PriorityStore, Store {
     });
   }
 
-  final _$getPrioritiesAsyncAction =
-      AsyncAction('_PriorityStore.getPriorities');
+  late final _$getPrioritiesAsyncAction =
+      AsyncAction('_PriorityStore.getPriorities', context: context);
 
   @override
   Future<dynamic> getPriorities() {

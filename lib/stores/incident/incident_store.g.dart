@@ -6,7 +6,7 @@ part of 'incident_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$IncidentStore on _IncidentStore, Store {
   Computed<bool>? _$loadingComputed;
@@ -30,8 +30,8 @@ mixin _$IncidentStore on _IncidentStore, Store {
               name: '_IncidentStore.gettingIncident'))
           .value;
 
-  final _$fetchIncidentsFutureAtom =
-      Atom(name: '_IncidentStore.fetchIncidentsFuture');
+  late final _$fetchIncidentsFutureAtom =
+      Atom(name: '_IncidentStore.fetchIncidentsFuture', context: context);
 
   @override
   ObservableFuture<IncidentList?> get fetchIncidentsFuture {
@@ -47,8 +47,8 @@ mixin _$IncidentStore on _IncidentStore, Store {
     });
   }
 
-  final _$fetchMoreIncidentsFutureAtom =
-      Atom(name: '_IncidentStore.fetchMoreIncidentsFuture');
+  late final _$fetchMoreIncidentsFutureAtom =
+      Atom(name: '_IncidentStore.fetchMoreIncidentsFuture', context: context);
 
   @override
   ObservableFuture<IncidentList?> get fetchMoreIncidentsFuture {
@@ -64,8 +64,8 @@ mixin _$IncidentStore on _IncidentStore, Store {
     });
   }
 
-  final _$fetchIncidentFutureAtom =
-      Atom(name: '_IncidentStore.fetchIncidentFuture');
+  late final _$fetchIncidentFutureAtom =
+      Atom(name: '_IncidentStore.fetchIncidentFuture', context: context);
 
   @override
   ObservableFuture<Incident?> get fetchIncidentFuture {
@@ -80,7 +80,8 @@ mixin _$IncidentStore on _IncidentStore, Store {
     });
   }
 
-  final _$incidentListAtom = Atom(name: '_IncidentStore.incidentList');
+  late final _$incidentListAtom =
+      Atom(name: '_IncidentStore.incidentList', context: context);
 
   @override
   IncidentList? get incidentList {
@@ -95,7 +96,8 @@ mixin _$IncidentStore on _IncidentStore, Store {
     });
   }
 
-  final _$incidentAtom = Atom(name: '_IncidentStore.incident');
+  late final _$incidentAtom =
+      Atom(name: '_IncidentStore.incident', context: context);
 
   @override
   Incident? get incident {
@@ -110,7 +112,8 @@ mixin _$IncidentStore on _IncidentStore, Store {
     });
   }
 
-  final _$successAtom = Atom(name: '_IncidentStore.success');
+  late final _$successAtom =
+      Atom(name: '_IncidentStore.success', context: context);
 
   @override
   bool get success {
@@ -125,7 +128,8 @@ mixin _$IncidentStore on _IncidentStore, Store {
     });
   }
 
-  final _$getIncidentsAsyncAction = AsyncAction('_IncidentStore.getIncidents');
+  late final _$getIncidentsAsyncAction =
+      AsyncAction('_IncidentStore.getIncidents', context: context);
 
   @override
   Future<dynamic> getIncidents({IncidentFilter? incidentFilter}) {
@@ -133,7 +137,8 @@ mixin _$IncidentStore on _IncidentStore, Store {
         .run(() => super.getIncidents(incidentFilter: incidentFilter));
   }
 
-  final _$getMoreAsyncAction = AsyncAction('_IncidentStore.getMore');
+  late final _$getMoreAsyncAction =
+      AsyncAction('_IncidentStore.getMore', context: context);
 
   @override
   Future<dynamic> getMore({IncidentFilter? incidentFilter}) {
@@ -141,7 +146,8 @@ mixin _$IncidentStore on _IncidentStore, Store {
         .run(() => super.getMore(incidentFilter: incidentFilter));
   }
 
-  final _$getIncidentAsyncAction = AsyncAction('_IncidentStore.getIncident');
+  late final _$getIncidentAsyncAction =
+      AsyncAction('_IncidentStore.getIncident', context: context);
 
   @override
   Future<dynamic> getIncident(String id) {

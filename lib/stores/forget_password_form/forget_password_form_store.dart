@@ -3,6 +3,7 @@ import 'package:mobx/mobx.dart';
 import 'package:validators/validators.dart';
 
 import '../../data/network/api_response.dart';
+import '../../data/network/api_response_new_entity.dart';
 import '../../data/respository/user_repository.dart';
 
 part 'forget_password_form_store.g.dart';
@@ -146,14 +147,14 @@ abstract class _ForgetPasswordFormStore with Store {
   }
 
   // empty responses:-----------------------------------------------------------
-  static ObservableFuture<ApiResponse?> emptyForgetPasswordResponse =
+  static ObservableFuture<LoginResponseEntity?> emptyForgetPasswordResponse =
       ObservableFuture.value(null);
   @observable
-  ObservableFuture<ApiResponse?> SendForgetPasswordCodeFuture =
+  ObservableFuture<LoginResponseEntity?> SendForgetPasswordCodeFuture =
       emptyForgetPasswordResponse;
 
   @observable
-  ObservableFuture<ApiResponse?> resetPasswordFuture =
+  ObservableFuture<LoginResponseEntity?> resetPasswordFuture =
       emptyForgetPasswordResponse;
 
   @computed
@@ -169,7 +170,7 @@ abstract class _ForgetPasswordFormStore with Store {
   //bool isPasswordChanged = false;
 
   @action
-  Future<ApiResponse?> sendForgetPasswordCode() async {
+  Future<LoginResponseEntity?> sendForgetPasswordCode() async {
     sendingCode = true;
     final future = _repository.sendForgetPasswordLink(this.email);
     SendForgetPasswordCodeFuture = ObservableFuture(future);
@@ -199,7 +200,7 @@ abstract class _ForgetPasswordFormStore with Store {
   }
 
   @action
-  Future<ApiResponse?> resetPassword() async {
+  Future<LoginResponseEntity?> resetPassword() async {
     changingPassword = true;
     final future =
         _repository.resetPassword(this.code, this.email, this.password);

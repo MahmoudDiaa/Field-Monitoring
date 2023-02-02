@@ -6,7 +6,7 @@ part of 'forget_password_form_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ForgetPasswordFormStore on _ForgetPasswordFormStore, Store {
   Computed<bool>? _$canSendForgetPasswordCodeComputed;
@@ -38,7 +38,8 @@ mixin _$ForgetPasswordFormStore on _ForgetPasswordFormStore, Store {
               name: '_ForgetPasswordFormStore.isChangingPassword'))
       .value;
 
-  final _$emailAtom = Atom(name: '_ForgetPasswordFormStore.email');
+  late final _$emailAtom =
+      Atom(name: '_ForgetPasswordFormStore.email', context: context);
 
   @override
   String get email {
@@ -53,7 +54,8 @@ mixin _$ForgetPasswordFormStore on _ForgetPasswordFormStore, Store {
     });
   }
 
-  final _$codeAtom = Atom(name: '_ForgetPasswordFormStore.code');
+  late final _$codeAtom =
+      Atom(name: '_ForgetPasswordFormStore.code', context: context);
 
   @override
   String get code {
@@ -68,7 +70,8 @@ mixin _$ForgetPasswordFormStore on _ForgetPasswordFormStore, Store {
     });
   }
 
-  final _$passwordAtom = Atom(name: '_ForgetPasswordFormStore.password');
+  late final _$passwordAtom =
+      Atom(name: '_ForgetPasswordFormStore.password', context: context);
 
   @override
   String get password {
@@ -83,8 +86,8 @@ mixin _$ForgetPasswordFormStore on _ForgetPasswordFormStore, Store {
     });
   }
 
-  final _$confirmPasswordAtom =
-      Atom(name: '_ForgetPasswordFormStore.confirmPassword');
+  late final _$confirmPasswordAtom =
+      Atom(name: '_ForgetPasswordFormStore.confirmPassword', context: context);
 
   @override
   String get confirmPassword {
@@ -99,7 +102,8 @@ mixin _$ForgetPasswordFormStore on _ForgetPasswordFormStore, Store {
     });
   }
 
-  final _$codeSentAtom = Atom(name: '_ForgetPasswordFormStore.codeSent');
+  late final _$codeSentAtom =
+      Atom(name: '_ForgetPasswordFormStore.codeSent', context: context);
 
   @override
   bool get codeSent {
@@ -114,7 +118,8 @@ mixin _$ForgetPasswordFormStore on _ForgetPasswordFormStore, Store {
     });
   }
 
-  final _$sendingCodeAtom = Atom(name: '_ForgetPasswordFormStore.sendingCode');
+  late final _$sendingCodeAtom =
+      Atom(name: '_ForgetPasswordFormStore.sendingCode', context: context);
 
   @override
   bool get sendingCode {
@@ -129,8 +134,8 @@ mixin _$ForgetPasswordFormStore on _ForgetPasswordFormStore, Store {
     });
   }
 
-  final _$changingPasswordAtom =
-      Atom(name: '_ForgetPasswordFormStore.changingPassword');
+  late final _$changingPasswordAtom =
+      Atom(name: '_ForgetPasswordFormStore.changingPassword', context: context);
 
   @override
   bool get changingPassword {
@@ -145,8 +150,8 @@ mixin _$ForgetPasswordFormStore on _ForgetPasswordFormStore, Store {
     });
   }
 
-  final _$passwordChangedAtom =
-      Atom(name: '_ForgetPasswordFormStore.passwordChanged');
+  late final _$passwordChangedAtom =
+      Atom(name: '_ForgetPasswordFormStore.passwordChanged', context: context);
 
   @override
   bool get passwordChanged {
@@ -161,58 +166,61 @@ mixin _$ForgetPasswordFormStore on _ForgetPasswordFormStore, Store {
     });
   }
 
-  final _$SendForgetPasswordCodeFutureAtom =
-      Atom(name: '_ForgetPasswordFormStore.SendForgetPasswordCodeFuture');
+  late final _$SendForgetPasswordCodeFutureAtom = Atom(
+      name: '_ForgetPasswordFormStore.SendForgetPasswordCodeFuture',
+      context: context);
 
   @override
-  ObservableFuture<ApiResponse?> get SendForgetPasswordCodeFuture {
+  ObservableFuture<LoginResponseEntity?> get SendForgetPasswordCodeFuture {
     _$SendForgetPasswordCodeFutureAtom.reportRead();
     return super.SendForgetPasswordCodeFuture;
   }
 
   @override
-  set SendForgetPasswordCodeFuture(ObservableFuture<ApiResponse?> value) {
+  set SendForgetPasswordCodeFuture(
+      ObservableFuture<LoginResponseEntity?> value) {
     _$SendForgetPasswordCodeFutureAtom
         .reportWrite(value, super.SendForgetPasswordCodeFuture, () {
       super.SendForgetPasswordCodeFuture = value;
     });
   }
 
-  final _$resetPasswordFutureAtom =
-      Atom(name: '_ForgetPasswordFormStore.resetPasswordFuture');
+  late final _$resetPasswordFutureAtom = Atom(
+      name: '_ForgetPasswordFormStore.resetPasswordFuture', context: context);
 
   @override
-  ObservableFuture<ApiResponse?> get resetPasswordFuture {
+  ObservableFuture<LoginResponseEntity?> get resetPasswordFuture {
     _$resetPasswordFutureAtom.reportRead();
     return super.resetPasswordFuture;
   }
 
   @override
-  set resetPasswordFuture(ObservableFuture<ApiResponse?> value) {
+  set resetPasswordFuture(ObservableFuture<LoginResponseEntity?> value) {
     _$resetPasswordFutureAtom.reportWrite(value, super.resetPasswordFuture, () {
       super.resetPasswordFuture = value;
     });
   }
 
-  final _$sendForgetPasswordCodeAsyncAction =
-      AsyncAction('_ForgetPasswordFormStore.sendForgetPasswordCode');
+  late final _$sendForgetPasswordCodeAsyncAction = AsyncAction(
+      '_ForgetPasswordFormStore.sendForgetPasswordCode',
+      context: context);
 
   @override
-  Future<ApiResponse?> sendForgetPasswordCode() {
+  Future<LoginResponseEntity?> sendForgetPasswordCode() {
     return _$sendForgetPasswordCodeAsyncAction
         .run(() => super.sendForgetPasswordCode());
   }
 
-  final _$resetPasswordAsyncAction =
-      AsyncAction('_ForgetPasswordFormStore.resetPassword');
+  late final _$resetPasswordAsyncAction =
+      AsyncAction('_ForgetPasswordFormStore.resetPassword', context: context);
 
   @override
-  Future<ApiResponse?> resetPassword() {
+  Future<LoginResponseEntity?> resetPassword() {
     return _$resetPasswordAsyncAction.run(() => super.resetPassword());
   }
 
-  final _$_ForgetPasswordFormStoreActionController =
-      ActionController(name: '_ForgetPasswordFormStore');
+  late final _$_ForgetPasswordFormStoreActionController =
+      ActionController(name: '_ForgetPasswordFormStore', context: context);
 
   @override
   void setEmail(String value) {
@@ -324,8 +332,8 @@ isChangingPassword: ${isChangingPassword}
 }
 
 mixin _$ForgetPasswordFormErrorStore on _ForgetPasswordFormErrorStore, Store {
-  final _$userEmailErrorAtom =
-      Atom(name: '_ForgetPasswordFormErrorStore.userEmailError');
+  late final _$userEmailErrorAtom = Atom(
+      name: '_ForgetPasswordFormErrorStore.userEmailError', context: context);
 
   @override
   String? get userEmailError {
@@ -340,7 +348,8 @@ mixin _$ForgetPasswordFormErrorStore on _ForgetPasswordFormErrorStore, Store {
     });
   }
 
-  final _$codeErrorAtom = Atom(name: '_ForgetPasswordFormErrorStore.codeError');
+  late final _$codeErrorAtom =
+      Atom(name: '_ForgetPasswordFormErrorStore.codeError', context: context);
 
   @override
   String? get codeError {
@@ -355,8 +364,8 @@ mixin _$ForgetPasswordFormErrorStore on _ForgetPasswordFormErrorStore, Store {
     });
   }
 
-  final _$passwordErrorAtom =
-      Atom(name: '_ForgetPasswordFormErrorStore.passwordError');
+  late final _$passwordErrorAtom = Atom(
+      name: '_ForgetPasswordFormErrorStore.passwordError', context: context);
 
   @override
   String? get passwordError {
@@ -371,8 +380,9 @@ mixin _$ForgetPasswordFormErrorStore on _ForgetPasswordFormErrorStore, Store {
     });
   }
 
-  final _$confirmPasswordErrorAtom =
-      Atom(name: '_ForgetPasswordFormErrorStore.confirmPasswordError');
+  late final _$confirmPasswordErrorAtom = Atom(
+      name: '_ForgetPasswordFormErrorStore.confirmPasswordError',
+      context: context);
 
   @override
   String? get confirmPasswordError {

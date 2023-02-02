@@ -6,7 +6,7 @@ part of 'incident_form_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$IncidentFormStore on _IncidentFormStore, Store {
   Computed<bool>? _$isStep1IsOkComputed;
@@ -38,7 +38,8 @@ mixin _$IncidentFormStore on _IncidentFormStore, Store {
               name: '_IncidentFormStore.isLoading'))
           .value;
 
-  final _$incidentAtom = Atom(name: '_IncidentFormStore.incident');
+  late final _$incidentAtom =
+      Atom(name: '_IncidentFormStore.incident', context: context);
 
   @override
   Incident get incident {
@@ -53,7 +54,8 @@ mixin _$IncidentFormStore on _IncidentFormStore, Store {
     });
   }
 
-  final _$savedAtom = Atom(name: '_IncidentFormStore.saved');
+  late final _$savedAtom =
+      Atom(name: '_IncidentFormStore.saved', context: context);
 
   @override
   bool get saved {
@@ -68,7 +70,8 @@ mixin _$IncidentFormStore on _IncidentFormStore, Store {
     });
   }
 
-  final _$loadingAtom = Atom(name: '_IncidentFormStore.loading');
+  late final _$loadingAtom =
+      Atom(name: '_IncidentFormStore.loading', context: context);
 
   @override
   bool get loading {
@@ -83,7 +86,8 @@ mixin _$IncidentFormStore on _IncidentFormStore, Store {
     });
   }
 
-  final _$saveFutureAtom = Atom(name: '_IncidentFormStore.saveFuture');
+  late final _$saveFutureAtom =
+      Atom(name: '_IncidentFormStore.saveFuture', context: context);
 
   @override
   ObservableFuture<bool?> get saveFuture {
@@ -98,15 +102,16 @@ mixin _$IncidentFormStore on _IncidentFormStore, Store {
     });
   }
 
-  final _$saveAsyncAction = AsyncAction('_IncidentFormStore.save');
+  late final _$saveAsyncAction =
+      AsyncAction('_IncidentFormStore.save', context: context);
 
   @override
   Future<dynamic> save() {
     return _$saveAsyncAction.run(() => super.save());
   }
 
-  final _$workFlowStepSaveAsyncAction =
-      AsyncAction('_IncidentFormStore.workFlowStepSave');
+  late final _$workFlowStepSaveAsyncAction =
+      AsyncAction('_IncidentFormStore.workFlowStepSave', context: context);
 
   @override
   Future<dynamic> workFlowStepSave(IncidentStatusEnum incidentStatusEnum) {
@@ -114,8 +119,8 @@ mixin _$IncidentFormStore on _IncidentFormStore, Store {
         .run(() => super.workFlowStepSave(incidentStatusEnum));
   }
 
-  final _$_IncidentFormStoreActionController =
-      ActionController(name: '_IncidentFormStore');
+  late final _$_IncidentFormStoreActionController =
+      ActionController(name: '_IncidentFormStore', context: context);
 
   @override
   void setIncidentValue(Incident value) {
@@ -192,8 +197,8 @@ mixin _$IncidentFormErrorStore on _IncidentFormErrorStore, Store {
               name: '_IncidentFormErrorStore.hasErrorsInSubmitAction'))
       .value;
 
-  final _$incidentErrorMessageAtom =
-      Atom(name: '_IncidentFormErrorStore.incidentErrorMessage');
+  late final _$incidentErrorMessageAtom = Atom(
+      name: '_IncidentFormErrorStore.incidentErrorMessage', context: context);
 
   @override
   String? get incidentErrorMessage {
@@ -209,8 +214,9 @@ mixin _$IncidentFormErrorStore on _IncidentFormErrorStore, Store {
     });
   }
 
-  final _$incidentTakeActionErrorMessageAtom =
-      Atom(name: '_IncidentFormErrorStore.incidentTakeActionErrorMessage');
+  late final _$incidentTakeActionErrorMessageAtom = Atom(
+      name: '_IncidentFormErrorStore.incidentTakeActionErrorMessage',
+      context: context);
 
   @override
   String? get incidentTakeActionErrorMessage {

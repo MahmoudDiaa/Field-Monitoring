@@ -1,3 +1,4 @@
+
 import '../../constants/strings.dart';
 
 class SubCategory {
@@ -21,10 +22,8 @@ class SubCategory {
     switch (language) {
       case Strings.englishCode:
         return this.englishName;
-        break;
       case Strings.arabicCode:
         return this.arabicName;
-        break;
     }
     return 'unknown language code';
   }
@@ -33,10 +32,8 @@ class SubCategory {
     switch (language) {
       case Strings.englishCode:
         return this.categoryEnglishName;
-        break;
       case Strings.arabicCode:
         return this.categoryArabicName;
-        break;
     }
     return 'unknown language code';
   }
@@ -44,10 +41,8 @@ class SubCategory {
     switch (language) {
       case Strings.englishCode:
         return this.amountUnitEnglishName;
-        break;
       case Strings.arabicCode:
         return this.amountUnitArabicName;
-        break;
     }
     return 'unknown language code';
   }

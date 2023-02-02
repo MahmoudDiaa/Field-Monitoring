@@ -1,9 +1,6 @@
-import 'package:boilerplate/models/user/user.dart';
-import 'package:sembast/sembast.dart';
 
 import '../../models/user/auth_user.dart';
-import '../local/constants/db_constants.dart';
-import '../network/api_response.dart';
+import '../network/api_response_new_entity.dart';
 import '../network/apis/user/user_api.dart';
 import '../sharedpref/shared_preference_helper.dart';
 
@@ -16,7 +13,7 @@ class UserRepository {
 
   UserRepository(this._userApi, this._sharedPrefsHelper);
 
-  Future<LoginApiResponse?> login(username, password) async {
+  Future<LoginResponseEntity?> login(username, password) async {
     // check to see if categories are present in database, then fetch from database
     // else make a network call to get all categories, store them into database for
     // later use
@@ -30,7 +27,7 @@ class UserRepository {
     return loginResponse;
   }
 
-  Future<ApiResponse?> register(
+  Future<LoginResponseEntity?> register(
       firstName, lastName, email, userName, password) async {
     var response = await _userApi
         .register(firstName, lastName, email, userName, password)
@@ -40,7 +37,7 @@ class UserRepository {
     return response;
   }
 
-  Future<ApiResponse?> changePassword(currentPassword, password) async {
+  Future<LoginResponseEntity?> changePassword(currentPassword, password) async {
     var response = await _userApi
         .changePassword(currentPassword, password)
         .then((resposne) {
@@ -49,7 +46,7 @@ class UserRepository {
     return response;
   }
 
-  Future<ApiResponse?> sendForgetPasswordLink(email) async {
+  Future<LoginResponseEntity?> sendForgetPasswordLink(email) async {
     var response =
         await _userApi.sendForgetPasswordLink(email).then((resposne) {
       return resposne;
@@ -57,7 +54,7 @@ class UserRepository {
     return response;
   }
 
-  Future<ApiResponse?> resetPassword(code, email, password) async {
+  Future<LoginResponseEntity?> resetPassword(code, email, password) async {
     var response =
         await _userApi.resetPassword(code, email, password).then((resposne) {
       return resposne;
@@ -68,9 +65,9 @@ class UserRepository {
   Future<void> saveIsLoggedIn(bool value) =>
       _sharedPrefsHelper.saveIsLoggedIn(value);
 
-  Future<void> saveLoggedInUser(AuthUser value) =>
+  Future<void> saveLoggedInUser(LoginResponseEntity value) =>
       _sharedPrefsHelper.saveLoggedInUser(value);
-
+  Future<void> saveAuthToken(String token) => _sharedPrefsHelper.saveAuthToken(token);
   Future<void> removeLoggedInUser() => _sharedPrefsHelper.removeLoggedInUser();
 
   Future<bool> get isLoggedIn => _sharedPrefsHelper.isLoggedIn;

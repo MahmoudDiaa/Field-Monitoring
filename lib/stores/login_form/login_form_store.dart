@@ -3,8 +3,8 @@ import 'package:mobx/mobx.dart';
 import 'package:validators/validators.dart';
 
 import '../../data/network/api_response.dart';
+import '../../data/network/api_response_new_entity.dart';
 import '../../data/respository/user_repository.dart';
-import '../../models/user/auth_user.dart';
 
 part 'login_form_store.g.dart';
 
@@ -179,16 +179,16 @@ abstract class _LoginFormStore with Store {
   }
 
   // empty responses:-----------------------------------------------------------
-  static ObservableFuture<ApiResponse?> emptyLoginResponse =
+  static ObservableFuture<LoginResponseEntity?> emptyLoginResponse =
       ObservableFuture.value(null);
   @observable
-  ObservableFuture<ApiResponse?> loginFuture = emptyLoginResponse;
+  ObservableFuture<LoginResponseEntity?> loginFuture = emptyLoginResponse;
 
   @observable
-  ObservableFuture<ApiResponse?> registerFuture = ObservableFuture.value(null);
+  ObservableFuture<LoginResponseEntity?> registerFuture = ObservableFuture.value(null);
 
   @observable
-  ObservableFuture<ApiResponse?> currentPasswordFuture =
+  ObservableFuture<LoginResponseEntity?> currentPasswordFuture =
       ObservableFuture.value(null);
 
   @computed
@@ -207,9 +207,10 @@ abstract class _LoginFormStore with Store {
     loginFuture = ObservableFuture(future);
     await future.then((value) async {
       this.loading = false;
-      if (value?.authUser?.access_token != null) {
+      if (value?.accessToken != null) {
         _repository.saveIsLoggedIn(true);
-        _repository.saveLoggedInUser(value!.authUser!);
+        _repository.saveLoggedInUser(value!);
+        _repository.saveAuthToken(value.accessToken!);
 
         this.isLoggedIn = true;
         this.success = true;

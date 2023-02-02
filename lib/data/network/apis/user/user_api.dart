@@ -1,24 +1,21 @@
 import 'dart:convert';
 
+import 'package:boilerplate/data/network/api_response_new_entity.dart';
 import 'package:boilerplate/data/network/dio_client.dart';
 import 'package:dio/dio.dart';
 
-import '../../../../models/category/category_list.dart';
-import '../../../../models/user/auth_user.dart';
-import '../../../../models/user/user.dart';
 import '../../../sharedpref/shared_preference_helper.dart';
-import '../../api_response.dart';
 import '../../constants/endpoints.dart';
 
 class UserApi {
   final DioClient _dioClient;
-  ApiResponse? apiResponse;
+  LoginResponseEntity? apiResponse;
   SharedPreferenceHelper sharedPreferenceHelper;
 
   UserApi(this._dioClient, this.sharedPreferenceHelper);
 
   /// Returns list of category in response
-  Future<LoginApiResponse?> login(username, password) async {
+  Future<LoginResponseEntity?> login(username, password) async {
     try {
       final res = await _dioClient.post(Endpoints.login,
           data: jsonEncode({'userName': username, 'password': password}),
@@ -28,7 +25,7 @@ class UserApi {
               'Accept': 'application/json',
             },
           ));
-      return apiResponse = LoginApiResponse.fromMap(res);
+      return apiResponse = LoginResponseEntity.fromJson(res);
       //return apiResponse!.success == true ? AuthUser.fromMap(res) : null;
     } catch (e) {
       print(e.toString());
@@ -36,7 +33,7 @@ class UserApi {
     }
   }
 
-  Future<ApiResponse?> register(
+  Future<LoginResponseEntity?> register(
       firstName, lastName, email, userName, password) async {
     try {
       final res = await _dioClient.post(
@@ -58,7 +55,7 @@ class UserApi {
               'Accept': 'application/json',
             },
           ));
-      apiResponse = ApiResponse.fromMap(res);
+      apiResponse = LoginResponseEntity.fromJson(res);
       return apiResponse;
     } catch (e) {
       print(e.toString());
@@ -66,7 +63,7 @@ class UserApi {
     }
   }
 
-  Future<ApiResponse?> changePassword(currentPassword, password) async {
+  Future<LoginResponseEntity?> changePassword(currentPassword, password) async {
     try {
       final res = await _dioClient.post(Endpoints.changePassword,
           data: jsonEncode({
@@ -81,7 +78,7 @@ class UserApi {
                   'Bearer ${sharedPreferenceHelper.authUser?.access_token ?? ''}',
             },
           ));
-      apiResponse = ApiResponse.fromMap(res);
+      apiResponse = LoginResponseEntity.fromJson(res);
       return apiResponse;
     } catch (e) {
       print(e.toString());
@@ -89,7 +86,7 @@ class UserApi {
     }
   }
 
-  Future<ApiResponse?> sendForgetPasswordLink(email) async {
+  Future<LoginResponseEntity?> sendForgetPasswordLink(email) async {
     try {
       final res = await _dioClient.post(Endpoints.forgetPasswordLink,
           data: jsonEncode({
@@ -101,7 +98,7 @@ class UserApi {
               'Accept': 'application/json',
             },
           ));
-      apiResponse = ApiResponse.fromMap(res);
+      apiResponse = LoginResponseEntity.fromJson(res);
       return apiResponse;
     } catch (e) {
       print(e.toString());
@@ -109,7 +106,7 @@ class UserApi {
     }
   }
 
-  Future<ApiResponse?> resetPassword(code, email, password) async {
+  Future<LoginResponseEntity?> resetPassword(code, email, password) async {
     try {
       final res = await _dioClient.post(Endpoints.resetPassword,
           data: jsonEncode({
@@ -123,7 +120,7 @@ class UserApi {
               'Accept': 'application/json',
             },
           ));
-      apiResponse = ApiResponse.fromMap(res);
+      apiResponse = LoginResponseEntity.fromJson(res);
       return apiResponse;
     } catch (e) {
       print(e.toString());

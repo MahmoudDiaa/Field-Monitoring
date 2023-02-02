@@ -646,18 +646,20 @@ class _IncidentsMapState extends State<IncidentsMap> {
   late LanguageStore _languageStore;
 
   Set<Marker> getIncidentsMarkers() {
-    var incdeints = _incidentStore.incidentList == null
+    List<Incident>? incdeints = _incidentStore.incidentList == null
         ? <Incident>[]
         : _incidentStore.incidentList!.incidents;
-
+    debugPrint("map lang ${_languageStore.locale}");
     var list = incdeints!
         .map(
           (e) => IncidentMarker(
               incident: e,
               InfoWindowOnTap: () {
+                debugPrint("map id ${e.id}");
+
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => InidentDetailsScreen(
-                          incidentId: e?.id,
+                          incidentId: e.id,
                         )));
               },
               localLanguage: _languageStore.locale),

@@ -164,7 +164,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
   }
 
   void _scrollListener() {
-    print(_scrollController?.position.extentAfter);
+    print(_scrollController.position.extentAfter);
     if (_scrollController.position.extentAfter < 500) {
       //load more incident items
       if (!_incidentStore.loading && !_incidentStore.loadingMore)

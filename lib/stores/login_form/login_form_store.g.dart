@@ -6,7 +6,7 @@ part of 'login_form_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$LoginFormStore on _LoginFormStore, Store {
   Computed<bool>? _$canLoginComputed;
@@ -52,7 +52,8 @@ mixin _$LoginFormStore on _LoginFormStore, Store {
               name: '_LoginFormStore.isSigningUp'))
           .value;
 
-  final _$usernameAtom = Atom(name: '_LoginFormStore.username');
+  late final _$usernameAtom =
+      Atom(name: '_LoginFormStore.username', context: context);
 
   @override
   String get username {
@@ -67,7 +68,8 @@ mixin _$LoginFormStore on _LoginFormStore, Store {
     });
   }
 
-  final _$firstnameAtom = Atom(name: '_LoginFormStore.firstname');
+  late final _$firstnameAtom =
+      Atom(name: '_LoginFormStore.firstname', context: context);
 
   @override
   String get firstname {
@@ -82,7 +84,8 @@ mixin _$LoginFormStore on _LoginFormStore, Store {
     });
   }
 
-  final _$lastnameAtom = Atom(name: '_LoginFormStore.lastname');
+  late final _$lastnameAtom =
+      Atom(name: '_LoginFormStore.lastname', context: context);
 
   @override
   String get lastname {
@@ -97,7 +100,8 @@ mixin _$LoginFormStore on _LoginFormStore, Store {
     });
   }
 
-  final _$passwordAtom = Atom(name: '_LoginFormStore.password');
+  late final _$passwordAtom =
+      Atom(name: '_LoginFormStore.password', context: context);
 
   @override
   String get password {
@@ -112,7 +116,8 @@ mixin _$LoginFormStore on _LoginFormStore, Store {
     });
   }
 
-  final _$currentPasswordAtom = Atom(name: '_LoginFormStore.currentPassword');
+  late final _$currentPasswordAtom =
+      Atom(name: '_LoginFormStore.currentPassword', context: context);
 
   @override
   String get currentPassword {
@@ -127,7 +132,8 @@ mixin _$LoginFormStore on _LoginFormStore, Store {
     });
   }
 
-  final _$confirmPasswordAtom = Atom(name: '_LoginFormStore.confirmPassword');
+  late final _$confirmPasswordAtom =
+      Atom(name: '_LoginFormStore.confirmPassword', context: context);
 
   @override
   String get confirmPassword {
@@ -142,7 +148,8 @@ mixin _$LoginFormStore on _LoginFormStore, Store {
     });
   }
 
-  final _$successAtom = Atom(name: '_LoginFormStore.success');
+  late final _$successAtom =
+      Atom(name: '_LoginFormStore.success', context: context);
 
   @override
   bool get success {
@@ -157,7 +164,8 @@ mixin _$LoginFormStore on _LoginFormStore, Store {
     });
   }
 
-  final _$loadingAtom = Atom(name: '_LoginFormStore.loading');
+  late final _$loadingAtom =
+      Atom(name: '_LoginFormStore.loading', context: context);
 
   @override
   bool get loading {
@@ -172,77 +180,81 @@ mixin _$LoginFormStore on _LoginFormStore, Store {
     });
   }
 
-  final _$loginFutureAtom = Atom(name: '_LoginFormStore.loginFuture');
+  late final _$loginFutureAtom =
+      Atom(name: '_LoginFormStore.loginFuture', context: context);
 
   @override
-  ObservableFuture<ApiResponse?> get loginFuture {
+  ObservableFuture<LoginResponseEntity?> get loginFuture {
     _$loginFutureAtom.reportRead();
     return super.loginFuture;
   }
 
   @override
-  set loginFuture(ObservableFuture<ApiResponse?> value) {
+  set loginFuture(ObservableFuture<LoginResponseEntity?> value) {
     _$loginFutureAtom.reportWrite(value, super.loginFuture, () {
       super.loginFuture = value;
     });
   }
 
-  final _$registerFutureAtom = Atom(name: '_LoginFormStore.registerFuture');
+  late final _$registerFutureAtom =
+      Atom(name: '_LoginFormStore.registerFuture', context: context);
 
   @override
-  ObservableFuture<ApiResponse?> get registerFuture {
+  ObservableFuture<LoginResponseEntity?> get registerFuture {
     _$registerFutureAtom.reportRead();
     return super.registerFuture;
   }
 
   @override
-  set registerFuture(ObservableFuture<ApiResponse?> value) {
+  set registerFuture(ObservableFuture<LoginResponseEntity?> value) {
     _$registerFutureAtom.reportWrite(value, super.registerFuture, () {
       super.registerFuture = value;
     });
   }
 
-  final _$currentPasswordFutureAtom =
-      Atom(name: '_LoginFormStore.currentPasswordFuture');
+  late final _$currentPasswordFutureAtom =
+      Atom(name: '_LoginFormStore.currentPasswordFuture', context: context);
 
   @override
-  ObservableFuture<ApiResponse?> get currentPasswordFuture {
+  ObservableFuture<LoginResponseEntity?> get currentPasswordFuture {
     _$currentPasswordFutureAtom.reportRead();
     return super.currentPasswordFuture;
   }
 
   @override
-  set currentPasswordFuture(ObservableFuture<ApiResponse?> value) {
+  set currentPasswordFuture(ObservableFuture<LoginResponseEntity?> value) {
     _$currentPasswordFutureAtom.reportWrite(value, super.currentPasswordFuture,
         () {
       super.currentPasswordFuture = value;
     });
   }
 
-  final _$loginAsyncAction = AsyncAction('_LoginFormStore.login');
+  late final _$loginAsyncAction =
+      AsyncAction('_LoginFormStore.login', context: context);
 
   @override
   Future<dynamic> login() {
     return _$loginAsyncAction.run(() => super.login());
   }
 
-  final _$registerAsyncAction = AsyncAction('_LoginFormStore.register');
+  late final _$registerAsyncAction =
+      AsyncAction('_LoginFormStore.register', context: context);
 
   @override
   Future<dynamic> register() {
     return _$registerAsyncAction.run(() => super.register());
   }
 
-  final _$changePasswordAsyncAction =
-      AsyncAction('_LoginFormStore.changePassword');
+  late final _$changePasswordAsyncAction =
+      AsyncAction('_LoginFormStore.changePassword', context: context);
 
   @override
   Future<dynamic> changePassword() {
     return _$changePasswordAsyncAction.run(() => super.changePassword());
   }
 
-  final _$sendForgetPasswordLinkAsyncAction =
-      AsyncAction('_LoginFormStore.sendForgetPasswordLink');
+  late final _$sendForgetPasswordLinkAsyncAction =
+      AsyncAction('_LoginFormStore.sendForgetPasswordLink', context: context);
 
   @override
   Future<dynamic> sendForgetPasswordLink() {
@@ -250,15 +262,16 @@ mixin _$LoginFormStore on _LoginFormStore, Store {
         .run(() => super.sendForgetPasswordLink());
   }
 
-  final _$logoutAsyncAction = AsyncAction('_LoginFormStore.logout');
+  late final _$logoutAsyncAction =
+      AsyncAction('_LoginFormStore.logout', context: context);
 
   @override
   Future<dynamic> logout() {
     return _$logoutAsyncAction.run(() => super.logout());
   }
 
-  final _$_LoginFormStoreActionController =
-      ActionController(name: '_LoginFormStore');
+  late final _$_LoginFormStoreActionController =
+      ActionController(name: '_LoginFormStore', context: context);
 
   @override
   void setUserId(String value) {
@@ -446,7 +459,8 @@ mixin _$LoginFormErrorStore on _LoginFormErrorStore, Store {
               name: '_LoginFormErrorStore.hasErrorInChangePassword'))
       .value;
 
-  final _$userEmailAtom = Atom(name: '_LoginFormErrorStore.userEmail');
+  late final _$userEmailAtom =
+      Atom(name: '_LoginFormErrorStore.userEmail', context: context);
 
   @override
   String? get userEmail {
@@ -461,7 +475,8 @@ mixin _$LoginFormErrorStore on _LoginFormErrorStore, Store {
     });
   }
 
-  final _$firstNameAtom = Atom(name: '_LoginFormErrorStore.firstName');
+  late final _$firstNameAtom =
+      Atom(name: '_LoginFormErrorStore.firstName', context: context);
 
   @override
   String? get firstName {
@@ -476,7 +491,8 @@ mixin _$LoginFormErrorStore on _LoginFormErrorStore, Store {
     });
   }
 
-  final _$lastNameAtom = Atom(name: '_LoginFormErrorStore.lastName');
+  late final _$lastNameAtom =
+      Atom(name: '_LoginFormErrorStore.lastName', context: context);
 
   @override
   String? get lastName {
@@ -491,7 +507,8 @@ mixin _$LoginFormErrorStore on _LoginFormErrorStore, Store {
     });
   }
 
-  final _$passwordAtom = Atom(name: '_LoginFormErrorStore.password');
+  late final _$passwordAtom =
+      Atom(name: '_LoginFormErrorStore.password', context: context);
 
   @override
   String? get password {
@@ -506,8 +523,8 @@ mixin _$LoginFormErrorStore on _LoginFormErrorStore, Store {
     });
   }
 
-  final _$confirmPasswordAtom =
-      Atom(name: '_LoginFormErrorStore.confirmPassword');
+  late final _$confirmPasswordAtom =
+      Atom(name: '_LoginFormErrorStore.confirmPassword', context: context);
 
   @override
   String? get confirmPassword {
@@ -522,8 +539,8 @@ mixin _$LoginFormErrorStore on _LoginFormErrorStore, Store {
     });
   }
 
-  final _$currentPasswordAtom =
-      Atom(name: '_LoginFormErrorStore.currentPassword');
+  late final _$currentPasswordAtom =
+      Atom(name: '_LoginFormErrorStore.currentPassword', context: context);
 
   @override
   String? get currentPassword {

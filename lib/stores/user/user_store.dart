@@ -1,10 +1,8 @@
+import 'package:boilerplate/data/network/api_response_new_entity.dart';
 import 'package:boilerplate/stores/error/error_store.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../data/network/api_response.dart';
-import '../../data/repository.dart';
 import '../../data/respository/user_repository.dart';
-import '../../models/user/auth_user.dart';
 import '../login_form/login_form_store.dart';
 
 part 'user_store.g.dart';
@@ -45,7 +43,7 @@ abstract class _UserStore with Store {
   }
 
   // empty responses:-----------------------------------------------------------
-  static ObservableFuture<ApiResponse?> emptyLoginResponse =
+  static ObservableFuture<LoginResponseEntity?> emptyLoginResponse =
       ObservableFuture.value(null);
 
   // store variables:-----------------------------------------------------------
@@ -53,7 +51,7 @@ abstract class _UserStore with Store {
   bool success = false;
 
   @observable
-  ObservableFuture<ApiResponse?> loginFuture = emptyLoginResponse;
+  ObservableFuture<LoginResponseEntity?> loginFuture = emptyLoginResponse;
 
   @computed
   bool get isLoading => loginFuture.status == FutureStatus.pending;
@@ -64,8 +62,9 @@ abstract class _UserStore with Store {
     final future = _repository.login(email, password);
     loginFuture = ObservableFuture(future);
     await future.then((value) async {
-      if (value?.authUser?.access_token != null) {
+      if (value?.accessToken != null) {
         _repository.saveIsLoggedIn(true);
+        _repository.saveAuthToken(value!.accessToken!);
         this.isLoggedIn = true;
         this.success = true;
       } else {

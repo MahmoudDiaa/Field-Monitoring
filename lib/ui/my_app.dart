@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   // Create your store as a final variable in a base Widget. This works better
   // with Hot Reload than creating it directly in the `build` function.
   final ThemeStore _themeStore = ThemeStore(getIt<Repository>());
-  final PostStore _postStore = PostStore(getIt<Repository>());
+  // final PostStore _postStore = PostStore(getIt<Repository>());
   final CategoryStore _categoryStore =
       CategoryStore(getIt<CategoryRepository>());
   final SubCategoryStore _subcategoryStore =
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<ThemeStore>(create: (_) => _themeStore),
-        Provider<PostStore>(create: (_) => _postStore),
+        // Provider<PostStore>(create: (_) => _postStore),
         Provider<CategoryStore>(create: (_) => _categoryStore),
         Provider<SubCategoryStore>(create: (_) => _subcategoryStore),
         Provider<LanguageStore>(create: (_) => _languageStore),
