@@ -2,3 +2,6 @@
 /shelf/
 /workspace.xml
 ../build
+/build/
+/.dart_tool/
+build/
