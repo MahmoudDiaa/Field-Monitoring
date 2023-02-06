@@ -21,7 +21,7 @@ class Incident {
   List<IncidentTransaction> transactions = [];
 
   IncidentImage? get primaryImageFromList {
-    if (images == null || images.length == 0) return null;
+    if (images.length == 0) return null;
     return images.firstWhere((element) => element.isPrimary == true);
   }
 
@@ -38,10 +38,10 @@ class Incident {
     switch (language) {
       case Strings.englishCode:
         return this.incidentCategoryEnglishName;
-        break;
+
       case Strings.arabicCode:
         return this.incidentCategoryArabicName;
-        break;
+
     }
     return 'unknown language code';
   }
@@ -50,10 +50,10 @@ class Incident {
     switch (language) {
       case Strings.englishCode:
         return this.incidentSubCategoryEnglishName;
-        break;
+
       case Strings.arabicCode:
         return this.incidentSubCategoryArabicName;
-        break;
+
     }
     return 'unknown language code';
   }
@@ -62,10 +62,10 @@ class Incident {
     switch (language) {
       case Strings.englishCode:
         return this.incidentStatusEnglishName;
-        break;
+
       case Strings.arabicCode:
         return this.incidentStatusArabicName;
-        break;
+
     }
     return 'unknown language code';
   }
@@ -74,10 +74,10 @@ class Incident {
     switch (language) {
       case Strings.englishCode:
         return this.priorityTextEnglish;
-        break;
+
       case Strings.arabicCode:
         return this.priorityTextArabic;
-        break;
+
     }
     return 'unknown language code';
   }
@@ -157,16 +157,12 @@ class Incident {
     switch (this.incidentStatusColor) {
       case 'orange':
         return Colors.orange;
-        break;
       case 'blue':
         return Colors.blue;
-        break;
       case 'green':
         return Colors.green;
-        break;
       case 'yellow':
         return Colors.yellow;
-        break;
     }
     return null;
   }
@@ -201,18 +197,18 @@ class Incident {
       case 1:
         return lan == 'ar' ? 'منخفضة' : 'Low';
 
-        break;
+
       case 2:
         return lan == 'ar' ? 'متوسط' : 'Medium';
 
-        break;
+
       case 3:
         return lan == 'ar' ? 'عالي' : 'High';
 
-        break;
+
       default:
         return lan == 'ar' ? 'غير محدد' : 'Unknown';
-        break;
+
     }
   }
 
@@ -264,15 +260,13 @@ class Incident {
 
   Map<String, dynamic> toMap() {
     var images = [];
-    if (xFiles != null) {
-      xFiles.forEach((element) {
-        images.add({
-          'ImageBase64': "data:image/png;base64," +
-              base64Encode(File(element.path).readAsBytesSync()),
-          'isPrimary': false
-        });
+    xFiles.forEach((element) {
+      images.add({
+        'ImageBase64': "data:image/png;base64," +
+            base64Encode(File(element.path).readAsBytesSync()),
+        'isPrimary': false
       });
-    }
+    });
     if (images.length > 0) images[0]['isPrimary'] = true;
 
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -285,7 +279,7 @@ class Incident {
     data['streetName'] = mapPlace?.addressComponents?[0].longName;
     data['address'] = mapPlace?.addressComponents == null
         ? null
-        : mapPlace?.addressComponents?.map((e) => e.longName)?.toString();
+        : mapPlace?.addressComponents?.map((e) => e.longName).toString();
     data['AmountUnitId'] = this.amountUnitId;
     data['UnitValue'] = this.amountValue;
     data['notes'] = this.notes;
@@ -333,8 +327,8 @@ class Incident {
 
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['IsImagesBase64'] = true;
-    data['lat'] = this.mapPlace?.geometry?.location?.lat?.toString();
-    data['long'] = this.mapPlace?.geometry?.location?.lng?.toString();
+    data['lat'] = this.mapPlace?.geometry?.location.lat.toString();
+    data['long'] = this.mapPlace?.geometry?.location.lng.toString();
     data['notes'] = this.notes;
     data['Images'] = images;
     data['IncidentID'] = this.id;

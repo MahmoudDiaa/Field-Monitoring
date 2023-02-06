@@ -96,7 +96,7 @@ class _IncidentFinallySdadScreenState extends State<IncidentFinallySdadScreen> {
                       imageMaxWidth: 500,
                       imageMaxHeight: 500,
                       imageQuality: 100,
-                      initialImageList: _incidentFormStore.incident?.xFiles,
+                      initialImageList: _incidentFormStore.incident.xFiles,
                       onImageListChanged: (list) {
                         _incidentFormStore.incident.xFiles = list;
                       },
@@ -110,7 +110,7 @@ class _IncidentFinallySdadScreenState extends State<IncidentFinallySdadScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
-                        initialValue: _incidentFormStore?.incident?.notes,
+                        initialValue: _incidentFormStore.incident.notes,
                         autofocus: false,
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
@@ -287,7 +287,7 @@ class _IncidentFinallySdadScreenState extends State<IncidentFinallySdadScreen> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
-            initialValue: _incidentFormStore?.incident?.notes,
+            initialValue: _incidentFormStore.incident.notes,
             autofocus: false,
             keyboardType: TextInputType.multiline,
             maxLines: null,
@@ -307,10 +307,10 @@ class _IncidentFinallySdadScreenState extends State<IncidentFinallySdadScreen> {
               return null;
             },
             onFieldSubmitted: (value) {
-              _incidentFormStore.incident!.notes = value;
+              _incidentFormStore.incident.notes = value;
             },
             onChanged: (value) {
-              _incidentFormStore.incident!.notes = value;
+              _incidentFormStore.incident.notes = value;
             },
           ),
         ),

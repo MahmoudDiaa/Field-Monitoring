@@ -25,7 +25,7 @@ class SubCategoryApi {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
               'Authorization':
-                  'Bearer ${sharedPreferenceHelper.authUser?.access_token ?? ''}',
+                  'Bearer ${sharedPreferenceHelper.authUser?.accessToken ?? ''}',
             },
           ));
       return SubCategoryList.fromJson(res['data']);

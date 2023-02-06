@@ -9,7 +9,7 @@ class SubCategoryList {
   });
 
   bool get isThereData {
-    return this.subcategories != null && this.subcategories!.length > 0;
+    return this.subcategories != null && this.subcategories.length > 0;
   }
 
   SubCategoryList filtered(SubCategoryQueryParams filter) {
@@ -18,8 +18,7 @@ class SubCategoryList {
     else
       return SubCategoryList(
           subcategories: this
-              .subcategories!
-              .where((element) => (filter.categoryId == null ||
+              .subcategories.where((element) => (filter.categoryId == null ||
                   filter.categoryId == element.categoryId))
               .toList());
   }

@@ -103,7 +103,7 @@ class _IncidentUppingSdadScreenState extends State<IncidentUppingSdadScreen> {
                               imageMaxHeight: 500,
                               imageQuality: 100,
                               initialImageList:
-                                  _incidentFormStore.incident?.xFiles,
+                                  _incidentFormStore.incident.xFiles,
                               onImageListChanged: (list) {
                                 _incidentFormStore.incident.xFiles = list;
                               },
@@ -119,7 +119,7 @@ class _IncidentUppingSdadScreenState extends State<IncidentUppingSdadScreen> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextFormField(
-                              initialValue: _incidentFormStore?.incident?.notes,
+                              initialValue: _incidentFormStore.incident.notes,
                               autofocus: false,
                               keyboardType: TextInputType.multiline,
                               maxLines: null,

@@ -22,7 +22,7 @@ class CategoryApi {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
               'Authorization':
-                  'Bearer ${sharedPreferenceHelper.authUser?.access_token ?? ''}',
+                  'Bearer ${sharedPreferenceHelper.authUser?.accessToken ?? ''}',
             },
           ));
       return CategoryList.fromJson(res['data']);

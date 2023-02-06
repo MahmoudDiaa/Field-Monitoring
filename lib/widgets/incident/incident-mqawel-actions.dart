@@ -40,7 +40,7 @@ class _MqawelActionButtonsState extends State<MqawelActionButtons> {
 
   @override
   Widget build(BuildContext context) {
-    return (sharedPreferenceHelper?.authUser?.user?.isMqawel == true &&
+    return (sharedPreferenceHelper?.authUser?.user?.isHasAssignedPermission() == true &&
 
         (widget.incident.incidentStatusId == IncidentStatusEnum.Assigned.id ||
         widget.incident.incidentStatusId == IncidentStatusEnum.Upped.id)

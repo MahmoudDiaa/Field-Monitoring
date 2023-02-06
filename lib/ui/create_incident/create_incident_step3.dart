@@ -127,7 +127,7 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
                                     keyboardType: TextInputType.number,
                                     decoration: InputDecoration(
                                         labelText:
-                                            '${AppLocalizations.of(context).translate('quantity')}-${_incidentFormStore?.incident?.amountUnitName}',
+                                            '${AppLocalizations.of(context).translate('quantity')}-${_incidentFormStore.incident.amountUnitName}',
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(20.0)),
@@ -387,9 +387,9 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
-            initialValue: _incidentFormStore?.incident?.unitValue == null
+            initialValue: _incidentFormStore.incident.unitValue == null
                 ? ''
-                : _incidentFormStore?.incident?.unitValue.toString(),
+                : _incidentFormStore.incident.unitValue.toString(),
             autofocus: false,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -430,7 +430,7 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
-            initialValue: _incidentFormStore?.incident?.notes,
+            initialValue: _incidentFormStore.incident.notes,
             autofocus: false,
             keyboardType: TextInputType.multiline,
             maxLines: null,

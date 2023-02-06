@@ -1,5 +1,4 @@
 
-import '../../models/user/auth_user.dart';
 import '../network/api_response_new_entity.dart';
 import '../network/apis/user/user_api.dart';
 import '../sharedpref/shared_preference_helper.dart';

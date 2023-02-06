@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:boilerplate/models/user/auth_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../network/api_response_new_entity.dart';
@@ -48,11 +47,11 @@ class SharedPreferenceHelper {
     return _sharedPreference.remove(Preferences.auth_user);
   }
 
-  AuthUser? get authUser {
+  LoginResponseEntity? get authUser {
     if (_sharedPreference.getString(Preferences.auth_user) == null) return null;
     Map<String, dynamic> userMap =
         jsonDecode(_sharedPreference.getString(Preferences.auth_user)!);
-    return AuthUser.fromMap(userMap);
+    return LoginResponseEntity.fromJson(userMap);
   }
 
   // Theme:------------------------------------------------------

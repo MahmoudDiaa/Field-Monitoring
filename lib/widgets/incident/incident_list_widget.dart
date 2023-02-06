@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
 import 'package:boilerplate/models/incident/incident.dart';
-import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:boilerplate/stores/theme/theme_store.dart';
 import 'package:boilerplate/utils/locale/app_localization.dart';
@@ -14,20 +12,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:material_dialog/material_dialog.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/enums.dart';
 import '../../data/sharedpref/shared_preference_helper.dart';
-import '../../extension/string_extension.dart';
 import '../../models/incident/incident_filter.dart';
-import '../../stores/incident/incident_store.dart';
 import '../../stores/incident_form/incident_form_store.dart';
 import '../../ui/constants/custom_style.dart';
 import '../../ui/constants/dimensions.dart';
-import '../../ui/sdad/incident_finally_sdad_screen.dart';
-import '../../ui/sdad/incident_sdad_screen.dart';
-import '../../ui/sdad/incident_upping_sdad_screen.dart';
 import '../progress_indicator/progress_indicator_text_widget.dart';
 import 'incident-employee-actions.dart';
 import 'incident-mqawel-actions.dart';
@@ -44,7 +35,7 @@ class _IncidentListWidget extends StatefulWidget {
   String? incidentId;
 
   double height;
-
+   dynamic incidentStore;
   _IncidentListWidget(
       {this.onSelectedIncidentChanged,
       this.incidentListView = IncidentListViewMode.Radiobutton,
@@ -52,20 +43,22 @@ class _IncidentListWidget extends StatefulWidget {
       this.subCategoryId,
       this.categoryId,
       this.incidentId,
-      required this.height});
+      required this.height,required this.incidentStore});
 
   @override
-  _IncidentListWidgetState createState() => _IncidentListWidgetState();
+  _IncidentListWidgetState createState() => _IncidentListWidgetState(incidentStore);
 }
 
 class _IncidentListWidgetState extends State<_IncidentListWidget> {
   //stores:---------------------------------------------------------------------
-  late IncidentStore _incidentStore;
+
   late ThemeStore _themeStore;
   late LanguageStore _languageStore;
   late IncidentFormStore _incidentFormStore;
-
+  dynamic incidentStore;
   SharedPreferenceHelper? sharedPreferenceHelper;
+
+  _IncidentListWidgetState(this.incidentStore);
 
   @override
   void initState() {
@@ -76,6 +69,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
 
   @override
   void didChangeDependencies() {
+
     sharedPreferenceHelper = GetIt.instance<SharedPreferenceHelper>();
     _incidentFormStore = Provider.of<IncidentFormStore>(context);
 
@@ -84,12 +78,11 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
     // initializing stores
     _languageStore = Provider.of<LanguageStore>(context);
     _themeStore = Provider.of<ThemeStore>(context);
-    _incidentStore = Provider.of<IncidentStore>(context);
   }
 
   void loadData() {
-    if (!_incidentStore.loading) {
-      _incidentStore.getIncidents(
+    if (!incidentStore.loading) {
+      incidentStore.getIncidents(
         incidentFilter: IncidentFilter(
             subCategoryId: widget.subCategoryId,
             categoryId: widget.categoryId,
@@ -119,11 +112,11 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
   setInitialSelectedIncident() {
     if (initialed) return;
     if (_selectedIncident == null && widget.initialSelectedId != null) {
-      if (_incidentStore.incidentList?.incidents != null) {
-        if (_incidentStore.incidentList!.incidents!
+      if (incidentStore.incidentList?.incidents != null) {
+        if (incidentStore.incidentList!.incidents!
                 .any((element) => element.id == widget.initialSelectedId) ==
             true) {
-          _selectedIncident = _incidentStore.incidentList!.incidents!
+          _selectedIncident = incidentStore.incidentList!.incidents!
               .firstWhere((element) => element.id == widget.initialSelectedId);
           widget.initialSelectedId = null;
         }
@@ -136,7 +129,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
   Widget _buildMainContent() {
     return Observer(
       builder: (context) {
-        return _incidentStore.loading
+        return incidentStore.loading
             ? CustomProgressIndicatorTextWidget(
                 message: AppLocalizations.of(context)
                     .translate('loadingIncidentList'),
@@ -167,8 +160,8 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
     print(_scrollController.position.extentAfter);
     if (_scrollController.position.extentAfter < 500) {
       //load more incident items
-      if (!_incidentStore.loading && !_incidentStore.loadingMore)
-        _incidentStore.getMore(
+      if (!incidentStore.loading && !incidentStore.loadingMore)
+        incidentStore.getMore(
           incidentFilter: IncidentFilter(
               subCategoryId: widget.subCategoryId,
               categoryId: widget.categoryId,
@@ -180,7 +173,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
   late ScrollController _scrollController;
 
   Future _onRefreshList() async {
-    _incidentStore.getIncidents(
+    incidentStore.getIncidents(
       incidentFilter: IncidentFilter(
           subCategoryId: widget.subCategoryId,
           categoryId: widget.categoryId,
@@ -189,9 +182,9 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
   }
 
   Widget _buildListView() {
-    return (_incidentStore.incidentList != null &&
-            _incidentStore.incidentList!.incidents != null &&
-            _incidentStore.incidentList!.incidents!.isNotEmpty)
+    return (incidentStore.incidentList != null &&
+            incidentStore.incidentList!.incidents != null &&
+            incidentStore.incidentList!.incidents!.isNotEmpty)
         ? Column(
             children: [
               RefreshIndicator(
@@ -208,9 +201,9 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
                           if (notification.metrics.extentAfter < 1000 &&
                               notification.direction ==
                                   ScrollDirection.reverse) {
-                            if (!_incidentStore.loading &&
-                                !_incidentStore.loadingMore)
-                              _incidentStore.getMore(
+                            if (!incidentStore.loading &&
+                                !incidentStore.loadingMore)
+                              incidentStore.getMore(
                                 incidentFilter: IncidentFilter(
                                     subCategoryId: widget.subCategoryId,
                                     categoryId: widget.categoryId,
@@ -230,7 +223,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
                           //controller: _scrollController,
                           shrinkWrap: true,
                           itemCount:
-                              _incidentStore.incidentList!.incidents!.length,
+                              incidentStore.incidentList!.incidents!.length,
                           separatorBuilder: (context, position) {
                             return Divider();
                           },
@@ -245,14 +238,14 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
               ),
               Observer(
                 builder: (context) {
-                  return _incidentStore.loadingMore
+                  return incidentStore.loadingMore
                       ? Text(
                           AppLocalizations.of(context).translate('gettingMore'))
                       : TextButton(
                           onPressed: () {
-                            if (!_incidentStore.loading &&
-                                !_incidentStore.loadingMore)
-                              _incidentStore.getMore(
+                            if (!incidentStore.loading &&
+                                !incidentStore.loadingMore)
+                              incidentStore.getMore(
                                 incidentFilter: IncidentFilter(
                                     subCategoryId: widget.subCategoryId,
                                     categoryId: widget.categoryId,
@@ -300,10 +293,10 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
   }
 
   Widget _buildRadiobuttonListView() {
-    return _incidentStore.incidentList != null
+    return incidentStore.incidentList != null
         ? ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: _incidentStore.incidentList!.incidents!.length,
+            itemCount: incidentStore.incidentList!.incidents!.length,
             separatorBuilder: (context, position) {
               return Divider();
             },
@@ -343,12 +336,12 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
         // selectedMainIncident = e;
         // widget.selectedIncidentChanged(e.id);
 
-        _onIncidentTap(_incidentStore.incidentList!.incidents![position]);
+        _onIncidentTap(incidentStore.incidentList!.incidents![position]);
       },
       child: Row(
         children: [
           Radio<Incident>(
-            value: _incidentStore.incidentList!.incidents![position],
+            value: incidentStore.incidentList!.incidents![position],
             toggleable: true,
             autofocus: true,
             groupValue: _selectedIncident,
@@ -361,8 +354,8 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
             },
           ),
           Text(
-            '${_incidentStore.incidentList?.incidents?[position].localizedTitle(_languageStore.locale)}',
-            style: Theme.of(context).textTheme.subtitle1,
+            '${incidentStore.incidentList?.incidents?[position].localizedTitle(_languageStore.locale)}',
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           SizedBox(
             width: 10,
@@ -375,7 +368,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
   Widget _buildListItem(int index) {
     return InkWell(
       onTap: () {
-        _onIncidentTap(_incidentStore.incidentList!.incidents![index]);
+        _onIncidentTap(incidentStore.incidentList!.incidents![index]);
       },
       // onLongPress: () async {
       //   if (sharedPreferenceHelper?.authUser?.user?.isMqawel == true &&
@@ -402,7 +395,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
                       flex: 1,
                       child: CachedNetworkImage(
                           imageUrl:
-                              '${_incidentStore.incidentList!.incidents![index].primaryImageFromList?.UrlAfterCheckUrl}',
+                              '${incidentStore.incidentList!.incidents![index].primaryImageFromList?.UrlAfterCheckUrl}',
                           fit: BoxFit.cover,
                           width: 90,
                           height: 90,
@@ -434,7 +427,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '${index + 1} - ${_incidentStore.incidentList!.incidents![index].localizedTitle(_languageStore.locale)}',
+                            '${index + 1} - ${incidentStore.incidentList!.incidents![index].localizedTitle(_languageStore.locale)}',
                             style: TextStyle(
                                 fontSize: Dimensions.defaultTextSize,
                                 color: Colors.black,
@@ -447,13 +440,13 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
                             height: Dimensions.heightSize * 0.5,
                           ),
                           Text(
-                            ' ${_incidentStore.incidentList!.incidents![index].localizedStatusName(_languageStore.locale)}',
+                            ' ${incidentStore.incidentList!.incidents![index].localizedStatusName(_languageStore.locale)}',
                             style: TextStyle(
-                                color: _incidentStore.incidentList!
+                                color: incidentStore.incidentList!
                                     .incidents![index].StatusColorDart),
                           ),
                           Text(
-                              ' ${_incidentStore.incidentList!.incidents![index].createDate != null ? DateFormat('dd/MM/yyyy').format(_incidentStore.incidentList!.incidents![index].createDate!) : ''} ${_incidentStore.incidentList!.incidents![index].createDate != null ? DateFormat("h:mma").format(_incidentStore.incidentList!.incidents![index].createDate!) : ''}  ',
+                              ' ${incidentStore.incidentList!.incidents![index].createDate != null ? DateFormat('dd/MM/yyyy').format(incidentStore.incidentList!.incidents![index].createDate!) : ''} ${incidentStore.incidentList!.incidents![index].createDate != null ? DateFormat("h:mma").format(incidentStore.incidentList!.incidents![index].createDate!) : ''}  ',
                               style: CustomStyle.textStyle),
                         ],
                       ),
@@ -462,21 +455,21 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
                 ],
               ),
             ),
-            EmplyeeActionButtons(
-              incident: _incidentStore.incidentList!.incidents![index],
-              onFinallySdadDone: (result) {
-                if (result == true) loadData();
-              },
-              onUppingSdadDone: (result) {
-                if (result == true) loadData();
-              },
-            ),
-            MqawelActionButtons(
-              incident: _incidentStore.incidentList!.incidents![index],
-              onSdadDone: (result) {
-                if (result == true) loadData();
-              },
-            ),
+            // EmplyeeActionButtons(
+            //   incident: incidentStore.incidentList!.incidents![index],
+            //   onFinallySdadDone: (result) {
+            //     if (result == true) loadData();
+            //   },
+            //   onUppingSdadDone: (result) {
+            //     if (result == true) loadData();
+            //   },
+            // ),
+            // MqawelActionButtons(
+            //   incident: incidentStore.incidentList!.incidents![index],
+            //   onSdadDone: (result) {
+            //     if (result == true) loadData();
+            //   },
+            // ),
           ],
         ),
       ),
@@ -486,8 +479,8 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
   Widget _handleErrorMessage() {
     return Observer(
       builder: (context) {
-        if (_incidentStore.errorStore.errorMessage.isNotEmpty) {
-          return _showErrorMessage(_incidentStore.errorStore.errorMessage);
+        if (incidentStore.errorStore.errorMessage.isNotEmpty) {
+          return _showErrorMessage(incidentStore.errorStore.errorMessage);
         }
 
         return SizedBox.shrink();
@@ -528,13 +521,14 @@ class IncidentListFormField extends FormField<Incident> {
       int? subCategoryId,
       int? categoryId,
       String? incidentId,
-      required double height})
+      required double height,required dynamic incidentStore})
       : super(
             onSaved: onSaved,
             validator: validator,
             //initialValue: initialValue,
             autovalidateMode: autovalidateMode,
             builder: (FormFieldState<Incident> state) {
+
               return Stack(
                 children: [
                   _IncidentListWidget(
@@ -550,7 +544,7 @@ class IncidentListFormField extends FormField<Incident> {
                         //state.didChange(incident);
                         if (stream != null) stream.add(incident);
                       },
-                      incidentListView: incidentListView),
+                      incidentListView: incidentListView,incidentStore:incidentStore,),
                   state.hasError
                       ? Text(
                           '${state.errorText}',

@@ -18,10 +18,10 @@ class IncidentTransaction {
     switch (language) {
       case Strings.englishCode:
         return this.incidentStatusEnglishName;
-        break;
+       
       case Strings.arabicCode:
         return this.incidentStatusArabicName;
-        break;
+       
     }
     return 'unknown language code';
   }

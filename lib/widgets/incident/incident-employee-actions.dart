@@ -7,7 +7,6 @@ import '../../constants/enums.dart';
 import '../../data/sharedpref/shared_preference_helper.dart';
 import '../../stores/incident_form/incident_form_store.dart';
 import '../../ui/sdad/incident_finally_sdad_screen.dart';
-import '../../ui/sdad/incident_sdad_screen.dart';
 import '../../ui/sdad/incident_upping_sdad_screen.dart';
 import '../../utils/locale/app_localization.dart';
 
@@ -44,8 +43,7 @@ class _EmplyeeActionButtonsState extends State<EmplyeeActionButtons> {
 
   @override
   Widget build(BuildContext context) {
-    return (sharedPreferenceHelper?.authUser?.user?.isIncidentEmployee ==
-                true &&
+    return (sharedPreferenceHelper!.authUser!.user!.isHasSupervisedPermission()  &&
             widget.incident.incidentStatusId ==
                 IncidentStatusEnum.SolvedInitially.id)
         ? Row(
@@ -81,6 +79,21 @@ class _EmplyeeActionButtonsState extends State<EmplyeeActionButtons> {
                 },
                 child: Text(
                     '${AppLocalizations.of(context).translate('incidentUpping')}'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  // _incidentFormStore.incident = widget.incident;
+                  // _incidentFormStore.incident.notes = '';
+                  // var result =
+                  //     await Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => IncidentUppingSdadScreen(),
+                  // ));
+                  //
+                  // if (result == true && widget.onUppingSdadDone != null)
+                  //   widget.onUppingSdadDone!(result);
+                },
+                child: Text(
+                    '${AppLocalizations.of(context).translate('cancel')}'),
               ),
             ],
           )

@@ -3,6 +3,8 @@ import 'package:boilerplate/constants/strings.dart';
 import 'package:boilerplate/data/repository.dart';
 import 'package:boilerplate/di/components/service_locator.dart';
 import 'package:boilerplate/stores/category/category_store.dart';
+import 'package:boilerplate/stores/incident/assigned_incident/assigned_incident_store.dart';
+import 'package:boilerplate/stores/incident/created_incident/created_incident_store.dart';
 import 'package:boilerplate/stores/incident/incident_store.dart';
 import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:boilerplate/stores/post/post_store.dart';
@@ -21,6 +23,7 @@ import '../data/respository/incident_repository.dart';
 import '../data/respository/priority_repository.dart';
 import '../data/respository/subcategory_repository.dart';
 import '../data/respository/user_repository.dart';
+import '../stores/incident/supervised_incident/supervised_incident_store.dart';
 import '../stores/incident_form/incident_form_store.dart';
 import '../stores/priority/priority_store.dart';
 import '../stores/subcategory/subcategory_store.dart';
@@ -43,8 +46,15 @@ class MyApp extends StatelessWidget {
   final UserStore _userStore = UserStore(getIt<UserRepository>());
   final PriorityStore _priorityStore =
       PriorityStore(getIt<PriorityRepository>());
-  final IncidentStore _incidentStore =
-      IncidentStore(getIt<IncidentRepository>());
+  //todo remove this as we replace it with three another stores
+  // final IncidentStore _incidentStore =
+  //     IncidentStore(getIt<IncidentRepository>());
+  final CreatedIncidentStore _createdIncidentStore =
+  CreatedIncidentStore(getIt<IncidentRepository>());
+  final AssignedIncidentStore _assignedIncidentStore =
+  AssignedIncidentStore(getIt<IncidentRepository>());
+  final SupervisedIncidentStore _supervisedIncidentStore =
+  SupervisedIncidentStore(getIt<IncidentRepository>());
   final IncidentFormStore _incidentFormStore =
       IncidentFormStore(getIt<IncidentRepository>());
 
@@ -60,7 +70,9 @@ class MyApp extends StatelessWidget {
         Provider<LanguageStore>(create: (_) => _languageStore),
         Provider<UserStore>(create: (_) => _userStore),
         Provider<PriorityStore>(create: (_) => _priorityStore),
-        Provider<IncidentStore>(create: (_) => _incidentStore),
+        Provider<CreatedIncidentStore>(create: (_) => _createdIncidentStore),
+        Provider<AssignedIncidentStore>(create: (_) => _assignedIncidentStore),
+        Provider<SupervisedIncidentStore>(create: (_) => _supervisedIncidentStore),
         Provider<IncidentFormStore>(create: (_) => _incidentFormStore),
       ],
       child: Observer(

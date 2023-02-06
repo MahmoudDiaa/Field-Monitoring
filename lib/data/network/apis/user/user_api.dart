@@ -75,7 +75,7 @@ class UserApi {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
               'Authorization':
-                  'Bearer ${sharedPreferenceHelper.authUser?.access_token ?? ''}',
+                  'Bearer ${sharedPreferenceHelper.authUser?.accessToken ?? ''}',
             },
           ));
       apiResponse = LoginResponseEntity.fromJson(res);

@@ -17,10 +17,10 @@ class Category {
     switch (language) {
       case Strings.englishCode:
         return this.englishName;
-        break;
+
       case Strings.arabicCode:
         return this.arabicName;
-        break;
+
     }
     return 'unknown language code';
   }

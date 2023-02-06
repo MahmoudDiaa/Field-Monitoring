@@ -52,7 +52,7 @@ User $ApiResponseNewUserFromJson(Map<String, dynamic> json) {
 	if (email != null) {
 		apiResponseNewUser.email = email;
 	}
-	final dynamic? mobile = jsonConvert.convert<dynamic>(json['mobile']);
+	final dynamic mobile = jsonConvert.convert<dynamic>(json['mobile']);
 	if (mobile != null) {
 		apiResponseNewUser.mobile = mobile;
 	}

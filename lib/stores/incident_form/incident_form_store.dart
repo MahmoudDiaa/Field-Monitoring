@@ -1,15 +1,9 @@
 import 'package:boilerplate/models/incident/incident.dart';
-import 'package:boilerplate/models/subcategory/subcategory.dart';
 import 'package:boilerplate/stores/error/error_store.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
-import 'package:validators/validators.dart';
 
 import '../../constants/enums.dart';
 import '../../data/respository/incident_repository.dart';
-import '../../models/category/category.dart';
 
 part 'incident_form_store.g.dart';
 

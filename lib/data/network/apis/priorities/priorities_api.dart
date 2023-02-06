@@ -4,7 +4,6 @@ import 'package:boilerplate/models/PriorityLevels/Priority_level_list.dart';
 import 'package:dio/dio.dart';
 
 import '../../dio_client.dart';
-import '../../rest_client.dart';
 
 class prioritiesApi{
 
@@ -26,7 +25,7 @@ class prioritiesApi{
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization':
-          'Bearer ${_sharedPreferenceHelper.authUser?.access_token ?? ''}',
+          'Bearer ${_sharedPreferenceHelper.authUser?.accessToken ?? ''}',
         },
       ));
       return PriorityLevelList.fromJson(res);

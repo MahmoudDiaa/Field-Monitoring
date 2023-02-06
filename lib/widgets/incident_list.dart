@@ -23,23 +23,27 @@ class _IncidentListWidget extends StatefulWidget {
   int? initialSelectedId;
 
   bool autoSelectFirstItem;
+  dynamic incidentStore;
 
   _IncidentListWidget({
     this.onSelectedIncidentChanged,
     this.incidentListView = IncidentListViewMode.Radiobutton,
     this.initialSelectedId,
-    this.autoSelectFirstItem = false,
+    this.autoSelectFirstItem = false, required this.incidentStore
   });
 
   @override
-  _IncidentListWidgetState createState() => _IncidentListWidgetState();
+  _IncidentListWidgetState createState() =>
+      _IncidentListWidgetState(incidentStore);
 }
 
 class _IncidentListWidgetState extends State<_IncidentListWidget> {
   //stores:---------------------------------------------------------------------
-  late IncidentStore _incidentStore;
+  dynamic _incidentStore;
   late ThemeStore _themeStore;
   late LanguageStore _languageStore;
+
+  _IncidentListWidgetState(this._incidentStore);
 
   @override
   void initState() {
@@ -53,7 +57,6 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
     // initializing stores
     _languageStore = Provider.of<LanguageStore>(context);
     _themeStore = Provider.of<ThemeStore>(context);
-    _incidentStore = Provider.of<IncidentStore>(context);
 
     // check to see if already called api
     if (!_incidentStore.loading) {
@@ -83,11 +86,11 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
     if (_selectedIncident == null && widget.initialSelectedId != null) {
       if (_incidentStore.incidentList?.incidents != null) {
         if (_incidentStore.incidentList!.incidents!
-                .any((element) => element.id == widget.initialSelectedId) ==
+            .any((element) => element.id == widget.initialSelectedId) ==
             true) {
           Future.delayed(Duration(seconds: 0), () {
             _onIncidentTap(_incidentStore.incidentList!.incidents!.firstWhere(
-                (element) => element.id == widget.initialSelectedId));
+                    (element) => element.id == widget.initialSelectedId));
           });
           widget.initialSelectedId = null;
         }
@@ -111,8 +114,8 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
       builder: (context) {
         return _incidentStore.loading
             ? CustomProgressIndicatorTextWidget(
-                message: 'Loading Categories...',
-              )
+          message: 'Loading Categories...',
+        )
             : Material(child: _incidentView());
       },
     );
@@ -123,57 +126,57 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
     return widget.incidentListView == IncidentListViewMode.List
         ? _buildListView()
         : widget.incidentListView == IncidentListViewMode.Radiobutton
-            ? _buildRadiobuttonListView()
-            : Center(
-                child: Text('There is no selected view type!'),
-              );
+        ? _buildRadiobuttonListView()
+        : Center(
+      child: Text('There is no selected view type!'),
+    );
   }
 
   Widget _buildListView() {
     return _incidentStore.incidentList != null
         ? ListView(
-            scrollDirection: Axis.horizontal,
-            children: _incidentStore.incidentList!.incidents!
-                .map((e) => _buildRadioItem(e))
-                .toList(),
-            // itemCount: _incidentStore.incidentList!.incidents!.length,
-            // separatorBuilder: (context, position) {
-            //   return Divider();
-            // },
-            // itemBuilder: (context, position) {
-            //   return _buildListItem(position);
-            // },
-          )
+      scrollDirection: Axis.horizontal,
+      children: _incidentStore.incidentList!.incidents!
+          .map((e) => _buildRadioItem(e))
+          .toList(),
+      // itemCount: _incidentStore.incidentList!.incidents!.length,
+      // separatorBuilder: (context, position) {
+      //   return Divider();
+      // },
+      // itemBuilder: (context, position) {
+      //   return _buildListItem(position);
+      // },
+    )
         : Center(
-            child: Text(
-              AppLocalizations.of(context).translate('home_tv_no_post_found'),
-            ),
-          );
+      child: Text(
+        AppLocalizations.of(context).translate('home_tv_no_post_found'),
+      ),
+    );
   }
 
   Widget _buildRadiobuttonListView() {
     return _incidentStore.incidentList != null
         ? Container(
-            height: 30.0,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: _incidentStore.incidentList!.incidents!
-                  .map((e) => _buildRadioItem(e))
-                  .toList(),
-              // itemCount: _subincidentStore.subincidentList!.subincidents!.length,
-              // separatorBuilder: (context, position) {
-              //   return Divider();
-              // },
-              // itemBuilder: (context, position) {
-              //   return _buildRadioItem(position);
-              // },
-            ),
-          )
+      height: 30.0,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: _incidentStore.incidentList!.incidents!
+            .map((e) => _buildRadioItem(e))
+            .toList(),
+        // itemCount: _subincidentStore.subincidentList!.subincidents!.length,
+        // separatorBuilder: (context, position) {
+        //   return Divider();
+        // },
+        // itemBuilder: (context, position) {
+        //   return _buildRadioItem(position);
+        // },
+      ),
+    )
         : Center(
-            child: Text(
-              AppLocalizations.of(context).translate('home_tv_no_post_found'),
-            ),
-          );
+      child: Text(
+        AppLocalizations.of(context).translate('home_tv_no_post_found'),
+      ),
+    );
   }
 
   Incident? _selectedIncident;
@@ -226,17 +229,25 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
       dense: true,
       leading: Icon(Icons.cloud_circle),
       title: Text(
-        '${_incidentStore.incidentList?.incidents?[position].localizedTitle(_languageStore.locale)}',
+        '${_incidentStore.incidentList?.incidents?[position].localizedTitle(
+            _languageStore.locale)}',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         softWrap: false,
         style: _incidentStore.incidentList?.incidents?[position]?.id ==
-                _selectedIncident?.id
-            ? Theme.of(context).textTheme.subtitle1
-            : Theme.of(context).textTheme.bodyText1,
+            _selectedIncident?.id
+            ? Theme
+            .of(context)
+            .textTheme
+            .subtitle1
+            : Theme
+            .of(context)
+            .textTheme
+            .bodyText1,
       ),
       subtitle: Text(
-        '${_incidentStore.incidentList?.incidents?[position].localizedTitle(_languageStore.locale)}',
+        '${_incidentStore.incidentList?.incidents?[position].localizedTitle(
+            _languageStore.locale)}',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         softWrap: false,
@@ -267,7 +278,8 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
           message: message,
           title: AppLocalizations.of(context).translate('home_tv_error'),
           duration: Duration(seconds: 3),
-        )..show(context);
+        )
+          ..show(context);
       }
     });
 
@@ -280,43 +292,42 @@ class IncidentFormField extends FormField<Incident> {
   Function(Incident?)? onChange;
   StreamController<Incident?>? stream;
 
-  IncidentFormField(
-      {required FormFieldSetter<Incident> onSaved,
-      required FormFieldValidator<Incident> validator,
-      int? initialSelectedId,
-      //Incident? initialValue,
-      AutovalidateMode autovalidateMode = AutovalidateMode.onUserInteraction,
-      this.incidentListView = IncidentListViewMode.Radiobutton,
-      this.onChange,
-      this.stream,
-      bool autoSelectFirstItem = false})
+  IncidentFormField({required FormFieldSetter<Incident> onSaved,
+    required FormFieldValidator<Incident> validator,
+    int? initialSelectedId,
+    //Incident? initialValue,
+    AutovalidateMode autovalidateMode = AutovalidateMode.onUserInteraction,
+    this.incidentListView = IncidentListViewMode.Radiobutton,
+    this.onChange,
+    this.stream,
+    bool autoSelectFirstItem = false,required dynamic incidentStore})
       : assert(initialSelectedId == null || autoSelectFirstItem == false),
         super(
-            onSaved: onSaved,
-            validator: validator,
-            //initialValue: initialValue,
-            autovalidateMode: autovalidateMode,
-            builder: (FormFieldState<Incident> state) {
-              return Stack(
-                children: [
-                  _IncidentListWidget(
-                      autoSelectFirstItem: autoSelectFirstItem,
-                      initialSelectedId: initialSelectedId,
-                      onSelectedIncidentChanged: (incident) {
-                        if (onChange != null) {
-                          onChange(incident);
-                        }
-                        state.didChange(incident);
-                        if (stream != null) stream.add(incident);
-                      },
-                      incidentListView: incidentListView),
-                  state.hasError
-                      ? Text(
-                          '${state.errorText}',
-                          style: TextStyle(color: Colors.red),
-                        )
-                      : Container()
-                ],
-              );
-            });
+          onSaved: onSaved,
+          validator: validator,
+          //initialValue: initialValue,
+          autovalidateMode: autovalidateMode,
+          builder: (FormFieldState<Incident> state) {
+            return Stack(
+              children: [
+                _IncidentListWidget(
+                    autoSelectFirstItem: autoSelectFirstItem,
+                    initialSelectedId: initialSelectedId,
+                    onSelectedIncidentChanged: (incident) {
+                      if (onChange != null) {
+                        onChange(incident);
+                      }
+                      state.didChange(incident);
+                      if (stream != null) stream.add(incident);
+                    },
+                    incidentListView: incidentListView, incidentStore:incidentStore),
+                state.hasError
+                    ? Text(
+                  '${state.errorText}',
+                  style: TextStyle(color: Colors.red),
+                )
+                    : Container()
+              ],
+            );
+          });
 }

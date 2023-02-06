@@ -1,15 +1,13 @@
+import 'package:boilerplate/ui/incidents/assigned_incidents/assigned_incident_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/enums.dart';
 import '../../data/sharedpref/shared_preference_helper.dart';
 import '../../models/category/category.dart';
 import '../../utils/locale/app_localization.dart';
-import '../../utils/routes/routes.dart';
 import '../../widgets/categories_select.dart';
-import '../../widgets/subcategories_select.dart';
 import '../barber_details/barber_details_screen.dart';
 import '../constants/colors.dart';
 import '../constants/dimensions.dart';
@@ -18,7 +16,7 @@ import '../dummy_data/barber.dart';
 import '../dummy_data/near_by.dart';
 import '../dummy_data/popular_category.dart';
 import '../dummy_data/popular_parlour.dart';
-import '../incident/incident_list_screen.dart';
+import '../incidents/created_incidents/created_incident_list_screen.dart';
 import '../parlour_details/parlour_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -194,14 +192,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     onSubCategoryChange: (subCategory) {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => IncidentListScreen(
+                          builder: (context) =>sharedPreferenceHelper!.authUser!.user!.isHasCreatedPermission()?CreatedIncidentListScreen(
                                 initialSubCategoryId: subCategory?.id,
                                 showBack: true,
                                 //initialSubCategoryId: e.id,
-                              )));
+                              ):AssignedIncidentListScreen()));
                     },
                     onSaved: (category) {},
-                    validator: (category) {},
+                    validator: (category) {
+                      return null;
+                    },
                     // stream: categoryStreamController,
                     //initialValue: null,
                   ),

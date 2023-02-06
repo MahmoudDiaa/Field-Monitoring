@@ -2,16 +2,17 @@ import 'package:boilerplate/data/respository/incident_repository.dart';
 import 'package:boilerplate/stores/error/error_store.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../models/incident/incident.dart';
-import '../../models/incident/incident_filter.dart';
-import '../../models/incident/incident_list.dart';
-import '../../utils/dio/dio_error_util.dart';
+import '../../../models/incident/incident.dart';
+import '../../../models/incident/incident_filter.dart';
+import '../../../models/incident/incident_list.dart';
+import '../../../utils/dio/dio_error_util.dart';
 
-part 'incident_store.g.dart';
 
-class IncidentStore = _IncidentStore with _$IncidentStore;
+part 'created_incident_store.g.dart';
 
-abstract class _IncidentStore with Store {
+class CreatedIncidentStore = _CreatedIncidentStore with _$IncidentStore;
+
+abstract class _CreatedIncidentStore with Store {
   // repository instance
   late IncidentRepository _incidentRepository;
 
@@ -19,7 +20,7 @@ abstract class _IncidentStore with Store {
   final ErrorStore errorStore = ErrorStore();
 
   // constructor:---------------------------------------------------------------
-  _IncidentStore(IncidentRepository incidentRepository)
+  _CreatedIncidentStore(IncidentRepository incidentRepository)
       : this._incidentRepository = incidentRepository;
 
   static ObservableFuture<IncidentList?> emptyIncidentResponse =

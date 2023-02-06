@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:boilerplate/models/dashboard/dashboard.dart';
 import 'package:boilerplate/models/incident/incident.dart';
-import 'package:boilerplate/widgets/google_map/place_picker_widget.dart';
+import 'package:boilerplate/stores/incident/assigned_incident/assigned_incident_store.dart';
+import 'package:boilerplate/stores/incident/created_incident/created_incident_store.dart';
+import 'package:boilerplate/stores/incident/supervised_incident/supervised_incident_store.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -15,30 +18,34 @@ import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../constants/enums.dart';
 import '../../constants/strings.dart';
 import '../../models/incident/incident_filter.dart';
-import '../../stores/incident/incident_store.dart';
 import '../../stores/language/language_store.dart';
 import '../../ui/constants/colors.dart';
 import 'dart:io' show Platform;
 
 import '../../utils/locale/app_localization.dart';
-import '../progress_indicator/progress_indicator_text_widget.dart';
 import 'incident-map-marker.dart';
 import 'incident_item_details.dart';
 
 class IncidentsMap extends StatefulWidget {
+  List<DashboardWidgets> userPermissions;
+
+  IncidentsMap(this.userPermissions);
+
   @override
-  _IncidentsMapState createState() => _IncidentsMapState();
+  _IncidentsMapState createState() => _IncidentsMapState(userPermissions);
 }
 
 class _IncidentsMapState extends State<IncidentsMap> {
   Future<PlaceProvider>? _futureProvider;
   late GoogleMapController mapController;
   final Set<Marker> markers = new Set();
+  final List<DashboardWidgets> userPermissions;
 
-  static const LatLng showLocation = const LatLng(27.7089427, 85.3086209);
+  // static const LatLng showLocation = const LatLng(27.7089427, 85.3086209);
+
+  _IncidentsMapState(this.userPermissions);
 
   @override
   void initState() {
@@ -116,7 +123,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
               placeProvider!.currentPosition != null) {
             targetLocation = LatLng(placeProvider!.currentPosition!.latitude,
                 placeProvider!.currentPosition!.longitude);
-            loadData(targetLocation);
+            loadData(targetLocation, _currentPermission);
             return _buildMap();
           } else {
             return Center(
@@ -138,7 +145,8 @@ class _IncidentsMapState extends State<IncidentsMap> {
           height: MediaQuery.of(context).size.height - 155,
           child: Observer(
             builder: (context) {
-              return (_incidentStore.loading || !_incidentStore.loading)
+              return (_currentIncidentStore.loading ||
+                      !_currentIncidentStore.loading)
                   ? new GoogleMap(
                       //minMaxZoomPreference: MinMaxZoomPreference(13, 17),
                       markers: getIncidentsMarkers(),
@@ -205,7 +213,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
                         // }
                       },
                       onCameraMoveStarted: () {
-                        var ff;
+                        // var ff;
 
                         // if(onCameraMoveStarted != null) {
                         //   onCameraMoveStarted!(provider);
@@ -234,9 +242,9 @@ class _IncidentsMapState extends State<IncidentsMap> {
                             milliseconds: 200,
                           ),
                           () {
-                            if (!_incidentStore.loading) {
+                            if (!_currentIncidentStore.loading) {
                               //zoom = position.zoom;
-                              loadData(targetLocation);
+                              loadData(targetLocation, _currentPermission);
                             }
                           },
                         );
@@ -264,13 +272,22 @@ class _IncidentsMapState extends State<IncidentsMap> {
   }
 
   BehaviorSubject<double> _streamController = BehaviorSubject<double>();
+  BehaviorSubject<DashboardWidgets> _permissionStreamController =
+      BehaviorSubject<DashboardWidgets>();
   double currentDistance = 500;
+  late DashboardWidgets _currentPermission;
+
+  List<double> distanceDropdown=[500,1000,1500,2000];
 
   @override
   Widget build(BuildContext context) {
     _streamController.stream.listen((event) {
       currentDistance = event;
-      loadData(targetLocation);
+      loadData(targetLocation, _currentPermission);
+    });
+    _permissionStreamController.stream.listen((event) {
+      _currentPermission=event;
+      loadData(targetLocation, event);
     });
     return FutureBuilder<PlaceProvider>(
       future: _futureProvider,
@@ -290,7 +307,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
+                        padding: const EdgeInsets.only(right: 4.0),
                         child: Icon(
                           Icons.pin_drop_sharp,
                           color: CustomColor.primaryColor,
@@ -298,7 +315,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
                       ),
                       Observer(
                         builder: (context) {
-                          return _incidentStore.loading
+                          return _currentIncidentStore.loading
                               ? Container(
                                   child: Text('Loading...'),
                                 )
@@ -309,76 +326,23 @@ class _IncidentsMapState extends State<IncidentsMap> {
                                         //icon: Icon(Icons.pin_drop_sharp),
                                         // dropdownColor: CustomColor.thirdColor,
                                         value: currentDistance,
-                                        items: [
-                                          DropdownMenuItem<double>(
-                                            child: TextButton(
-                                              onPressed: () {
-                                                if (currentDistance == 500)
-                                                  return;
-                                                _streamController.add(500);
-                                              },
-                                              child: Text(
-                                                '500 Meter',
-                                                style: TextStyle(
-                                                  color:
-                                                      CustomColor.primaryColor,
-                                                ),
+                                        items: distanceDropdown.map((distance) =>  DropdownMenuItem<double>(
+                                          child: TextButton(
+                                            onPressed: () {
+                                              if (currentDistance == distance)
+                                                return;
+                                              _streamController.add(distance);
+                                            },
+                                            child: Text(
+                                              '${distance.round()} Meter',
+                                              style: TextStyle(
+                                                color:
+                                                CustomColor.primaryColor,
                                               ),
                                             ),
-                                            value: 500,
                                           ),
-                                          DropdownMenuItem<double>(
-                                            child: TextButton(
-                                              onPressed: () {
-                                                if (currentDistance == 1000)
-                                                  return;
-                                                _streamController.add(1000);
-                                              },
-                                              child: Text(
-                                                '1000 Meter',
-                                                style: TextStyle(
-                                                  color:
-                                                      CustomColor.primaryColor,
-                                                ),
-                                              ),
-                                            ),
-                                            value: 1000,
-                                          ),
-                                          DropdownMenuItem<double>(
-                                            child: TextButton(
-                                              onPressed: () {
-                                                if (currentDistance == 1500)
-                                                  return;
-                                                _streamController.add(1500);
-                                              },
-                                              child: Text(
-                                                '1500 Meter',
-                                                style: TextStyle(
-                                                  color:
-                                                      CustomColor.primaryColor,
-                                                ),
-                                              ),
-                                            ),
-                                            value: 1500,
-                                          ),
-                                          DropdownMenuItem<double>(
-                                            child: TextButton(
-                                              onPressed: () {
-                                                if (currentDistance == 2000)
-                                                  return;
-                                                _streamController.add(2000);
-                                              },
-                                              child: Text(
-                                                '2000 Meter',
-                                                style: TextStyle(
-                                                  color:
-                                                      CustomColor.primaryColor,
-                                                ),
-                                              ),
-                                            ),
-                                            value: 2000,
-                                          ),
-                                        ],
+                                          value: distance,
+                                        )).toList(),
                                         onChanged: (number) {});
                                   },
                                 );
@@ -388,13 +352,47 @@ class _IncidentsMapState extends State<IncidentsMap> {
                         padding: const EdgeInsets.all(8.0),
                         child: Observer(
                           builder: (context) {
-                            return _incidentStore.loading
+                            return _currentIncidentStore.loading
                                 ? Container()
                                 : Text(
-                                    '${_incidentStore.incidentList == null ? "0" : _incidentStore.incidentList!.incidents!.length.toString()} ${AppLocalizations.of(context).translate('incident')}');
+                                    '${_currentIncidentStore.incidentList == null ? "0" : _currentIncidentStore.incidentList!.incidents!.length.toString()} ${AppLocalizations.of(context).translate('incident')}');
                           },
                         ),
-                      )
+                      ),
+                      Observer(
+                        builder: (context) {
+                          print("user permissions ${userPermissions.length}");
+                          return userPermissions.length<=1
+                              ? Container()
+                              : StreamBuilder<DashboardWidgets>(
+                                  stream: _permissionStreamController,
+                                  builder: (context, snapshot) {
+                                    return DropdownButton<DashboardWidgets>(
+                                        //icon: Icon(Icons.pin_drop_sharp),
+                                        // dropdownColor: CustomColor.thirdColor,
+                                        value: _currentPermission,
+                                        items: userPermissions.map((permission) => DropdownMenuItem<DashboardWidgets>(
+                                          child: TextButton(
+
+                                            onPressed: () {  },
+                                            child: Text(
+                                              permission.name,
+                                              style: TextStyle(
+                                                color: CustomColor.primaryColor,
+                                              ),
+                                            ),
+                                          ),
+                                          value: permission,
+                                        )).toList(),
+                                        onChanged: (permission) {
+                                          if(permission==_currentPermission)
+                                            return;
+                                          _permissionStreamController.add(permission!);
+                                        });
+                                  },
+                                );
+                        },
+                      ),
                     ],
                   )
                 ],
@@ -407,7 +405,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
                       children: [
                         TextButton(
                             onPressed: () {
-                              loadData(targetLocation);
+                              loadData(targetLocation, _currentPermission);
                             },
                             child: Text('Refresh')),
                         //TextButton(onPressed: () {}, child: Text('Load More')),
@@ -422,7 +420,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
                   titleSpacing: 0.0,
                   title: Observer(
                     builder: (context) {
-                      return _incidentStore.loading
+                      return _currentIncidentStore.loading
                           ? Container(
                               height: 70,
                               child: Center(
@@ -453,7 +451,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
           children.addAll([
             Icon(
               Icons.error_outline,
-              color: Theme.of(context).errorColor,
+              color: Theme.of(context).colorScheme.error,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 16),
@@ -620,19 +618,39 @@ class _IncidentsMapState extends State<IncidentsMap> {
     );
   }
 
-  late IncidentStore _incidentStore;
+  CreatedIncidentStore? _createdIncidentStore;
+
+  AssignedIncidentStore? _assignedIncidentStore;
+
+  SupervisedIncidentStore? _supervisedIncidentStore;
+
+  dynamic _currentIncidentStore;
 
   @override
   void didChangeDependencies() {
-    _incidentStore = Provider.of<IncidentStore>(context);
+    print("didChangeDependencies");
+    if (userPermissions.contains(DashboardWidgets.Created)) {
+      print("Created");
+      _createdIncidentStore = Provider.of<CreatedIncidentStore>(context);
+    }
+    if (userPermissions.contains(DashboardWidgets.Assigned)) {
+      _assignedIncidentStore = Provider.of<AssignedIncidentStore>(context);
+      print("Assigned");
+    }
+    if (userPermissions.contains(DashboardWidgets.Supervised)) {
+      _supervisedIncidentStore = Provider.of<SupervisedIncidentStore>(context);
+      print("Supervised");
+    }
     _languageStore = Provider.of<LanguageStore>(context);
-
+    _currentPermission=userPermissions.first;
+    setStore(userPermissions.first);
     super.didChangeDependencies();
   }
 
-  void loadData(LatLng initialTarget) {
-    if (!_incidentStore.loading) {
-      _incidentStore.getIncidents(
+  void loadData(LatLng initialTarget, DashboardWidgets dashboardWidget) {
+    setStore(dashboardWidget);
+    if (!_currentIncidentStore.loading) {
+      _currentIncidentStore.getIncidents(
         incidentFilter: IncidentFilter(
             subCategoryId: null,
             categoryId: null,
@@ -646,9 +664,9 @@ class _IncidentsMapState extends State<IncidentsMap> {
   late LanguageStore _languageStore;
 
   Set<Marker> getIncidentsMarkers() {
-    List<Incident>? incdeints = _incidentStore.incidentList == null
+    List<Incident>? incdeints = _currentIncidentStore.incidentList == null
         ? <Incident>[]
-        : _incidentStore.incidentList!.incidents;
+        : _currentIncidentStore.incidentList!.incidents;
     debugPrint("map lang ${_languageStore.locale}");
     var list = incdeints!
         .map(
@@ -659,7 +677,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
 
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => InidentDetailsScreen(
-                          incidentId: e.id,
+                          incidentId: e.id,incidentStore: _currentIncidentStore,
                         )));
               },
               localLanguage: _languageStore.locale),
@@ -674,4 +692,22 @@ class _IncidentsMapState extends State<IncidentsMap> {
 
     return markers;
   }
+
+  void setStore(DashboardWidgets value) {
+    switch (value) {
+      case DashboardWidgets.Created:
+        _currentIncidentStore = _createdIncidentStore;
+        break;
+      case DashboardWidgets.Assigned:
+        _currentIncidentStore = _assignedIncidentStore;
+        break;
+      case DashboardWidgets.Supervised:
+        _currentIncidentStore = _supervisedIncidentStore;
+        break;
+      default:
+        _currentIncidentStore = null;
+        break;
+    }
+  }
+
 }

@@ -309,7 +309,7 @@ class _CategoryListWidgetState extends State<_CategoryListWidget> {
                 color: CustomColor.accentColor.withOpacity(0.8),
                 child: Center(
                   child: Text(
-                    '${subCategories![index]!.localizedName(_languageStore.locale)}',
+                    '${subCategories[index].localizedName(_languageStore.locale)}',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     softWrap: false,
@@ -426,10 +426,10 @@ class _CategoryListWidgetState extends State<_CategoryListWidget> {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         softWrap: false,
-        style: _categoryStore.categoryList?.categories?[position]?.id ==
+        style: _categoryStore.categoryList?.categories?[position].id ==
                 _selectedCategory?.id
-            ? Theme.of(context).textTheme.subtitle1
-            : Theme.of(context).textTheme.bodyText1,
+            ? Theme.of(context).textTheme.titleMedium
+            : Theme.of(context).textTheme.bodyLarge,
       ),
       subtitle: Text(
         '${_categoryStore.categoryList?.categories?[position].arabicName}',

@@ -2,7 +2,6 @@ import 'package:boilerplate/stores/error/error_store.dart';
 import 'package:mobx/mobx.dart';
 import 'package:validators/validators.dart';
 
-import '../../data/network/api_response.dart';
 import '../../data/network/api_response_new_entity.dart';
 import '../../data/respository/user_repository.dart';
 
@@ -242,7 +241,7 @@ abstract class _LoginFormStore with Store {
     registerFuture = ObservableFuture(future);
     await future.then((value) async {
       this.loading = false;
-      if (value != null && value!.success! == true) {
+      if (value != null && value.success! == true) {
         this.success = true;
       } else {
         this.success = false;
@@ -269,7 +268,7 @@ abstract class _LoginFormStore with Store {
     currentPasswordFuture = ObservableFuture(future);
     await future.then((value) async {
       this.loading = false;
-      if (value != null && value!.success! == true) {
+      if (value != null && value.success! == true) {
         this.success = true;
       } else {
         this.success = false;
@@ -297,7 +296,7 @@ abstract class _LoginFormStore with Store {
     registerFuture = ObservableFuture(future);
     await future.then((value) async {
       this.loading = false;
-      if (value != null && value!.success! == true) {
+      if (value != null && value.success! == true) {
         //this.isLoggedIn = true;
         this.success = true;
       } else {

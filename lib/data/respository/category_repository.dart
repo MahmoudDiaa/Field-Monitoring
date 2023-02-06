@@ -7,8 +7,6 @@ import 'package:sembast/sembast.dart';
 
 import '../../models/category/category.dart';
 import '../local/constants/db_constants.dart';
-import '../local/database.dart';
-import '../local/datasources/category/category_datasource.dart';
 
 class CategoryRepository{
   // data source object

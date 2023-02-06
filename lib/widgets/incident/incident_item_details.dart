@@ -27,20 +27,22 @@ class InidentDetailsScreen extends StatefulWidget {
   String? incidentId;
 
   Incident? incident;
-
-  InidentDetailsScreen({Key? key, this.incidentId, this.incident})
+  final dynamic incidentStore;
+  InidentDetailsScreen({Key? key, this.incidentId, this.incident, required this.incidentStore})
       : assert(incidentId != null || incident != null),
         super(key: key);
 
   @override
-  _InidentDetailsScreenState createState() => _InidentDetailsScreenState();
+  _InidentDetailsScreenState createState() => _InidentDetailsScreenState(incidentStore);
 }
 
 class _InidentDetailsScreenState extends State<InidentDetailsScreen> {
   //stores:---------------------------------------------------------------------
-  late IncidentStore _incidentStore;
+  late dynamic _incidentStore;
   late ThemeStore _themeStore;
   late LanguageStore _languageStore;
+
+  _InidentDetailsScreenState(this._incidentStore);
 
   @override
   void didChangeDependencies() {
@@ -49,7 +51,7 @@ class _InidentDetailsScreenState extends State<InidentDetailsScreen> {
     // initializing stores
     _languageStore = Provider.of<LanguageStore>(context);
     _themeStore = Provider.of<ThemeStore>(context);
-    _incidentStore = Provider.of<IncidentStore>(context);
+
 
     // check to see if already called api
     if (!_incidentStore.gettingIncident) {

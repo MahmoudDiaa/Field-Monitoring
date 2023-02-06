@@ -39,6 +39,9 @@
   "loadingIncidentList": "جلب البلاغات...",
   "selectSubCategory": "حدد فئة فرعية",
   "myincidents": "بلاغاتي",
+  "myAssignedIncidents": "البلاغات المخصصه لي",
+  "myCreatedIncidents": "البلاغات التي انشائتها",
+  "mySupervisedIncidents": "البلاغات الخاضع لاشرافي",
   "changePassword": "تغيير كلمة المرور",
   "logout": "خروج",
   "loadingSubCategories": "جلب الفئات الفرعية...",
@@ -102,7 +105,10 @@
   "passwordChanged": "تم تعيين كلمة المرور",
   "resetPasswordfailed": "فشلت تعيين كلمة المرور",
   "sendCodeFailed": "فشل إرسال الكود",
-  "incident": "بلاغ"
+  "incident": "بلاغ",
+  "createdList": "قائمة اليلاغات المنشائة",
+  "assignedList": "قائمة اليلاغات المسندة",
+  "supervisedList": "قائمة اليلاغات المدارة"
 
 
 

@@ -19,24 +19,21 @@ import '../models/subcategory/subcategory_query_params.dart';
 import '../stores/subcategory/subcategory_store.dart';
 import '../ui/constants/custom_style.dart';
 import '../ui/constants/dimensions.dart';
-import '../ui/constants/strings.dart';
-import '../ui/incident/incident_list_screen.dart';
-import 'image/cache_image_widget.dart';
 import 'progress_indicator/progress_indicator_text_widget.dart';
 
 class _SubCategoryListWidget extends StatefulWidget {
-  void Function(SubCategory?)? onSelectedSubCategoryChanged;
-  SubCategoryListViewMode subcategoryListView;
+  final void Function(SubCategory?)? onSelectedSubCategoryChanged;
+  final SubCategoryListViewMode subcategoryListView;
 
-  int? initialSelectedId;
+   int? initialSelectedId;
 
-  bool categoryIdIsMandatory;
+  final bool categoryIdIsMandatory;
 
-  bool refreshDataBeforeGetting;
+  final bool refreshDataBeforeGetting;
 
-  bool? autoSelectFirstItem;
+  final bool? autoSelectFirstItem;
 
-  double gridAndListHeight;
+ final double gridAndListHeight;
   final LanguageStore _languageStore = LanguageStore(getIt<Repository>());
 
   _SubCategoryListWidget(
@@ -49,7 +46,7 @@ class _SubCategoryListWidget extends StatefulWidget {
       this.autoSelectFirstItem = false,
       required this.gridAndListHeight});
 
-  int? categoryId;
+final  int? categoryId;
 
   @override
   _SubCategoryListWidgetState createState() => _SubCategoryListWidgetState();
@@ -112,12 +109,10 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
     if (initialed) return;
     if (_selectedSubCategory == null && widget.initialSelectedId != null) {
       if (_subcategoryStore.subcategoryList?.subcategories != null) {
-        if (_subcategoryStore.subcategoryList!.subcategories!
-                .any((element) => element.id == widget.initialSelectedId) ==
+        if (_subcategoryStore.subcategoryList!.subcategories.any((element) => element.id == widget.initialSelectedId) ==
             true) {
           _selectedSubCategory = _subcategoryStore
-              .subcategoryList!.subcategories!
-              .firstWhere((element) => element.id == widget.initialSelectedId);
+              .subcategoryList!.subcategories.firstWhere((element) => element.id == widget.initialSelectedId);
           widget.initialSelectedId = null;
           Future.delayed(Duration(seconds: 1), () {
             _onSubCategoryTap(_selectedSubCategory);
@@ -127,7 +122,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
     } else if (widget.autoSelectFirstItem == true &&
         _subcategoryStore.subcategoryList?.subcategories != null) {
       Future.delayed(Duration(seconds: 0), () {
-        _onSubCategoryTap(_subcategoryStore.subcategoryList!.subcategories![0]);
+        _onSubCategoryTap(_subcategoryStore.subcategoryList!.subcategories[0]);
       });
     }
     initialed = true;
@@ -199,14 +194,14 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
           //color: Colors.green,
           width: MediaQuery.of(context).size.width,
           child: ListView.builder(
-              itemCount: subCategories?.length,
+              itemCount: subCategories.length,
               //physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 //subCategories[index].imageUrl = '';
                 return InkWell(
                   onTap: () {
                     _onSubCategoryTap(_subcategoryStore
-                        .subcategoryList?.subcategories?[index]);
+                        .subcategoryList?.subcategories[index]);
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -226,7 +221,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
                           Expanded(
                             flex: 1,
                             child: CachedNetworkImage(
-                                imageUrl: '${subCategories?[index].icon}',
+                                imageUrl: '${subCategories[index].icon}',
                                 fit: BoxFit.cover,
                                 // width: 90,
                                 height: 90,
@@ -251,14 +246,14 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
                                     child: new Container(
                                       padding: new EdgeInsets.only(right: 13.0),
                                       child: new Text(
-                                        '${subCategories?[index].localizedName(_languageStore.locale)}',
+                                        '${subCategories[index].localizedName(_languageStore.locale)}',
                                         overflow: TextOverflow.ellipsis,
                                         style: new TextStyle(
                                           fontSize: 13.0,
                                           fontFamily: 'Roboto',
                                           color: new Color(0xFF212121),
                                           fontWeight:
-                                              subCategories?[index]?.id ==
+                                              subCategories[index].id ==
                                                       _selectedSubCategory?.id
                                                   ? FontWeight.bold
                                                   : FontWeight.normal,
@@ -270,7 +265,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
                                     height: Dimensions.heightSize * 0.5,
                                   ),
                                   Text(
-                                      '${subCategories?[index].localizedCategoryName(_languageStore.locale)}',
+                                      '${subCategories[index].localizedCategoryName(_languageStore.locale)}',
                                       style: CustomStyle.textStyle),
                                 ],
                               ),
@@ -426,7 +421,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
             //I assumed you want to occupy the entire space of the card
 
             image: NetworkImage(
-              subCategories![index]!.icon!,
+              subCategories[index].icon!,
             ),
           ),
         ),
@@ -441,7 +436,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
                 color: CustomColor.accentColor.withOpacity(0.8),
                 child: Center(
                   child: Text(
-                    '${subCategories![index]!.localizedName(_languageStore.locale)}',
+                    '${subCategories[index].localizedName(_languageStore.locale)}',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     softWrap: false,
@@ -468,8 +463,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
             height: 30.0,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              children: _subcategoryStore.subcategoryList!.subcategories!
-                  .map((e) => _buildRadioItem(e))
+              children: _subcategoryStore.subcategoryList!.subcategories.map((e) => _buildRadioItem(e))
                   .toList(),
             ),
           )
@@ -484,7 +478,6 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
   late StreamController<SubCategory?> _selectedSubCategoryStreamController;
 
   _onSubCategoryTap(SubCategory? subcategory) {
-
     _selectedSubCategory = subcategory;
     if (widget.onSelectedSubCategoryChanged != null)
       widget.onSelectedSubCategoryChanged!(subcategory);
@@ -527,25 +520,25 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
       dense: true,
       leading: Icon(Icons.cloud_circle),
       title: Text(
-        '${_subcategoryStore.subcategoryList?.subcategories?[position].localizedName(_languageStore.locale)}',
+        '${_subcategoryStore.subcategoryList?.subcategories[position].localizedName(_languageStore.locale)}',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         softWrap: false,
         style:
-            _subcategoryStore.subcategoryList?.subcategories?[position]?.id ==
+            _subcategoryStore.subcategoryList?.subcategories[position].id ==
                     _selectedSubCategory?.id
-                ? Theme.of(context).textTheme.subtitle1
-                : Theme.of(context).textTheme.bodyText1,
+                ? Theme.of(context).textTheme.titleMedium
+                : Theme.of(context).textTheme.bodyLarge,
       ),
       subtitle: Text(
-        '${_subcategoryStore.subcategoryList?.subcategories?[position].localizedName(_languageStore.locale)}',
+        '${_subcategoryStore.subcategoryList?.subcategories[position].localizedName(_languageStore.locale)}',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         softWrap: false,
       ),
       onTap: () {
         _onSubCategoryTap(
-            _subcategoryStore.subcategoryList?.subcategories?[position]);
+            _subcategoryStore.subcategoryList?.subcategories[position]);
       },
     );
   }

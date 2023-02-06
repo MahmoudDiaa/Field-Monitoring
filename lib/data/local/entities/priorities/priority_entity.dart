@@ -1,7 +1,6 @@
 import 'package:boilerplate/models/PriorityLevels/priorrity_level.dart';
 import 'package:floor/floor.dart';
 
-import '../../../../models/priority/priority.dart';
 
 @entity
 class PriorityEntity {

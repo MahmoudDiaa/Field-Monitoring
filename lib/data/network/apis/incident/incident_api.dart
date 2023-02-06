@@ -42,7 +42,7 @@ class IncidentApi {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
               'Authorization':
-                  'Bearer ${sharedPreferenceHelper.authUser?.access_token ?? ''}',
+                  'Bearer ${sharedPreferenceHelper.authUser?.accessToken ?? ''}',
             },
           ));
       return IncidentList.fromJson(res['data']);
@@ -61,7 +61,7 @@ class IncidentApi {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
               'Authorization':
-                  'Bearer ${sharedPreferenceHelper.authUser?.access_token ?? ''}',
+                  'Bearer ${sharedPreferenceHelper.authUser?.accessToken ?? ''}',
             },
           ));
       apiResponse = LoginResponseEntity.fromJson(res);
@@ -83,7 +83,7 @@ class IncidentApi {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
               'Authorization':
-                  'Bearer ${sharedPreferenceHelper.authUser?.access_token ?? ''}',
+                  'Bearer ${sharedPreferenceHelper.authUser?.accessToken ?? ''}',
             },
           ));
       apiResponse = LoginResponseEntity.fromJson(res);
@@ -102,7 +102,7 @@ class IncidentApi {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
               'Authorization':
-                  'Bearer ${sharedPreferenceHelper.authUser?.access_token ?? ''}',
+                  'Bearer ${sharedPreferenceHelper.authUser?.accessToken ?? ''}',
             },
           ));
       return Incident.fromMap(res['data']);

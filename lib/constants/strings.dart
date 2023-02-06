@@ -20,6 +20,14 @@ class RoleNames {
   static const String Mqawel = "Mqawel";
 }
 
+class UserPermission{
+  static const String Supervised="Permission.Users.Add";
+  static const String Assigned="Permission.Roles.Add";
+  static const String Created="Permission.Roles.Add";
+
+
+}
+
 // class IncidentStatuses {
 //   static const int StillNew = 1;
 //   static const int Assigned = 2;

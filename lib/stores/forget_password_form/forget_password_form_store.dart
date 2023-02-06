@@ -2,7 +2,6 @@ import 'package:boilerplate/stores/error/error_store.dart';
 import 'package:mobx/mobx.dart';
 import 'package:validators/validators.dart';
 
-import '../../data/network/api_response.dart';
 import '../../data/network/api_response_new_entity.dart';
 import '../../data/respository/user_repository.dart';
 
@@ -177,7 +176,7 @@ abstract class _ForgetPasswordFormStore with Store {
 
     await future.then((value) async {
       this.sendingCode = false;
-      if (value != null && value!.success! == true) {
+      if (value != null && value.success! == true) {
         this.codeSent = true;
       } else {
         this.codeSent = false;
@@ -208,7 +207,7 @@ abstract class _ForgetPasswordFormStore with Store {
 
     await future.then((value) async {
       this.changingPassword = false;
-      if (value != null && value!.success! == true) {
+      if (value != null && value.success! == true) {
         this.passwordChanged = true;
       } else {
         this.passwordChanged = false;

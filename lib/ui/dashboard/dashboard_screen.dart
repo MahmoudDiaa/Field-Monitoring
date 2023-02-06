@@ -1,9 +1,9 @@
-import 'dart:ui';
-
+import 'package:boilerplate/models/dashboard/dashboard.dart';
 import 'package:boilerplate/ui/constants/colors.dart';
 import 'package:boilerplate/ui/create_incident/create_incident_step1.dart';
+import 'package:boilerplate/ui/incidents/assigned_incidents/assigned_incident_list_screen.dart';
+import 'package:boilerplate/ui/incidents/supervised_incidents/supervised_incident_list_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:material_dialog/material_dialog.dart';
@@ -22,7 +22,7 @@ import '../../utils/routes/routes.dart';
 import '../../widgets/incident/incidents_map.dart';
 import '../constants/strings.dart';
 import '../home/home_screen.dart';
-import '../incident/incident_list_screen.dart';
+import '../incidents/created_incidents/created_incident_list_screen.dart';
 
 double scaledHeight(BuildContext context, double baseSize) {
   return baseSize * (MediaQuery.of(context).size.height / 800);
@@ -40,6 +40,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   late LanguageStore _languageStore;
   late ThemeStore _themeStore;
+   Map<DashboardWidgets,int> indexMap=Map<DashboardWidgets,int>();
 
   //Color? logoColor;
   int? activeIndex;
@@ -52,7 +53,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // Icons.person,
   ];
 
-  var badges = <int?>[null, null, null,null];
+  var badges = <int?>[null, null, null, null];
 
   var iconText = <Widget>[
     Text(Strings.home, style: TextStyle(color: Colors.grey, fontSize: 12)),
@@ -107,7 +108,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   _onTap(int index) {
     activeIndex = index;
 
-    print('indexsd: ' + index.toString());
+    print('indexed: ' + index.toString());
   }
 
   List<Widget> get builderChildren => const <Widget>[
@@ -133,127 +134,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       drawer: Drawer(
         child: ListView(
-          children: [
-            UserAccountsDrawerHeader(
-              accountName:
-                  Text('${sharedPreferenceHelper?.authUser?.user?.fullName}'),
-              accountEmail: Column(
-                children: [
-                  Text('${sharedPreferenceHelper?.authUser?.user?.userName}'),
-                  Text(
-                      '${sharedPreferenceHelper?.authUser?.user?.roles.toString()}'),
-                ],
-              ),
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage('assets/images/default_user.png'),
-                // NetworkImage(
-                //     "https://appmaking.co/wp-content/uploads/2021/08/appmaking-logo-colored.png"),
-              ),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/menu_background.jpg'),
-                  fit: BoxFit.fill,
-                ),
-              ),
-              otherAccountsPictures: [
-                _buildLanguageButton(),
-                _buildThemeButton(),
-                // CircleAvatar(
-                //   backgroundColor: Colors.white,
-                //   backgroundImage: NetworkImage(
-                //       "https://randomuser.me/api/portraits/women/74.jpg"),
-                // ),
-                // CircleAvatar(
-                //   backgroundColor: Colors.white,
-                //   backgroundImage: NetworkImage(
-                //       "https://randomuser.me/api/portraits/men/47.jpg"),
-                // ),
-              ],
-            ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('${appLocalization.translate('home')}'),
-              onTap: () {
-                _pageController.animateToPage(
-                  0,
-                  duration: const Duration(milliseconds: 400),
-                  curve: Curves.easeOut,
-                );
-                activeIndex = 0;
-                Navigator.of(context).pop();
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.list_outlined),
-              title: Text('${appLocalization.translate('myincidents')}'),
-              onTap: () {
-                _pageController.animateToPage(
-                  1,
-                  duration: const Duration(milliseconds: 400),
-                  curve: Curves.easeOut,
-                );
-                activeIndex = 1;
-                Navigator.of(context).pop();
-              },
-            ),
-            // ListTile(
-            //   leading: Icon(Icons.grid_3x3_outlined),
-            //   title: Text("Products"),
-            //   onTap: () {},
-            // ),
-            // ListTile(
-            //   leading: Icon(Icons.contact_mail),
-            //   title: Text("Contact"),
-            //   onTap: () {},
-            // ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.security),
-              title: Text('${appLocalization.translate('changePassword')}'),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pushNamed(Routes.changePassword);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.follow_the_signs_outlined),
-              title: Text('${appLocalization.translate('logout')}'),
-              onTap: () {
-                sharedPreferenceHelper?.removeLoggedInUser();
-                Navigator.of(context).pushReplacementNamed(Routes.login);
-              },
-            ),
-          ],
+          children: getDrawerListByPermission(appLocalization),
         ),
       ),
       body: PageView(
-        controller: _pageController,
-        children: <Widget>[
-          HomeScreen(),
-          IncidentListScreen(hideSubCategoryWidget: false),
-          IncidentFormStep1(),
-          IncidentsMap(),
-        ],
-      ),
+          controller: _pageController, children: getPermissionWidget()),
       extendBody: true,
       bottomNavigationBar: RollingBottomBar(
         //color: CustomColor.primaryColor.value,
         controller: _pageController,
-        flat: true,
+        flat: false,
         useActiveColorByDefault: false,
-        items: [
-          RollingBottomBarItem(Icons.home,
-              label: appLocalization.translate('home'),
-              activeColor: CustomColor.primaryColor),
-          RollingBottomBarItem(Icons.view_list,
-              label: appLocalization.translate('list'),
-              activeColor: CustomColor.primaryColor),
-          RollingBottomBarItem(Icons.new_label_rounded,
-              label: appLocalization.translate('new'),
-              activeColor: CustomColor.secondaryColor),
-          RollingBottomBarItem(Icons.map,
-              label: 'Map', activeColor: Colors.orangeAccent),
-        ],
+
+        items: getPermissionBottomBar(appLocalization),
         enableIconRotation: true,
         onTap: (index) {
           _pageController.jumpToPage(
@@ -356,13 +249,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
       case 0:
         return HomeScreen();
       case 1:
-        return IncidentListScreen(); //NearByScreen
+        return CreatedIncidentListScreen(); //NearByScreen
       // case 2:
       //   return GoogleMapMarkers();
       case 2:
         return IncidentFormStep1();
       case 3:
-        return IncidentsMap();
+
+
+        return IncidentsMap(indexMap.keys.toList());
       // case 3:
       //   return Center(
       //     child: Column(
@@ -381,5 +276,194 @@ class _DashboardScreenState extends State<DashboardScreen> {
       //   );
       // case 3: return HomeScreenNews();
     }
+  }
+
+  List<Widget> getPermissionWidget() {
+    indexMap.clear();
+    final List<Widget> widgets = [];
+    widgets.add(HomeScreen());
+    indexMap.putIfAbsent(DashboardWidgets.Home, () => widgets.length-1);
+    if (sharedPreferenceHelper!.authUser!.user!.isHasCreatedPermission()) {
+      widgets.add(CreatedIncidentListScreen(hideSubCategoryWidget: false));
+      indexMap.putIfAbsent(DashboardWidgets.Created, () => widgets.length-1);
+      widgets.add(IncidentFormStep1());
+    }
+    if (sharedPreferenceHelper!.authUser!.user!.isHasAssignedPermission()) {
+      widgets.add(AssignedIncidentListScreen(hideSubCategoryWidget: false));
+      indexMap.putIfAbsent(DashboardWidgets.Assigned, () => widgets.length-1);
+
+    }
+    if (sharedPreferenceHelper!.authUser!.user!.isHasSupervisedPermission()) {
+      widgets.add(SupervisedIncidentListScreen(hideSubCategoryWidget: false));
+      indexMap.putIfAbsent(DashboardWidgets.Supervised, () => widgets.length-1);
+
+    }
+    var permissionIndex= indexMap;
+    permissionIndex.remove(DashboardWidgets.Home);
+    widgets.add(IncidentsMap(permissionIndex.keys.toList()));
+
+    return widgets;
+  }
+
+  List<RollingBottomBarItem>? getPermissionBottomBar(
+      AppLocalizations appLocalization) {
+    final List<RollingBottomBarItem> bottomBarItems = [];
+    bottomBarItems.add(RollingBottomBarItem(Icons.home,
+        label: appLocalization.translate('home'),
+        activeColor: CustomColor.primaryColor));
+    if (sharedPreferenceHelper!.authUser!.user!.isHasCreatedPermission()) {
+      bottomBarItems.add(RollingBottomBarItem(Icons.view_list,
+          label: appLocalization.translate('createdList'),
+          activeColor: CustomColor.primaryColor));
+      bottomBarItems.add(
+        RollingBottomBarItem(Icons.new_label_rounded,
+            label: appLocalization.translate('new'),
+            activeColor: CustomColor.secondaryColor),
+      );
+    }
+    if (sharedPreferenceHelper!.authUser!.user!.isHasAssignedPermission()) {
+      bottomBarItems.add(RollingBottomBarItem(Icons.list_alt,
+          label: appLocalization.translate('assignedList'),
+          activeColor: CustomColor.secondaryColor));
+    }
+    if (sharedPreferenceHelper!.authUser!.user!.isHasSupervisedPermission()) {
+      bottomBarItems.add(RollingBottomBarItem(Icons.view_list_sharp,
+          label: appLocalization.translate('supervisedList'),
+          activeColor: CustomColor.primaryColor));
+    }
+
+    bottomBarItems.add(
+      RollingBottomBarItem(Icons.map,
+          label: 'Map', activeColor: Colors.orangeAccent),
+    );
+
+    return bottomBarItems;
+  }
+
+  List<Widget> getDrawerListByPermission(AppLocalizations appLocalization) {
+    List<Widget> drawerList = [];
+
+    drawerList.add(UserAccountsDrawerHeader(
+      accountName: Text('${sharedPreferenceHelper?.authUser?.user?.fullName}'),
+      accountEmail: Column(
+        children: [
+          Text('${sharedPreferenceHelper?.authUser?.user?.userName}'),
+          Text('${sharedPreferenceHelper?.authUser?.user?.roles.toString()}'),
+        ],
+      ),
+      currentAccountPicture: CircleAvatar(
+        backgroundImage: AssetImage('assets/images/default_user.png'),
+        // NetworkImage(
+        //     "https://appmaking.co/wp-content/uploads/2021/08/appmaking-logo-colored.png"),
+      ),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/menu_background.jpg'),
+          fit: BoxFit.fill,
+        ),
+      ),
+      otherAccountsPictures: [
+        _buildLanguageButton(),
+        _buildThemeButton(),
+        // CircleAvatar(
+        //   backgroundColor: Colors.white,
+        //   backgroundImage: NetworkImage(
+        //       "https://randomuser.me/api/portraits/women/74.jpg"),
+        // ),
+        // CircleAvatar(
+        //   backgroundColor: Colors.white,
+        //   backgroundImage: NetworkImage(
+        //       "https://randomuser.me/api/portraits/men/47.jpg"),
+        // ),
+      ],
+    ));
+    drawerList.add(ListTile(
+      leading: Icon(Icons.home),
+      title: Text('${appLocalization.translate('home')}'),
+      onTap: () {
+        _pageController.animateToPage(
+          indexMap[DashboardWidgets.Home]!,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeOut,
+        );
+        activeIndex = indexMap[DashboardWidgets.Home]!;
+        Navigator.of(context).pop();
+      },
+    ));
+
+    if (sharedPreferenceHelper!.authUser!.user!.isHasCreatedPermission()) {
+      drawerList.add(ListTile(
+        leading: Icon(Icons.list_outlined),
+        title: Text('${appLocalization.translate('myCreatedIncidents')}'),
+        onTap: () {
+          _pageController.animateToPage(
+            indexMap[DashboardWidgets.Created]!,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeOut,
+          );
+          activeIndex = indexMap[DashboardWidgets.Created]!;
+          Navigator.of(context).pop();
+        },
+      ));
+    }
+    if (sharedPreferenceHelper!.authUser!.user!.isHasAssignedPermission()) {
+      drawerList.add(ListTile(
+        leading: Icon(Icons.list_outlined),
+        title: Text('${appLocalization.translate('myAssignedIncidents')}'),
+        onTap: () {
+          _pageController.animateToPage(
+            indexMap[DashboardWidgets.Assigned]!,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeOut,
+          );
+          activeIndex = indexMap[DashboardWidgets.Assigned]!;
+          Navigator.of(context).pop();
+        },
+      ));
+    }
+    if (sharedPreferenceHelper!.authUser!.user!.isHasSupervisedPermission()) {
+      drawerList.add(ListTile(
+        leading: Icon(Icons.list_outlined),
+        title: Text('${appLocalization.translate('mySupervisedIncidents')}'),
+        onTap: () {
+          _pageController.animateToPage(
+            indexMap[DashboardWidgets.Supervised]!,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeOut,
+          );
+          activeIndex = indexMap[DashboardWidgets.Supervised]!;
+          Navigator.of(context).pop();
+        },
+      ));
+    }
+    // ListTile(
+    //   leading: Icon(Icons.grid_3x3_outlined),
+    //   title: Text("Products"),
+    //   onTap: () {},
+    // ),
+    // ListTile(
+    //   leading: Icon(Icons.contact_mail),
+    //   title: Text("Contact"),
+    //   onTap: () {},
+    // ),
+    drawerList.add(Divider());
+    drawerList.add(ListTile(
+      leading: Icon(Icons.security),
+      title: Text('${appLocalization.translate('changePassword')}'),
+      onTap: () {
+        Navigator.of(context).pop();
+        Navigator.of(context).pushNamed(Routes.changePassword);
+      },
+    ));
+    drawerList.add(ListTile(
+      leading: Icon(Icons.follow_the_signs_outlined),
+      title: Text('${appLocalization.translate('logout')}'),
+      onTap: () {
+        sharedPreferenceHelper?.removeLoggedInUser();
+        Navigator.of(context).pushReplacementNamed(Routes.login);
+      },
+    ));
+
+    return drawerList;
   }
 }

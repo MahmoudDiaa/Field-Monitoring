@@ -3,11 +3,6 @@ import 'dart:async';
 import 'package:boilerplate/data/local/constants/db_constants.dart';
 import 'package:boilerplate/data/local/database.dart';
 import 'package:boilerplate/utils/encryption/xxtea.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:sembast/sembast.dart';
-import 'package:sembast/sembast_io.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class LocalModule {
@@ -24,11 +19,10 @@ abstract class LocalModule {
   ///
   /// Calling it multiple times will return the same instance.
   static Future<AppDatabase> provideDatabase()   {
-    debugPrint("start");
+
 
     // Key for encryption
     var encryptionKey = "";
-
     // Get a platform-specific directory where persistent app data can be stored
     // final appDocumentDir = await getApplicationDocumentsDirectory();
 
@@ -45,7 +39,6 @@ abstract class LocalModule {
     } else {
       database =  $FloorAppDatabase.databaseBuilder(DBConstants.DB_NAME).build();
     }
-debugPrint("finish ${database}");
     // Return database instance
     return database;
   }

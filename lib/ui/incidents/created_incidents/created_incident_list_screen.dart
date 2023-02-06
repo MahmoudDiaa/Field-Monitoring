@@ -1,42 +1,41 @@
 import 'dart:async';
 
-import 'package:boilerplate/stores/incident/incident_store.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../constants/enums.dart';
-import '../../models/incident/incident.dart';
-import '../../models/incident/incident_filter.dart';
-import '../../models/subcategory/subcategory.dart';
-import '../../utils/locale/app_localization.dart';
-import '../../widgets/incident/incident_item_details.dart';
-import '../../widgets/incident/incident_list_widget.dart';
-import '../../widgets/progress_indicator/progress_indicator_text_widget.dart';
-import '../../widgets/subcategories_select.dart';
-import '../constants/colors.dart';
-import '../constants/custom_style.dart';
-import '../constants/dimensions.dart';
-import '../constants/strings.dart';
-import '../dummy_data/near_by.dart';
 
-class IncidentListScreen extends StatefulWidget {
-  int? initialSubCategoryId;
-  bool? showBack = false;
 
-  bool hideSubCategoryWidget;
+import '../../../constants/enums.dart';
+import '../../../models/incident/incident.dart';
+import '../../../models/subcategory/subcategory.dart';
+import '../../../stores/incident/created_incident/created_incident_store.dart';
+import '../../../utils/locale/app_localization.dart';
+import '../../../widgets/incident/incident_item_details.dart';
+import '../../../widgets/incident/incident_list_widget.dart';
+import '../../../widgets/subcategories_select.dart';
+import '../../constants/colors.dart';
+import '../../constants/custom_style.dart';
+import '../../constants/dimensions.dart';
+import '../../constants/strings.dart';
+import '../../dummy_data/near_by.dart';
+
+
+class CreatedIncidentListScreen extends StatefulWidget {
+  final int? initialSubCategoryId;
+  final bool showBack ;
+
+ final bool hideSubCategoryWidget;
 
   @override
-  _IncidentListScreenState createState() => _IncidentListScreenState();
+  _CreatedIncidentListScreenState createState() => _CreatedIncidentListScreenState();
 
-  IncidentListScreen(
+  CreatedIncidentListScreen(
       {this.initialSubCategoryId,
-      this.showBack,
+      this.showBack=false ,
       this.hideSubCategoryWidget = false});
 }
 
-class _IncidentListScreenState extends State<IncidentListScreen> {
+class _CreatedIncidentListScreenState extends State<CreatedIncidentListScreen> {
   TextEditingController searchController = TextEditingController();
 
   var selectedCatId;
@@ -79,7 +78,7 @@ class _IncidentListScreenState extends State<IncidentListScreen> {
                     padding:
                         const EdgeInsets.only(right: Dimensions.marginSize),
                     child: Text(
-                      '${_appLocalizations.translate('myIncidentList')}',
+                      '${_appLocalizations.translate('myCreatedIncidents')}',
                       style: TextStyle(
                           fontSize: Dimensions.extraLargeTextSize,
                           color: Colors.black,
@@ -137,6 +136,7 @@ class _IncidentListScreenState extends State<IncidentListScreen> {
                         },
                         onSaved: (category) {},
                         validator: (category) {
+                          return null;
                           // return selectedSubCat == null ? 'select one ' : null;
                         },
                         stream: _subcategoryStreamController,
@@ -146,7 +146,7 @@ class _IncidentListScreenState extends State<IncidentListScreen> {
 
                 StreamBuilder<SubCategory?>(
                   builder: (context, snapshot) {
-                    return snapshot?.data?.id == null
+                    return snapshot.data?.id == null
                         ? Padding(
                             padding: const EdgeInsets.only(top: 15.0),
                             child: Text(
@@ -157,7 +157,7 @@ class _IncidentListScreenState extends State<IncidentListScreen> {
                             //color: Colors.black12,
                             child: IncidentListFormField(
                               height: MediaQuery.of(context).size.height - 300,
-                              subCategoryId: snapshot?.data?.id,
+                              subCategoryId: snapshot.data?.id,
                               categoryId: null,
                               incidentId: null,
                               incidentListView: IncidentListViewMode.List,
@@ -165,11 +165,13 @@ class _IncidentListScreenState extends State<IncidentListScreen> {
                               onChange: (d) {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => InidentDetailsScreen(
-                                          incidentId: d?.id,
+                                          incidentId: d?.id,incidentStore: Provider.of<CreatedIncidentStore>(context),
                                         )));
                               },
-                              validator: (Incident? value) {},
-                            ),
+                              validator: (Incident? value) {
+                                return null;
+                              },
+                                incidentStore: Provider.of<CreatedIncidentStore>(context)),
                           );
                   },
                   stream: _subcategoryStreamController?.stream,
@@ -199,6 +201,8 @@ class _IncidentListScreenState extends State<IncidentListScreen> {
               style: CustomStyle.textStyle,
               controller: searchController,
               validator: (String? value) {
+                return null;
+
                 // if (value.isEmpty) {
                 //   return Strings.spaFacialMakeup;
                 // } else {

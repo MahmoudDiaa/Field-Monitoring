@@ -1,7 +1,6 @@
 {
   "login_start": "Below are list of strings for login",
   "login_et_user_email": "Enter user email",
-
   "enterCode": "Enter The Code",
   "login_et_user_displayname": "Enter display name",
   "login_et_user_firstname": "Enter first name",
@@ -17,7 +16,7 @@
   "home_tv_posts": "Posts",
   "home_tv_cats": "Categories",
   "home_tv_error": "Error",
-  "successMessageTitle":"Success",
+  "successMessageTitle": "Success",
   "cannotGetImage": "cannot get image data",
   "home_tv_saving_incident": "Saving Incident",
   "home_tv_no_post_found": "No data found",
@@ -41,6 +40,9 @@
   "loadingIncidentList": "Getting Incidents...",
   "selectSubCategory": "select Sub Category",
   "myincidents": "My Incidents",
+  "myAssignedIncidents": "My Assigned Incidents",
+  "myCreatedIncidents": "My Created Incidents",
+  "mySupervisedIncidents": "My Supervised Incidents",
   "changePassword": "Change Password",
   "logout": "Log Out",
   "loadingSubCategories": "Loading Sub Categories...",
@@ -102,17 +104,8 @@
   "passwordChanged": "Password has been changed",
   "resetPasswordfailed": "Reset password failed",
   "sendCodeFailed": "Sending code failed",
-  "incident": "Incident"
-
-
-
-
-
-
-
-
-
-
-
-
+  "incident": "Incident",
+  "createdList": "Created",
+  "assignedList": "Assigned",
+  "supervisedList": "Supervised"
 }
