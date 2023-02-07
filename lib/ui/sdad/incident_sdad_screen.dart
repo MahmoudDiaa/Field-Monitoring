@@ -6,18 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/enums.dart';
 import '../../models/incident/incident.dart';
-import '../../stores/incident/incident_store.dart';
 import '../../stores/incident_form/incident_form_store.dart';
 import '../../stores/language/language_store.dart';
 import '../../stores/theme/theme_store.dart';
 import '../../utils/device/device_utils.dart';
-import '../../utils/locale/app_localization.dart';
-import '../../utils/routes/routes.dart';
 import '../../widgets/media_picker_widget.dart';
-import '../../widgets/navigation/back_widget.dart';
-import '../../widgets/priority_select.dart';
 import '../../widgets/progress_indicator/progress_indicator_text_widget.dart';
-import '../../widgets/progress_indicator/progress_indicator_widget.dart';
 import '../constants/colors.dart';
 import '../constants/custom_style.dart';
 import '../constants/dimensions.dart';
@@ -66,7 +60,7 @@ class _IncidentSdadScreenState extends State<IncidentSdadScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: CustomColor.primaryColor,
-        title: Text(AppLocalizations.of(context).translate('incidentSdsd')),
+        title: Text(_languageStore.language.incidentSdsd),
       ),
       //backgroundColor: CustomColor.primaryColor,
       body: Padding(
@@ -93,7 +87,7 @@ class _IncidentSdadScreenState extends State<IncidentSdadScreen> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(AppLocalizations.of(context).translate('theImages')),
+                            child: Text(_languageStore.language.theImages),
                           ),
                           SingleChildScrollView(
                             child: MediaPickerWidget(
@@ -123,8 +117,7 @@ class _IncidentSdadScreenState extends State<IncidentSdadScreen> {
                               maxLines: null,
                               minLines: 3,
                               decoration: InputDecoration(
-                                  labelText: AppLocalizations.of(context)
-                                      .translate('notes'),
+                                  labelText:_languageStore.language.notes,
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20.0)),
@@ -189,9 +182,8 @@ class _IncidentSdadScreenState extends State<IncidentSdadScreen> {
   Widget navigate(BuildContext context) {
     Future.delayed(Duration(milliseconds: 0), () {
       FlushbarHelper.createSuccess(
-        message: AppLocalizations.of(context)
-            .translate('incidentSdsdSuccessMessage'),
-        title: AppLocalizations.of(context).translate('successMessageTitle'),
+        message: _languageStore.language.incidentSdsdSuccessMessage,
+        title: _languageStore.language.successMessageTitle,
         duration: Duration(seconds: 1),
       )..show(context).then((value) => Navigator.of(context).pop(true));
     });
@@ -225,8 +217,7 @@ class _IncidentSdadScreenState extends State<IncidentSdadScreen> {
               ? Visibility(
                   visible: _incidentFormStore.loading,
                   child: CustomProgressIndicatorTextWidget(
-                    message: AppLocalizations.of(context)
-                        .translate('incidentSdsdInProgressMessage'),
+                    message: _languageStore.language.incidentSdsdInProgressMessage,
                   ),
                 )
               : Padding(
@@ -244,8 +235,7 @@ class _IncidentSdadScreenState extends State<IncidentSdadScreen> {
                               topRight: Radius.circular(Dimensions.radius))),
                       child: Center(
                         child: Text(
-                          AppLocalizations.of(context)
-                              .translate('incidentSdsd'),
+                          _languageStore.language.incidentSdsd,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: Dimensions.largeTextSize,
@@ -265,8 +255,7 @@ class _IncidentSdadScreenState extends State<IncidentSdadScreen> {
                             IncidentStatusEnum.SolvedInitially);
                       } else {
                         _showErrorMessage(
-                          AppLocalizations.of(context)
-                              .translate('login_error_fill_fields'),
+                          _languageStore.language.login_error_fill_fields,
                         );
                       }
 
@@ -316,7 +305,7 @@ class _IncidentSdadScreenState extends State<IncidentSdadScreen> {
             keyboardType: TextInputType.multiline,
             maxLines: null,
             decoration: InputDecoration(
-                labelText: '${AppLocalizations.of(context).translate('notes')}',
+                labelText: '${_languageStore.language.notes}',
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   borderSide: BorderSide(color: Colors.grey, width: 0.0),
@@ -377,13 +366,13 @@ class _IncidentSdadScreenState extends State<IncidentSdadScreen> {
   void _submit() {
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: Text('${AppLocalizations.of(context).translate('cancel')}'),
+      child: Text('${_languageStore.language.cancel}'),
       onPressed: () {
         Navigator.of(context).pop(); // dismiss dialog
       },
     );
     Widget continueButton = TextButton(
-      child: Text('${AppLocalizations.of(context).translate('yes')}'),
+      child: Text('${_languageStore.language.yes}'),
       onPressed: () {
         //Navigator.of(context).pop();
         _incidentFormStore.workFlowStepSave(
@@ -394,9 +383,9 @@ class _IncidentSdadScreenState extends State<IncidentSdadScreen> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title:
-          Text('${AppLocalizations.of(context).translate('sendingIncident')}'),
+          Text('${_languageStore.language.sendingIncident}'),
       content: Text(
-          '${AppLocalizations.of(context).translate('sendIncidentConfirmation')}'),
+          '${_languageStore.language.sendIncidentConfirmation}'),
       actions: [
         cancelButton,
         continueButton,
@@ -418,7 +407,7 @@ class _IncidentSdadScreenState extends State<IncidentSdadScreen> {
         if (message.isNotEmpty) {
           FlushbarHelper.createError(
             message: message,
-            title: AppLocalizations.of(context).translate('home_tv_error'),
+            title: _languageStore.language.home_tv_error,
             duration: Duration(seconds: 2),
           )..show(context);
         }
@@ -434,8 +423,7 @@ class _IncidentSdadScreenState extends State<IncidentSdadScreen> {
         if (message.isNotEmpty) {
           FlushbarHelper.createSuccess(
             message: message,
-            title: AppLocalizations.of(context)
-                .translate('home_tv_saving_incident'),
+            title: _languageStore.language.home_tv_saving_incident,
             duration: Duration(seconds: 5),
           )..show(context);
         }

@@ -24,7 +24,6 @@ import '../../stores/language/language_store.dart';
 import '../../ui/constants/colors.dart';
 import 'dart:io' show Platform;
 
-import '../../utils/locale/app_localization.dart';
 import 'incident-map-marker.dart';
 import 'incident_item_details.dart';
 
@@ -42,7 +41,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
   late GoogleMapController mapController;
   final Set<Marker> markers = new Set();
   final List<DashboardWidgets> userPermissions;
-
+  late LanguageStore _languageStore; 
   // static const LatLng showLocation = const LatLng(27.7089427, 85.3086209);
 
   _IncidentsMapState(this.userPermissions);
@@ -103,7 +102,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                        '${AppLocalizations.of(context).translate('NoLocationPermissionAllowed')}'),
+                        '${_languageStore.language.noLocationPermissionAllowed}'),
                   ),
                   TextButton(
                       onPressed: () async {
@@ -115,7 +114,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
                         }
                       },
                       child: Text(
-                          '${AppLocalizations.of(context).translate('givePermission')}'))
+                          '${_languageStore.language.givePermission}'))
                 ],
               )),
             );
@@ -355,7 +354,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
                             return _currentIncidentStore.loading
                                 ? Container()
                                 : Text(
-                                    '${_currentIncidentStore.incidentList == null ? "0" : _currentIncidentStore.incidentList!.incidents!.length.toString()} ${AppLocalizations.of(context).translate('incident')}');
+                                    '${_currentIncidentStore.incidentList == null ? "0" : _currentIncidentStore.incidentList!.incidents!.length.toString()} ${_languageStore.language.incident}');
                           },
                         ),
                       ),
@@ -661,7 +660,6 @@ class _IncidentsMapState extends State<IncidentsMap> {
     }
   }
 
-  late LanguageStore _languageStore;
 
   Set<Marker> getIncidentsMarkers() {
     List<Incident>? incdeints = _currentIncidentStore.incidentList == null

@@ -1,4 +1,5 @@
 import 'package:boilerplate/models/incident/incident.dart';
+import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +9,7 @@ import '../../data/sharedpref/shared_preference_helper.dart';
 import '../../stores/incident_form/incident_form_store.dart';
 import '../../ui/sdad/incident_finally_sdad_screen.dart';
 import '../../ui/sdad/incident_upping_sdad_screen.dart';
-import '../../utils/locale/app_localization.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EmplyeeActionButtons extends StatefulWidget {
   final Incident incident;
@@ -31,12 +32,14 @@ class EmplyeeActionButtons extends StatefulWidget {
 
 class _EmplyeeActionButtonsState extends State<EmplyeeActionButtons> {
   late IncidentFormStore _incidentFormStore;
+  late LanguageStore _languageStore;
   SharedPreferenceHelper? sharedPreferenceHelper;
 
   @override
   void didChangeDependencies() {
     sharedPreferenceHelper = GetIt.instance<SharedPreferenceHelper>();
     _incidentFormStore = Provider.of<IncidentFormStore>(context);
+    _languageStore = Provider.of<LanguageStore>(context);
 
     super.didChangeDependencies();
   }
@@ -63,7 +66,7 @@ class _EmplyeeActionButtonsState extends State<EmplyeeActionButtons> {
                     widget.onFinallySdadDone!(result);
                 },
                 child: Text(
-                    '${AppLocalizations.of(context).translate('incidentFinish')}'),
+                    '${_languageStore.language.incidentFinish}'),
               ),
               TextButton(
                 onPressed: () async {
@@ -78,7 +81,7 @@ class _EmplyeeActionButtonsState extends State<EmplyeeActionButtons> {
                     widget.onUppingSdadDone!(result);
                 },
                 child: Text(
-                    '${AppLocalizations.of(context).translate('incidentUpping')}'),
+                    '${_languageStore.language.incidentUpping}'),
               ),
               TextButton(
                 onPressed: () async {
@@ -93,7 +96,7 @@ class _EmplyeeActionButtonsState extends State<EmplyeeActionButtons> {
                   //   widget.onUppingSdadDone!(result);
                 },
                 child: Text(
-                    '${AppLocalizations.of(context).translate('cancel')}'),
+                    '${_languageStore.language.cancel}'),
               ),
             ],
           )

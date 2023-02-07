@@ -132,14 +132,13 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
     if (widget.categoryIdIsMandatory == true && widget.categoryId == null)
       return Center(
         child: Text(
-            '${AppLocalizations.of(context).translate('categoryIsMandatory')}'),
+            '${_languageStore.language.categoryIsMandatory}'),
       );
     return Observer(
       builder: (context) {
         return _subcategoryStore.loading
             ? CustomProgressIndicatorTextWidget(
-                message: AppLocalizations.of(context)
-                    .translate('loadingSubCategories'),
+                message: _languageStore.language.loadingSubCategories,
               )
             : Material(
                 child: StreamBuilder(
@@ -182,7 +181,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
         Padding(
           padding: const EdgeInsets.only(right: Dimensions.marginSize),
           child: Text(
-            AppLocalizations.of(context).translate('selectSubCategory'),
+            _languageStore.language.selectSubCategory,
             style: TextStyle(
                 fontSize: Dimensions.extraLargeTextSize,
                 color: Colors.black,
@@ -230,7 +229,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
                                 placeholder: (context, url) =>
                                     Center(child: CircularProgressIndicator()),
                                 errorWidget: (context, url, err) =>
-                                    Center(child: Text('فشل جلب الصورة'))),
+                                    Center(child: Text(_languageStore.language.failedLoadImage))),
                           ),
                           Expanded(
                             flex: 2,
@@ -287,7 +286,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
         ? columnWidget
         : Center(
             child: Text(
-              AppLocalizations.of(context).translate('home_tv_no_post_found'),
+              _languageStore.language.home_tv_no_post_found,
             ),
           );
   }
@@ -302,7 +301,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
           padding: const EdgeInsets.only(
               right: Dimensions.marginSize, bottom: Dimensions.marginSize),
           child: Text(
-            AppLocalizations.of(context).translate('myIncidentsBySubCategory'),
+            _languageStore.language.myIncidentsBySubCategory,
             style: TextStyle(
                 color: Colors.black,
                 fontSize: Dimensions.defaultTextSize,
@@ -323,9 +322,9 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
             image: null,
             packageImage: PackageImage.Image_1,
             title:
-                '${AppLocalizations.of(context).translate('home_tv_no_post_found')}',
+                '${_languageStore.language.home_tv_no_post_found}',
             // subTitle:
-            // '${AppLocalizations.of(context).translate('home_tv_no_post_found_line2')}',
+            // '${_languageStore.language.home_tv_no_post_found_line2')}',
             titleTextStyle: TextStyle(
               fontSize: 22,
               color: Color(0xff9da9c7),
@@ -338,7 +337,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
           )
 
             // Text(
-            //   AppLocalizations.of(context).translate('home_tv_no_post_found'),
+            //   _languageStore.language.home_tv_no_post_found'),
             // ),
             );
   }
@@ -353,7 +352,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
           padding: const EdgeInsets.only(
               right: Dimensions.marginSize, bottom: Dimensions.marginSize),
           child: Text(
-            AppLocalizations.of(context).translate('myIncidentsBySubCategory'),
+            _languageStore.language.myIncidentsBySubCategory,
             style: TextStyle(
                 color: Colors.black,
                 fontSize: Dimensions.defaultTextSize,
@@ -374,9 +373,9 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
             image: null,
             packageImage: PackageImage.Image_1,
             title:
-                '${AppLocalizations.of(context).translate('home_tv_no_post_found')}',
+                '${_languageStore.language.home_tv_no_post_found}',
             // subTitle:
-            // '${AppLocalizations.of(context).translate('home_tv_no_post_found_line2')}',
+            // '${_languageStore.language.home_tv_no_post_found_line2')}',
             titleTextStyle: TextStyle(
               fontSize: 22,
               color: Color(0xff9da9c7),
@@ -389,7 +388,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
           )
 
             // Text(
-            //   AppLocalizations.of(context).translate('home_tv_no_post_found'),
+            //   _languageStore.language.home_tv_no_post_found'),
             // ),
             );
   }
@@ -469,7 +468,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
           )
         : Center(
             child: Text(
-              AppLocalizations.of(context).translate('home_tv_no_post_found'),
+              _languageStore.language.home_tv_no_post_found,
             ),
           );
   }
@@ -561,7 +560,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
       if (message.isNotEmpty) {
         FlushbarHelper.createError(
           message: message,
-          title: AppLocalizations.of(context).translate('home_tv_error'),
+          title: _languageStore.language.home_tv_error,
           duration: Duration(seconds: 3),
         )..show(context);
       }

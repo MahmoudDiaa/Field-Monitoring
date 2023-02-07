@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:boilerplate/constants/colors.dart';
+import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:boilerplate/ui/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
+import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
 
 import '../../constants/strings.dart';
-import '../../utils/locale/app_localization.dart';
 
 // Your api key storage.
 // import 'keys.dart';
@@ -40,6 +40,14 @@ class _PlacePickerWidgetState extends State<PlacePickerWidget> {
   PickResult? selectedPlace;
   bool showGoogleMapInContainer = false;
   bool initialized = false;
+  late LanguageStore _languageStore;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  
+    _languageStore=Provider.of<LanguageStore>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,13 +126,12 @@ class _PlacePickerWidgetState extends State<PlacePickerWidget> {
                           ? Strings.androidApiKey
                           : Strings.iosApiKey,
                       hintText:
-                          AppLocalizations.of(context).translate('findAPlace'),
+                          _languageStore.language.findAPlace,
                       searchingText:
-                          AppLocalizations.of(context).translate('pleaseWait'),
+                          _languageStore.language.pleaseWait,
                       selectText:
-                          AppLocalizations.of(context).translate('selectPlace'),
-                      outsideOfPickAreaText: AppLocalizations.of(context)
-                          .translate('placeNotInArea'),
+                          _languageStore.language.selectPlace,
+                      outsideOfPickAreaText:_languageStore.language.placeNotInArea,
                       initialPosition: PlacePickerWidget.kInitialPosition,
                       useCurrentLocation: true,
                       selectInitialPosition: true,
@@ -180,13 +187,13 @@ class _PlacePickerWidgetState extends State<PlacePickerWidget> {
                 apiKey: Platform.isAndroid
                     ? Strings.androidApiKey
                     : Strings.iosApiKey,
-                hintText: AppLocalizations.of(context).translate('findAPlace'),
+                hintText: _languageStore.language.findAPlace,
                 searchingText:
-                    AppLocalizations.of(context).translate('pleaseWait'),
+                    _languageStore.language.pleaseWait,
                 selectText:
-                    AppLocalizations.of(context).translate('selectPlace'),
+                    _languageStore.language.selectPlace,
                 outsideOfPickAreaText:
-                    AppLocalizations.of(context).translate('placeNotInArea'),
+                    _languageStore.language.placeNotInArea,
                 initialPosition: PlacePickerWidget.kInitialPosition,
                 useCurrentLocation: true,
                 selectInitialPosition: true,

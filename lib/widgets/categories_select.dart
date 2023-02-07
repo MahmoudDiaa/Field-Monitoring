@@ -1,21 +1,15 @@
 import 'dart:async';
 
 import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
 import 'package:boilerplate/stores/category/category_store.dart';
-import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:boilerplate/stores/language/language_store.dart';
-import 'package:boilerplate/stores/post/post_store.dart';
 import 'package:boilerplate/stores/theme/theme_store.dart';
-import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:material_dialog/material_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/category/category.dart';
 import '../constants/enums.dart';
 import '../models/subcategory/subcategory.dart';
@@ -23,18 +17,17 @@ import '../ui/constants/colors.dart';
 import '../ui/constants/custom_style.dart';
 import '../ui/constants/dimensions.dart';
 import 'progress_indicator/progress_indicator_text_widget.dart';
-import 'progress_indicator/progress_indicator_widget.dart';
 
 class _CategoryListWidget extends StatefulWidget {
-  double gridAndListHeight;
-  void Function(Category?)? onSelectedCategoryChanged;
-  void Function(SubCategory?)? onSelectedSubCategoryChanged;
+  final double gridAndListHeight;
+  final void Function(Category?)? onSelectedCategoryChanged;
+  final void Function(SubCategory?)? onSelectedSubCategoryChanged;
 
-  CategoryListViewMode categoryListViewMode;
+  final CategoryListViewMode categoryListViewMode;
 
   int? initialSelectedId;
 
-  bool autoSelectFirstItem;
+  final bool autoSelectFirstItem;
 
   _CategoryListWidget(
       {this.onSelectedCategoryChanged,
@@ -136,7 +129,7 @@ class _CategoryListWidgetState extends State<_CategoryListWidget> {
         return _categoryStore.loading
             ? CustomProgressIndicatorTextWidget(
                 message:
-                    AppLocalizations.of(context).translate('loadingCategories'),
+                    _languageStore.language.loadingCategories,
               )
             : Material(child: _categoryView());
       },
@@ -174,7 +167,7 @@ class _CategoryListWidgetState extends State<_CategoryListWidget> {
           )
         : Center(
             child: Text(
-              AppLocalizations.of(context).translate('home_tv_no_post_found'),
+              _languageStore.language.home_tv_no_post_found,
             ),
           );
   }
@@ -224,9 +217,9 @@ class _CategoryListWidgetState extends State<_CategoryListWidget> {
             image: null,
             packageImage: PackageImage.Image_1,
             title:
-                '${AppLocalizations.of(context).translate('home_tv_no_post_found')}',
+                '${_languageStore.language.home_tv_no_post_found}',
             // subTitle:
-            // '${AppLocalizations.of(context).translate('home_tv_no_post_found_line2')}',
+            // '${_languageStore.language.home_tv_no_post_found_line2')}',
             titleTextStyle: TextStyle(
               fontSize: 22,
               color: Color(0xff9da9c7),
@@ -239,7 +232,7 @@ class _CategoryListWidgetState extends State<_CategoryListWidget> {
           )
 
             // Text(
-            //   AppLocalizations.of(context).translate('home_tv_no_post_found'),
+            //   _languageStore.language.home_tv_no_post_found'),
             // ),
             );
   }
@@ -350,7 +343,7 @@ class _CategoryListWidgetState extends State<_CategoryListWidget> {
           )
         : Center(
             child: Text(
-              AppLocalizations.of(context).translate('home_tv_no_post_found'),
+              _languageStore.language.home_tv_no_post_found,
             ),
           );
   }
@@ -461,7 +454,7 @@ class _CategoryListWidgetState extends State<_CategoryListWidget> {
       if (message.isNotEmpty) {
         FlushbarHelper.createError(
           message: message,
-          title: AppLocalizations.of(context).translate('home_tv_error'),
+          title: _languageStore.language.home_tv_error,
           duration: Duration(seconds: 3),
         )..show(context);
       }

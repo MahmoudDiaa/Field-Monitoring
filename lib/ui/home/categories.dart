@@ -1,15 +1,10 @@
 import 'dart:async';
 
-import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
 import 'package:boilerplate/models/PriorityLevels/priorrity_level.dart';
-import 'package:boilerplate/models/priority/priority.dart';
 import 'package:boilerplate/stores/category/category_store.dart';
 import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:boilerplate/stores/language/language_store.dart';
-import 'package:boilerplate/stores/post/post_store.dart';
 import 'package:boilerplate/stores/theme/theme_store.dart';
-import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:material_dialog/material_dialog.dart';
@@ -20,12 +15,6 @@ import '../../constants/enums.dart';
 import '../../models/category/category.dart';
 import '../../models/subcategory/subcategory.dart';
 import '../../stores/user/user_store.dart';
-import '../../widgets/categories_select.dart';
-import '../../widgets/incident/incident_item_details.dart';
-import '../../widgets/incident/incident_list_widget.dart';
-import '../../widgets/media_picker_widget.dart';
-import '../../widgets/google_map/place_picker_widget.dart';
-import '../../widgets/priority_select.dart';
 import '../../widgets/subcategories_select.dart';
 
 class CategoryListPage extends StatefulWidget {
@@ -140,7 +129,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
   // app bar methods:-----------------------------------------------------------
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      title: Text(AppLocalizations.of(context).translate('home_tv_cats')),
+      title: Text(_languageStore.language.home_tv_cats),
       actions: _buildActions(context),
     );
   }
@@ -212,7 +201,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
         borderRadius: 5.0,
         enableFullWidth: true,
         title: Text(
-          AppLocalizations.of(context).translate('home_tv_choose_language'),
+          _languageStore.language.home_tv_choose_language,
           style: TextStyle(
             color: Colors.white,
             fontSize: 16.0,
@@ -226,7 +215,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
         onCloseButtonClicked: () {
           Navigator.of(context).pop();
         },
-        children: _languageStore.supportedLanguages
+        children: []
             .map(
               (object) => ListTile(
                 dense: true,
@@ -244,7 +233,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                 onTap: () {
                   Navigator.of(context).pop();
                   // change user language based on selected locale
-                  _languageStore.changeLanguage(object.locale!);
+                  _languageStore.changeLanguage(object.locale!,context);
                 },
               ),
             )

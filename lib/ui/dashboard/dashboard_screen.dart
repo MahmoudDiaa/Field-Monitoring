@@ -8,8 +8,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:material_dialog/material_dialog.dart';
 import 'package:provider/provider.dart';
-import 'package:rolling_bottom_bar/rolling_bottom_bar.dart';
-import 'package:rolling_bottom_bar/rolling_bottom_bar_item.dart';
 
 // import 'package:rolling_nav_bar/indexed.dart';
 // import 'package:rolling_nav_bar/rolling_nav_bar.dart';
@@ -17,7 +15,6 @@ import 'package:rolling_bottom_bar/rolling_bottom_bar_item.dart';
 import '../../data/sharedpref/shared_preference_helper.dart';
 import '../../stores/language/language_store.dart';
 import '../../stores/theme/theme_store.dart';
-import '../../utils/locale/app_localization.dart';
 import '../../utils/routes/routes.dart';
 import '../../widgets/incident/incidents_map.dart';
 import '../constants/strings.dart';
@@ -40,10 +37,10 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   late LanguageStore _languageStore;
   late ThemeStore _themeStore;
-   Map<DashboardWidgets,int> indexMap=Map<DashboardWidgets,int>();
+  Map<DashboardWidgets, int> indexMap = Map<DashboardWidgets, int>();
 
   //Color? logoColor;
-  int? activeIndex;
+  int activeIndex = 0;
 
   var iconData = <IconData>[
     Icons.home,
@@ -94,7 +91,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void incrementIndex() {
     setState(() {
-      activeIndex = activeIndex! < (iconData.length - 1) ? activeIndex! + 1 : 0;
+      activeIndex = activeIndex < (iconData.length - 1) ? activeIndex + 1 : 0;
     });
   }
 
@@ -130,29 +127,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var appLocalization = AppLocalizations.of(context);
     return Scaffold(
       drawer: Drawer(
         child: ListView(
-          children: getDrawerListByPermission(appLocalization),
+          children: getDrawerListByPermission(),
         ),
       ),
       body: PageView(
           controller: _pageController, children: getPermissionWidget()),
       extendBody: true,
-      bottomNavigationBar: RollingBottomBar(
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: activeIndex,
         //color: CustomColor.primaryColor.value,
-        controller: _pageController,
-        flat: false,
-        useActiveColorByDefault: false,
+        // controller: _pageController,
+        // flat: false,
+        // useActiveColorByDefault: false,
 
-        items: getPermissionBottomBar(appLocalization),
-        enableIconRotation: true,
+        items: getPermissionBottomBar(),
+        // enableIconRotation: true,
         onTap: (index) {
           _pageController.jumpToPage(
             index,
           );
-          activeIndex = index;
+          setState(() {
+            activeIndex = index;
+          });
         },
       ),
     );
@@ -202,7 +201,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         borderRadius: 5.0,
         enableFullWidth: true,
         title: Text(
-          AppLocalizations.of(context).translate('home_tv_choose_language'),
+          _languageStore.language.home_tv_choose_language,
           style: TextStyle(
             color: Colors.white,
             fontSize: 16.0,
@@ -235,7 +234,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                   // change user language based on selected locale
-                  _languageStore.changeLanguage(object.locale!);
+                  _languageStore.changeLanguage(object.locale!, context);
                 },
               ),
             )
@@ -255,8 +254,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       case 2:
         return IncidentFormStep1();
       case 3:
-
-
         return IncidentsMap(indexMap.keys.toList());
       // case 3:
       //   return Center(
@@ -282,65 +279,70 @@ class _DashboardScreenState extends State<DashboardScreen> {
     indexMap.clear();
     final List<Widget> widgets = [];
     widgets.add(HomeScreen());
-    indexMap.putIfAbsent(DashboardWidgets.Home, () => widgets.length-1);
+    indexMap.putIfAbsent(DashboardWidgets.Home, () => widgets.length - 1);
     if (sharedPreferenceHelper!.authUser!.user!.isHasCreatedPermission()) {
       widgets.add(CreatedIncidentListScreen(hideSubCategoryWidget: false));
-      indexMap.putIfAbsent(DashboardWidgets.Created, () => widgets.length-1);
+      indexMap.putIfAbsent(DashboardWidgets.Created, () => widgets.length - 1);
       widgets.add(IncidentFormStep1());
     }
     if (sharedPreferenceHelper!.authUser!.user!.isHasAssignedPermission()) {
       widgets.add(AssignedIncidentListScreen(hideSubCategoryWidget: false));
-      indexMap.putIfAbsent(DashboardWidgets.Assigned, () => widgets.length-1);
-
+      indexMap.putIfAbsent(DashboardWidgets.Assigned, () => widgets.length - 1);
     }
     if (sharedPreferenceHelper!.authUser!.user!.isHasSupervisedPermission()) {
       widgets.add(SupervisedIncidentListScreen(hideSubCategoryWidget: false));
-      indexMap.putIfAbsent(DashboardWidgets.Supervised, () => widgets.length-1);
-
+      indexMap.putIfAbsent(
+          DashboardWidgets.Supervised, () => widgets.length - 1);
     }
-    var permissionIndex= indexMap;
+    var permissionIndex = indexMap;
     permissionIndex.remove(DashboardWidgets.Home);
     widgets.add(IncidentsMap(permissionIndex.keys.toList()));
 
     return widgets;
   }
 
-  List<RollingBottomBarItem>? getPermissionBottomBar(
-      AppLocalizations appLocalization) {
-    final List<RollingBottomBarItem> bottomBarItems = [];
-    bottomBarItems.add(RollingBottomBarItem(Icons.home,
-        label: appLocalization.translate('home'),
-        activeColor: CustomColor.primaryColor));
+  List<BottomNavigationBarItem> getPermissionBottomBar() {
+    final List<BottomNavigationBarItem> bottomBarItems = [];
+    bottomBarItems.add(BottomNavigationBarItem(
+        icon: Icon(Icons.home),
+        label: _languageStore.language.home,
+        backgroundColor: CustomColor.primaryColor));
     if (sharedPreferenceHelper!.authUser!.user!.isHasCreatedPermission()) {
-      bottomBarItems.add(RollingBottomBarItem(Icons.view_list,
-          label: appLocalization.translate('createdList'),
-          activeColor: CustomColor.primaryColor));
+      bottomBarItems.add(BottomNavigationBarItem(
+          icon: Icon(Icons.view_list),
+          label: _languageStore.language.createdList,
+          backgroundColor: CustomColor.primaryColor));
       bottomBarItems.add(
-        RollingBottomBarItem(Icons.new_label_rounded,
-            label: appLocalization.translate('new'),
-            activeColor: CustomColor.secondaryColor),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.new_label_rounded),
+            label: _languageStore.language.newWord,
+            backgroundColor: CustomColor.secondaryColor),
       );
     }
     if (sharedPreferenceHelper!.authUser!.user!.isHasAssignedPermission()) {
-      bottomBarItems.add(RollingBottomBarItem(Icons.list_alt,
-          label: appLocalization.translate('assignedList'),
-          activeColor: CustomColor.secondaryColor));
+      bottomBarItems.add(BottomNavigationBarItem(
+          icon: Icon(Icons.list_alt),
+          label: _languageStore.language.assignedList,
+          backgroundColor: CustomColor.secondaryColor));
     }
     if (sharedPreferenceHelper!.authUser!.user!.isHasSupervisedPermission()) {
-      bottomBarItems.add(RollingBottomBarItem(Icons.view_list_sharp,
-          label: appLocalization.translate('supervisedList'),
-          activeColor: CustomColor.primaryColor));
+      bottomBarItems.add(BottomNavigationBarItem(
+          icon: Icon(Icons.view_list_sharp),
+          label: _languageStore.language.supervisedList,
+          backgroundColor: CustomColor.primaryColor));
     }
 
     bottomBarItems.add(
-      RollingBottomBarItem(Icons.map,
-          label: 'Map', activeColor: Colors.orangeAccent),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.map),
+          label: _languageStore.language.map,
+          backgroundColor: Colors.orangeAccent),
     );
 
     return bottomBarItems;
   }
 
-  List<Widget> getDrawerListByPermission(AppLocalizations appLocalization) {
+  List<Widget> getDrawerListByPermission() {
     List<Widget> drawerList = [];
 
     drawerList.add(UserAccountsDrawerHeader(
@@ -379,14 +381,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     ));
     drawerList.add(ListTile(
       leading: Icon(Icons.home),
-      title: Text('${appLocalization.translate('home')}'),
+      title: Text('${_languageStore.language.home}'),
       onTap: () {
         _pageController.animateToPage(
           indexMap[DashboardWidgets.Home]!,
           duration: const Duration(milliseconds: 400),
           curve: Curves.easeOut,
         );
-        activeIndex = indexMap[DashboardWidgets.Home]!;
+        setState(() {
+          activeIndex = indexMap[DashboardWidgets.Home]!;
+        });
         Navigator.of(context).pop();
       },
     ));
@@ -394,14 +398,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (sharedPreferenceHelper!.authUser!.user!.isHasCreatedPermission()) {
       drawerList.add(ListTile(
         leading: Icon(Icons.list_outlined),
-        title: Text('${appLocalization.translate('myCreatedIncidents')}'),
+        title: Text('${_languageStore.language.myCreatedIncidents}'),
         onTap: () {
           _pageController.animateToPage(
             indexMap[DashboardWidgets.Created]!,
             duration: const Duration(milliseconds: 400),
             curve: Curves.easeOut,
           );
-          activeIndex = indexMap[DashboardWidgets.Created]!;
+          setState(() {
+            activeIndex = indexMap[DashboardWidgets.Created]!;
+          });
           Navigator.of(context).pop();
         },
       ));
@@ -409,14 +415,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (sharedPreferenceHelper!.authUser!.user!.isHasAssignedPermission()) {
       drawerList.add(ListTile(
         leading: Icon(Icons.list_outlined),
-        title: Text('${appLocalization.translate('myAssignedIncidents')}'),
+        title: Text('${_languageStore.language.myAssignedIncidents}'),
         onTap: () {
           _pageController.animateToPage(
             indexMap[DashboardWidgets.Assigned]!,
             duration: const Duration(milliseconds: 400),
             curve: Curves.easeOut,
           );
-          activeIndex = indexMap[DashboardWidgets.Assigned]!;
+          setState(() {
+            activeIndex = indexMap[DashboardWidgets.Assigned]!;
+          });
           Navigator.of(context).pop();
         },
       ));
@@ -424,14 +432,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (sharedPreferenceHelper!.authUser!.user!.isHasSupervisedPermission()) {
       drawerList.add(ListTile(
         leading: Icon(Icons.list_outlined),
-        title: Text('${appLocalization.translate('mySupervisedIncidents')}'),
+        title: Text('${_languageStore.language.mySupervisedIncidents}'),
         onTap: () {
           _pageController.animateToPage(
             indexMap[DashboardWidgets.Supervised]!,
             duration: const Duration(milliseconds: 400),
             curve: Curves.easeOut,
           );
-          activeIndex = indexMap[DashboardWidgets.Supervised]!;
+          setState(() {
+            activeIndex = indexMap[DashboardWidgets.Supervised]!;
+          });
           Navigator.of(context).pop();
         },
       ));
@@ -449,7 +459,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     drawerList.add(Divider());
     drawerList.add(ListTile(
       leading: Icon(Icons.security),
-      title: Text('${appLocalization.translate('changePassword')}'),
+      title: Text('${_languageStore.language.changePassword}'),
       onTap: () {
         Navigator.of(context).pop();
         Navigator.of(context).pushNamed(Routes.changePassword);
@@ -457,7 +467,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     ));
     drawerList.add(ListTile(
       leading: Icon(Icons.follow_the_signs_outlined),
-      title: Text('${appLocalization.translate('logout')}'),
+      title: Text('${_languageStore.language.logout}'),
       onTap: () {
         sharedPreferenceHelper?.removeLoggedInUser();
         Navigator.of(context).pushReplacementNamed(Routes.login);

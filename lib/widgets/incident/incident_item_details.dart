@@ -9,19 +9,16 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../stores/incident/incident_store.dart';
 import '../../stores/language/language_store.dart';
 import '../../stores/theme/theme_store.dart';
 import '../../ui/constants/colors.dart';
 import '../../ui/constants/dimensions.dart';
-import '../../utils/locale/app_localization.dart';
 import '../navigation/back_widget.dart';
 import '../progress_indicator/progress_indicator_text_widget.dart';
 import '../progress_indicator/progress_indicator_widget.dart';
 import 'about_incident_widget.dart';
 
 import 'incident_images_widget.dart';
-import 'incident_transactions_widget.dart';
 
 class InidentDetailsScreen extends StatefulWidget {
   String? incidentId;
@@ -120,7 +117,7 @@ class _InidentDetailsScreenState extends State<InidentDetailsScreen> {
               placeholder: (context, url) =>
                   Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, err) =>
-                  Center(child: Text('جاري تحميل الصورة الرئيسية.'))),
+                  Center(child: Text(_languageStore.language.loadingMainImage))),
           BackWidget(),
           Positioned(
             bottom: Dimensions.heightSize * 2,
@@ -172,7 +169,7 @@ class _InidentDetailsScreenState extends State<InidentDetailsScreen> {
                             child: Text(
                               _incidentStore.incident?.localizedStatusName(
                                       _languageStore.locale) ??
-                                  'Unknown status!',
+                                  _languageStore.language.unKnownState,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: Dimensions.smallTextSize),
@@ -239,7 +236,7 @@ class _InidentDetailsScreenState extends State<InidentDetailsScreen> {
             builder: (context) {
               return _incidentStore.gettingIncident
                   ? CustomProgressIndicatorTextWidget(
-                      message: 'Loading Incidents...',
+                      message: _languageStore.language.loadingIncidents,
                     )
                   : Material(
                       child: PageView.builder(
@@ -266,9 +263,7 @@ class _InidentDetailsScreenState extends State<InidentDetailsScreen> {
                                                   currentTabIndex = 0;
                                                 },
                                                 child: Center(
-                                                  child: Text(
-                                                    AppLocalizations.of(context)
-                                                        .translate('details'),
+                                                  child: Text(_languageStore.language.details,
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize: Dimensions
@@ -293,8 +288,7 @@ class _InidentDetailsScreenState extends State<InidentDetailsScreen> {
                                                 },
                                                 child: Center(
                                                   child: Text(
-                                                    AppLocalizations.of(context)
-                                                        .translate('theImages'),
+                                                    _languageStore.language.theImages,
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize: Dimensions
@@ -319,9 +313,7 @@ class _InidentDetailsScreenState extends State<InidentDetailsScreen> {
                                                 },
                                                 child: Center(
                                                   child: Text(
-                                                    AppLocalizations.of(context)
-                                                        .translate(
-                                                            'incidentTransactions'),
+                                                    _languageStore.language.incidentTransactions,
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize: Dimensions
@@ -369,7 +361,7 @@ class _InidentDetailsScreenState extends State<InidentDetailsScreen> {
       if (message.isNotEmpty) {
         FlushbarHelper.createError(
           message: message,
-          title: AppLocalizations.of(context).translate('home_tv_error'),
+          title: _languageStore.language.home_tv_error,
           duration: Duration(seconds: 3),
         )..show(context);
       }

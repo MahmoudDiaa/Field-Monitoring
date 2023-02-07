@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -10,16 +11,13 @@ import '../../data/sharedpref/constants/preferences.dart';
 import '../../stores/login_form/login_form_store.dart';
 import '../../stores/theme/theme_store.dart';
 import '../../utils/device/device_utils.dart';
-import '../../utils/locale/app_localization.dart';
 import '../../utils/routes/routes.dart';
-import '../../widgets/navigation/back_widget.dart';
 import '../../widgets/progress_indicator/progress_indicator_widget.dart';
 import '../../widgets/rounded_button_widget.dart';
 import '../../widgets/textfield_widget.dart';
 import '../constants/colors.dart';
 import '../constants/custom_style.dart';
 import '../constants/dimensions.dart';
-import '../constants/strings.dart';
 import 'forgot_password_dialog.dart';
 
 class LoginFormWidget extends StatefulWidget {
@@ -39,6 +37,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
 
   //stores:---------------------------------------------------------------------
   late ThemeStore _themeStore;
+  late LanguageStore _languageStore;
 
   //focus node:-----------------------------------------------------------------
   late FocusNode _passwordFocusNode;
@@ -68,6 +67,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
       _passwordController = TextEditingController(text: widget.initialPassword);
     super.didChangeDependencies();
     _themeStore = Provider.of<ThemeStore>(context);
+    _languageStore =Provider.of<LanguageStore>(context);
   }
 
   @override
@@ -83,7 +83,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
     return Observer(
       builder: (context) {
         return TextFieldWidget(
-          hint: AppLocalizations.of(context).translate('login_et_user_email'),
+          hint: _languageStore.language.login_et_user_email,
           inputType: TextInputType.emailAddress,
           icon: Icons.person,
           iconColor: _themeStore.darkMode ? Colors.white70 : Colors.black54,
@@ -134,7 +134,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
       builder: (context) {
         return TextFieldWidget(
           hint:
-              AppLocalizations.of(context).translate('login_et_user_password'),
+              _languageStore.language.login_et_user_password,
           isObscure: true,
           padding: EdgeInsets.only(top: 16.0),
           icon: Icons.lock,
@@ -198,11 +198,11 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
       alignment: FractionalOffset.centerRight,
       child: TextButton(
         child: Text(
-          AppLocalizations.of(context).translate('login_btn_forgot_password'),
+          _languageStore.language.login_btn_forgot_password,
           style: Theme.of(context)
               .textTheme
-              .caption
-              ?.copyWith(color: CustomColor.primaryColor),
+              .bodySmall!
+              .copyWith(color: CustomColor.primaryColor),
         ),
         onPressed: () async {
           var result = await showDialog(
@@ -221,7 +221,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
 
   Widget _buildSignInButton() {
     return RoundedButtonWidget(
-      buttonText: AppLocalizations.of(context).translate('login_btn_sign_in'),
+      buttonText: _languageStore.language.login_btn_sign_in,
       buttonColor: CustomColor.primaryColor,
       textColor: Colors.white,
       onPressed: () async {
@@ -229,8 +229,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           DeviceUtils.hideKeyboard(context);
           _store.login();
         } else {
-          _showErrorMessage(AppLocalizations.of(context)
-              .translate('login_error_fill_fields'));
+          _showErrorMessage(_languageStore.language.login_error_fill_fields);
         }
       },
     );
@@ -242,7 +241,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         if (message.isNotEmpty) {
           FlushbarHelper.createError(
             message: message,
-            title: AppLocalizations.of(context).translate('home_tv_error'),
+            title:_languageStore.language.home_tv_error,
             duration: Duration(seconds: 3),
           )..show(context);
         }
@@ -302,7 +301,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                         padding: const EdgeInsets.only(
                             top: Dimensions.heightSize * 3),
                         child: Text(
-                          AppLocalizations.of(context).translate('signin'),
+                          _languageStore.language.signIn,
                           style: TextStyle(
                               fontSize: Dimensions.extraLargeTextSize * 1.2,
                               color: Colors.black),
@@ -344,14 +343,12 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                AppLocalizations.of(context)
-                                    .translate('dontHaveAccount'),
+                               _languageStore.language.dontHaveAccount,
                                 style: CustomStyle.textStyle,
                               ),
                               GestureDetector(
                                 child: Text(
-                                  AppLocalizations.of(context)
-                                      .translate('createAccount'),
+                                  _languageStore.language.createAccount,
                                   style: TextStyle(
                                       color: CustomColor.primaryColor,
                                       fontWeight: FontWeight.bold),

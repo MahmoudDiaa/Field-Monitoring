@@ -5,7 +5,7 @@ import 'package:photo_view/photo_view.dart';
 
 import '../../models/incident/incident_image.dart';
 import '../../ui/constants/colors.dart';
-import '../../utils/locale/app_localization.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 //https://pub.dev/packages/carousel_slider/example
 class FullscreenSliderDemo extends StatelessWidget {

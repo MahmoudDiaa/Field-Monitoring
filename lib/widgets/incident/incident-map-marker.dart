@@ -1,7 +1,6 @@
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:intl/intl.dart';
 
-import '../../constants/enums.dart';
 import '../../models/incident/incident.dart';
 
 class IncidentMarker extends Marker {

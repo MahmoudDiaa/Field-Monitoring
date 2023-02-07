@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:boilerplate/data/local/constants/db_constants.dart';
 import 'package:boilerplate/data/local/database.dart';
 import 'package:boilerplate/utils/encryption/xxtea.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 abstract class LocalModule {
 
 
@@ -42,4 +43,9 @@ abstract class LocalModule {
     // Return database instance
     return database;
   }
+
+
+  static AppLocalizations provideLang(BuildContext context)=>AppLocalizations.of(context)!;
+
+
 }

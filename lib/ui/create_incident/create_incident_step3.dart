@@ -9,7 +9,6 @@ import '../../stores/incident_form/incident_form_store.dart';
 import '../../stores/language/language_store.dart';
 import '../../stores/theme/theme_store.dart';
 import '../../utils/device/device_utils.dart';
-import '../../utils/locale/app_localization.dart';
 import '../../utils/routes/routes.dart';
 import '../../widgets/navigation/back_widget.dart';
 import '../../widgets/priority_select.dart';
@@ -94,8 +93,7 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               child: Text(
-                                AppLocalizations.of(context)
-                                    .translate('lastStep'),
+                               _languageStore.language.lastStep,
                                 style: TextStyle(
                                     fontSize:
                                         Dimensions.extraLargeTextSize * 1.2,
@@ -127,7 +125,7 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
                                     keyboardType: TextInputType.number,
                                     decoration: InputDecoration(
                                         labelText:
-                                            '${AppLocalizations.of(context).translate('quantity')}-${_incidentFormStore.incident.amountUnitName}',
+                                            '${_languageStore.language.quantity}-${_incidentFormStore.incident.amountUnitName}',
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(20.0)),
@@ -179,8 +177,7 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
                                     keyboardType: TextInputType.multiline,
                                     maxLines: null,
                                     decoration: InputDecoration(
-                                        labelText: AppLocalizations.of(context)
-                                            .translate('notes'),
+                                        labelText:_languageStore.language.notes,
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(20.0)),
@@ -216,8 +213,7 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
                                 Padding(
                                     padding: EdgeInsets.all(14.0),
                                     child: Text(
-                                        AppLocalizations.of(context)
-                                            .translate('priority'),
+                                       _languageStore.language.priority,
                                         style: TextStyle(fontSize: 17))),
                                 PriorityFormField(
                                   initialSelectedId:
@@ -330,7 +326,7 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
                     topRight: Radius.circular(Dimensions.radius))),
             child: Center(
               child: Text(
-                AppLocalizations.of(context).translate('finishAndSend'),
+                _languageStore.language.finishAndSend,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: Dimensions.largeTextSize,
@@ -345,8 +341,7 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
               _submit();
             } else {
               _showErrorMessage(
-                AppLocalizations.of(context)
-                    .translate('login_error_fill_fields'),
+                _languageStore.language.login_error_fill_fields,
               );
             }
 
@@ -552,14 +547,14 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
   void _submit() {
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: Text(AppLocalizations.of(context).translate('cancel')),
+      child: Text(_languageStore.language.cancel),
       onPressed: () {
         Navigator.of(context).pop(); // dismiss dialog
       },
     );
     Widget continueButton = TextButton(
       child: Text(
-        AppLocalizations.of(context).translate('yes'),
+        _languageStore.language.yes,
       ),
       onPressed: () {
         Navigator.of(context).pop();
@@ -574,10 +569,10 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(
-        AppLocalizations.of(context).translate('sendingIncident'),
+        _languageStore.language.sendingIncident,
       ),
       content: Text(
-        AppLocalizations.of(context).translate('sendIncidentConfirmation'),
+        _languageStore.language.sendIncidentConfirmation,
       ),
       actions: [
         cancelButton,
@@ -600,7 +595,7 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
         if (message.isNotEmpty) {
           FlushbarHelper.createError(
             message: message,
-            title: AppLocalizations.of(context).translate('home_tv_error'),
+            title: _languageStore.language.home_tv_error,
             duration: Duration(seconds: 2),
           )..show(context);
         }
@@ -616,8 +611,7 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
         if (message.isNotEmpty) {
           FlushbarHelper.createSuccess(
             message: message,
-            title: AppLocalizations.of(context)
-                .translate('home_tv_saving_incident'),
+            title:_languageStore.language.home_tv_saving_incident,
             duration: Duration(seconds: 5),
           )..show(context);
         }

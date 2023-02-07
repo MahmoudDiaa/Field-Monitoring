@@ -1,28 +1,22 @@
 import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:boilerplate/ui/authentication/auth_screen.dart';
+import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../constants/enums.dart';
 import '../../data/respository/user_repository.dart';
-import '../../data/sharedpref/constants/preferences.dart';
 import '../../data/sharedpref/shared_preference_helper.dart';
 import '../../stores/login_form/login_form_store.dart';
 import '../../stores/theme/theme_store.dart';
 import '../../utils/device/device_utils.dart';
-import '../../utils/locale/app_localization.dart';
 import '../../utils/routes/routes.dart';
 import '../../widgets/navigation/back_widget.dart';
 import '../../widgets/progress_indicator/progress_indicator_widget.dart';
 import '../../widgets/rounded_button_widget.dart';
 import '../../widgets/textfield_widget.dart';
 import '../constants/colors.dart';
-import '../constants/custom_style.dart';
 import '../constants/dimensions.dart';
-import '../constants/strings.dart';
 
 class ChangePasswordFormWidget extends StatefulWidget {
   ChangePasswordFormWidget();
@@ -43,7 +37,7 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
 
   //stores:---------------------------------------------------------------------
   late ThemeStore _themeStore;
-
+  late LanguageStore _languageStore;
   //focus node:-----------------------------------------------------------------
   late FocusNode _passwordFocusNode;
 
@@ -64,7 +58,7 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
   void didChangeDependencies() {
     sharedPreferenceHelper = GetIt.instance<SharedPreferenceHelper>();
     _themeStore = Provider.of<ThemeStore>(context);
-
+    _languageStore =Provider.of<LanguageStore>(context);
     super.didChangeDependencies();
   }
 
@@ -151,8 +145,7 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
           DeviceUtils.hideKeyboard(context);
           _signup_store.changePassword();
         } else {
-          _showErrorMessage(AppLocalizations.of(context)
-              .translate('login_error_fill_fields'));
+          _showErrorMessage(_languageStore.language.login_error_fill_fields);
         }
       },
     );
@@ -164,7 +157,7 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
         if (message.isNotEmpty) {
           FlushbarHelper.createError(
             message: message,
-            title: AppLocalizations.of(context).translate('home_tv_error'),
+            title: _languageStore.language.home_tv_error,
             duration: Duration(seconds: 3),
           )..show(context);
         }

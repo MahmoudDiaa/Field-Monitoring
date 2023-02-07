@@ -1,10 +1,10 @@
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:boilerplate/constants/assets.dart';
 import 'package:boilerplate/data/sharedpref/constants/preferences.dart';
+import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:boilerplate/utils/routes/routes.dart';
 import 'package:boilerplate/stores/theme/theme_store.dart';
 import 'package:boilerplate/utils/device/device_utils.dart';
-import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:boilerplate/widgets/app_icon_widget.dart';
 import 'package:boilerplate/widgets/empty_app_bar_widget.dart';
 import 'package:boilerplate/widgets/rounded_button_widget.dart';
@@ -31,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //stores:---------------------------------------------------------------------
   late ThemeStore _themeStore;
+  late LanguageStore _languageStore;
 
   //focus node:-----------------------------------------------------------------
   late FocusNode _passwordFocusNode;
@@ -48,6 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _themeStore = Provider.of<ThemeStore>(context);
+    _languageStore = Provider.of<LanguageStore>(context);
   }
 
   @override
@@ -132,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Observer(
       builder: (context) {
         return TextFieldWidget(
-          hint: AppLocalizations.of(context).translate('login_et_user_email'),
+          hint: _languageStore.language.login_et_user_email,
           inputType: TextInputType.emailAddress,
           icon: Icons.person,
           iconColor: _themeStore.darkMode ? Colors.white70 : Colors.black54,
@@ -156,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
       builder: (context) {
         return TextFieldWidget(
           hint:
-              AppLocalizations.of(context).translate('login_et_user_password'),
+              _languageStore.language.login_et_user_password,
           isObscure: true,
           padding: EdgeInsets.only(top: 16.0),
           icon: Icons.lock,
@@ -177,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
       alignment: FractionalOffset.centerRight,
       child: TextButton(
         child: Text(
-          AppLocalizations.of(context).translate('login_btn_forgot_password'),
+          _languageStore.language.login_btn_forgot_password,
           style: Theme.of(context)
               .textTheme
               .caption
@@ -190,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildSignInButton() {
     return RoundedButtonWidget(
-      buttonText: AppLocalizations.of(context).translate('login_btn_sign_in'),
+      buttonText: _languageStore.language.login_btn_sign_in,
       buttonColor: Colors.orangeAccent,
       textColor: Colors.white,
       onPressed: () async {
@@ -198,8 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
           DeviceUtils.hideKeyboard(context);
           _store.login();
         } else {
-          _showErrorMessage(AppLocalizations.of(context)
-              .translate('login_error_fill_fields'));
+          _showErrorMessage(_languageStore.language.login_error_fill_fields);
         }
       },
     );
@@ -225,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (message.isNotEmpty) {
           FlushbarHelper.createError(
             message: message,
-            title: AppLocalizations.of(context).translate('home_tv_error'),
+            title: _languageStore.language.home_tv_error,
             duration: Duration(seconds: 3),
           )..show(context);
         }

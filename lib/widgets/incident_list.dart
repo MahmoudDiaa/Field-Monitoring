@@ -149,7 +149,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
     )
         : Center(
       child: Text(
-        AppLocalizations.of(context).translate('home_tv_no_post_found'),
+        _languageStore.language.home_tv_no_post_found,
       ),
     );
   }
@@ -174,7 +174,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
     )
         : Center(
       child: Text(
-        AppLocalizations.of(context).translate('home_tv_no_post_found'),
+        _languageStore.language.home_tv_no_post_found,
       ),
     );
   }
@@ -276,7 +276,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
       if (message.isNotEmpty) {
         FlushbarHelper.createError(
           message: message,
-          title: AppLocalizations.of(context).translate('home_tv_error'),
+          title: _languageStore.language.home_tv_error,
           duration: Duration(seconds: 3),
         )
           ..show(context);

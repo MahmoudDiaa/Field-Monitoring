@@ -1,10 +1,11 @@
 import 'dart:async';
 
+import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/sharedpref/constants/preferences.dart';
-import '../../utils/locale/app_localization.dart';
 import '../../utils/routes/routes.dart';
 import '../constants/color_constants.dart';
 import '../constants/colors.dart';
@@ -17,6 +18,7 @@ class SplashScreen2 extends StatefulWidget {
 }
 
 class _SplashScreen2State extends State<SplashScreen2> {
+  late LanguageStore _languageStore;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +66,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
                     left: Dimensions.marginSize * 2,
                     right: Dimensions.marginSize * 2),
                 child: Text(
-                    AppLocalizations.of(context).translate('loading'),
+                    _languageStore.language.loading,
                   style: TextStyle(
                       fontSize: Dimensions.largeTextSize, color: Colors.white),
                   textAlign: TextAlign.center,
@@ -84,6 +86,13 @@ class _SplashScreen2State extends State<SplashScreen2> {
   startTimer() {
     var _duration = Duration(milliseconds: 2000);
     return Timer(_duration, navigate);
+  }
+
+  @override
+  void didChangeDependencies() {
+    _languageStore=Provider.of<LanguageStore>(context);
+    super.didChangeDependencies();
+
   }
 
   navigate() async {

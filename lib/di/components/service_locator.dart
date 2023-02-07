@@ -31,7 +31,6 @@ import '../../stores/incident_form/incident_form_store.dart';
 import '../../stores/login_form/login_form_store.dart';
 import '../../stores/priority/priority_store.dart';
 import '../../stores/subcategory/subcategory_store.dart';
-
 final getIt = GetIt.instance;
 
 Future<void> setupLocator() async {
@@ -43,6 +42,7 @@ Future<void> setupLocator() async {
       .registerSingletonAsync<AppDatabase>(() => LocalModule.provideDatabase());
   getIt.registerSingletonAsync<SharedPreferences>(
       () => LocalModule.provideSharedPreferences());
+  // getIt.registerSingleton<AppLocalizations>(LocalModule.provideLang(context));
 
   // singletons:----------------------------------------------------------------
   getIt.registerSingleton(

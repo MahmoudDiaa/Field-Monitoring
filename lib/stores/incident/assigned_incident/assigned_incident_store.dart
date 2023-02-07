@@ -9,7 +9,7 @@ import '../../../utils/dio/dio_error_util.dart';
 
 part 'assigned_incident_store.g.dart';
 
-class AssignedIncidentStore = _AssignedIncidentStore with _$IncidentStore;
+class AssignedIncidentStore = _AssignedIncidentStore with _$AssignedIncidentStore;
 
 abstract class _AssignedIncidentStore with Store {
 

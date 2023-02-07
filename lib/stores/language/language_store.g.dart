@@ -36,11 +36,11 @@ mixin _$LanguageStore on _LanguageStore, Store {
       ActionController(name: '_LanguageStore', context: context);
 
   @override
-  void changeLanguage(String value) {
+  void changeLanguage(String value, BuildContext context) {
     final _$actionInfo = _$_LanguageStoreActionController.startAction(
         name: '_LanguageStore.changeLanguage');
     try {
-      return super.changeLanguage(value);
+      return super.changeLanguage(value, context);
     } finally {
       _$_LanguageStoreActionController.endAction(_$actionInfo);
     }
@@ -52,17 +52,6 @@ mixin _$LanguageStore on _LanguageStore, Store {
         name: '_LanguageStore.getCode');
     try {
       return super.getCode();
-    } finally {
-      _$_LanguageStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  String? getLanguage() {
-    final _$actionInfo = _$_LanguageStoreActionController.startAction(
-        name: '_LanguageStore.getLanguage');
-    try {
-      return super.getLanguage();
     } finally {
       _$_LanguageStoreActionController.endAction(_$actionInfo);
     }

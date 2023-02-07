@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +10,6 @@ import '../../../constants/enums.dart';
 import '../../../models/incident/incident.dart';
 import '../../../models/subcategory/subcategory.dart';
 import '../../../stores/incident/created_incident/created_incident_store.dart';
-import '../../../utils/locale/app_localization.dart';
 import '../../../widgets/incident/incident_item_details.dart';
 import '../../../widgets/incident/incident_list_widget.dart';
 import '../../../widgets/subcategories_select.dart';
@@ -41,13 +41,13 @@ class _CreatedIncidentListScreenState extends State<CreatedIncidentListScreen> {
   var selectedCatId;
   var selectedSubCatId;
 
-  late AppLocalizations _appLocalizations;
+  late LanguageStore _languageStore;
 
   @override
   void didChangeDependencies() {
-    _appLocalizations = AppLocalizations.of(context);
     _subcategoryStreamController = StreamController<SubCategory?>();
     super.didChangeDependencies();
+    _languageStore = Provider.of<LanguageStore>(context);
   }
 
   StreamController<SubCategory?>? _subcategoryStreamController;
@@ -78,7 +78,7 @@ class _CreatedIncidentListScreenState extends State<CreatedIncidentListScreen> {
                     padding:
                         const EdgeInsets.only(right: Dimensions.marginSize),
                     child: Text(
-                      '${_appLocalizations.translate('myCreatedIncidents')}',
+                      '${_languageStore.language.myCreatedIncidents}',
                       style: TextStyle(
                           fontSize: Dimensions.extraLargeTextSize,
                           color: Colors.black,
@@ -102,7 +102,7 @@ class _CreatedIncidentListScreenState extends State<CreatedIncidentListScreen> {
                                     color: Colors.black,
                                   ),
                                   Text(
-                                    Strings.back,
+                                    _languageStore.language.back,
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: Dimensions.largeTextSize),
@@ -150,7 +150,7 @@ class _CreatedIncidentListScreenState extends State<CreatedIncidentListScreen> {
                         ? Padding(
                             padding: const EdgeInsets.only(top: 15.0),
                             child: Text(
-                                '${_appLocalizations.translate('selectSubCategory')}'),
+                                '${_languageStore.language.selectSubCategory}'),
                           )
                         : Container(
                             height: MediaQuery.of(context).size.height - 300,

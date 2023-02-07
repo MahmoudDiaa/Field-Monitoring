@@ -1,27 +1,23 @@
 import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:boilerplate/ui/authentication/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/enums.dart';
 import '../../data/respository/user_repository.dart';
-import '../../data/sharedpref/constants/preferences.dart';
 import '../../stores/login_form/login_form_store.dart';
 import '../../stores/theme/theme_store.dart';
 import '../../utils/device/device_utils.dart';
-import '../../utils/locale/app_localization.dart';
 import '../../utils/routes/routes.dart';
-import '../../widgets/navigation/back_widget.dart';
 import '../../widgets/progress_indicator/progress_indicator_widget.dart';
 import '../../widgets/rounded_button_widget.dart';
 import '../../widgets/textfield_widget.dart';
 import '../constants/colors.dart';
 import '../constants/custom_style.dart';
 import '../constants/dimensions.dart';
-import '../constants/strings.dart';
 
 class SignUpFormWidget extends StatefulWidget {
   SignUpFormWidget();
@@ -41,6 +37,7 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
 
   //stores:---------------------------------------------------------------------
   late ThemeStore _themeStore;
+  late LanguageStore _languageStore;
 
   //focus node:-----------------------------------------------------------------
   late FocusNode _passwordFocusNode;
@@ -65,6 +62,7 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _themeStore = Provider.of<ThemeStore>(context);
+    _languageStore =Provider.of<LanguageStore>(context);
   }
 
   @override
@@ -80,7 +78,7 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
     return Observer(
       builder: (context) {
         return TextFieldWidget(
-          hint: AppLocalizations.of(context).translate('login_et_user_email'),
+          hint:_languageStore.language.login_et_user_email,
           inputType: TextInputType.emailAddress,
           icon: Icons.email,
           iconColor: _themeStore.darkMode ? Colors.white70 : Colors.black54,
@@ -104,7 +102,7 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
       builder: (context) {
         return TextFieldWidget(
           hint:
-              AppLocalizations.of(context).translate('login_et_user_firstname'),
+              _languageStore.language.login_et_user_firstname,
           inputType: TextInputType.name,
           icon: Icons.person,
           iconColor: _themeStore.darkMode ? Colors.white70 : Colors.black54,
@@ -155,7 +153,7 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
       builder: (context) {
         return TextFieldWidget(
           hint:
-              AppLocalizations.of(context).translate('login_et_user_lastname'),
+              _languageStore.language.login_et_user_lastname,
           inputType: TextInputType.name,
           icon: Icons.person,
           iconColor: _themeStore.darkMode ? Colors.white70 : Colors.black54,
@@ -206,7 +204,7 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
       builder: (context) {
         return TextFieldWidget(
           hint:
-              AppLocalizations.of(context).translate('login_et_user_password'),
+              _languageStore.language.login_et_user_password,
           isObscure: true,
           padding: EdgeInsets.only(top: 16.0),
           icon: Icons.lock,
@@ -268,8 +266,7 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
     return Observer(
       builder: (context) {
         return TextFieldWidget(
-          hint: AppLocalizations.of(context)
-              .translate('login_et_user_password_again'),
+          hint:_languageStore.language.login_et_user_password_again,
           isObscure: true,
           padding: EdgeInsets.only(top: 16.0),
           icon: Icons.lock,
@@ -329,7 +326,7 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
 
   Widget _buildSignupButton() {
     return RoundedButtonWidget(
-      buttonText: AppLocalizations.of(context).translate('login_btn_sign_up'),
+      buttonText: _languageStore.language.login_btn_sign_up,
       buttonColor: CustomColor.primaryColor,
       textColor: Colors.white,
       onPressed: () async {
@@ -337,8 +334,7 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
           DeviceUtils.hideKeyboard(context);
           _signup_store.register();
         } else {
-          _showErrorMessage(AppLocalizations.of(context)
-              .translate('login_error_fill_fields'));
+          _showErrorMessage(_languageStore.language.login_error_fill_fields);
         }
       },
     );
@@ -350,7 +346,7 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
         if (message.isNotEmpty) {
           FlushbarHelper.createError(
             message: message,
-            title: AppLocalizations.of(context).translate('home_tv_error'),
+            title: _languageStore.language.home_tv_error,
             duration: Duration(seconds: 3),
           )..show(context);
         }
@@ -388,7 +384,7 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
                         padding: const EdgeInsets.only(
                             top: Dimensions.heightSize * 3),
                         child: Text(
-                          AppLocalizations.of(context).translate('newAccount'),
+                          _languageStore.language.newAccount,
                           style: TextStyle(
                               fontSize: Dimensions.extraLargeTextSize * 1.2,
                               color: Colors.black),
@@ -432,14 +428,12 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                AppLocalizations.of(context)
-                                    .translate('alreadyHaveAccount'),
+                               _languageStore.language.alreadyHaveAccount,
                                 style: CustomStyle.textStyle,
                               ),
                               GestureDetector(
                                 child: Text(
-                                  AppLocalizations.of(context)
-                                      .translate('login'),
+                                  _languageStore.language.login,
                                   style: TextStyle(
                                       color: CustomColor.primaryColor,
                                       fontWeight: FontWeight.bold),
@@ -475,8 +469,8 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
   Widget navigate(BuildContext context) {
     Future.delayed(Duration(milliseconds: 0), () {
       FlushbarHelper.createSuccess(
-        message: AppLocalizations.of(context).translate('afterCreateAccount'),
-        title: AppLocalizations.of(context).translate('successMessageTitle'),
+        message: _languageStore.language.afterCreateAccount,
+        title: _languageStore.language.successMessageTitle,
         duration: Duration(seconds: 3),
       )..show(context).then((value) {
           Future.delayed(Duration(milliseconds: 0), () {

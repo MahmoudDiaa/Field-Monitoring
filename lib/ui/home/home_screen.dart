@@ -1,12 +1,13 @@
+import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:boilerplate/ui/incidents/assigned_incidents/assigned_incident_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 
 import '../../constants/enums.dart';
 import '../../data/sharedpref/shared_preference_helper.dart';
 import '../../models/category/category.dart';
-import '../../utils/locale/app_localization.dart';
 import '../../widgets/categories_select.dart';
 import '../barber_details/barber_details_screen.dart';
 import '../constants/colors.dart';
@@ -27,11 +28,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchController = TextEditingController();
   SharedPreferenceHelper? sharedPreferenceHelper;
+  late LanguageStore _languageStore;
 
   @override
   void didChangeDependencies() {
     sharedPreferenceHelper = GetIt.instance<SharedPreferenceHelper>();
     super.didChangeDependencies();
+    _languageStore=Provider.of<LanguageStore>(context);
   }
 
   @override
@@ -143,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 30,
                           ),
                           Text(
-                            '${AppLocalizations.of(context).translate('hello')}: ${sharedPreferenceHelper?.authUser?.user?.fullName}  ',
+                            '${_languageStore.language.hello}: ${sharedPreferenceHelper?.authUser?.user?.fullName}  ',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: Dimensions.extraLargeTextSize,

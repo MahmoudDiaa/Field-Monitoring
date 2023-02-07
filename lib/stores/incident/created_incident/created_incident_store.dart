@@ -10,7 +10,7 @@ import '../../../utils/dio/dio_error_util.dart';
 
 part 'created_incident_store.g.dart';
 
-class CreatedIncidentStore = _CreatedIncidentStore with _$IncidentStore;
+class CreatedIncidentStore = _CreatedIncidentStore with _$CreatedIncidentStore;
 
 abstract class _CreatedIncidentStore with Store {
   // repository instance

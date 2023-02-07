@@ -1,29 +1,20 @@
 import 'dart:async';
 
 import 'package:boilerplate/models/category/category.dart';
-import 'package:boilerplate/models/incident/incident_image.dart';
-import 'package:boilerplate/ui/create_incident/create_incident_step2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../constants/enums.dart';
 import '../../models/subcategory/subcategory.dart';
 import '../../stores/incident_form/incident_form_store.dart';
 import '../../stores/language/language_store.dart';
 import '../../stores/theme/theme_store.dart';
-import '../../utils/locale/app_localization.dart';
-import '../../widgets/categories_select.dart';
 import '../../widgets/google_map/place_picker_widget.dart';
 import '../../widgets/media_picker_widget.dart';
 import '../../widgets/navigation/back_widget.dart';
-import '../../widgets/subcategories_select.dart';
 import '../constants/colors.dart';
 import '../constants/dimensions.dart';
-import '../constants/strings.dart';
 import 'create_incident_step3.dart';
 
 class IncidentFormStep2 extends StatefulWidget {
@@ -129,7 +120,7 @@ class _IncidentFormStep2State extends State<IncidentFormStep2> {
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              AppLocalizations.of(context).translate('step2'),
+                              _languageStore.language.step2,
                               style: TextStyle(
                                   fontSize: Dimensions.extraLargeTextSize * 1.2,
                                   color: Colors.black),
@@ -195,8 +186,7 @@ class _IncidentFormStep2State extends State<IncidentFormStep2> {
                                 padding: const EdgeInsets.only(
                                     right: Dimensions.marginSize),
                                 child: Text(
-                                  AppLocalizations.of(context)
-                                      .translate('theImages'),
+                                  _languageStore.language.theImages,
                                   style: TextStyle(
                                       fontSize: Dimensions.extraLargeTextSize,
                                       color: Colors.black,
@@ -254,8 +244,7 @@ class _IncidentFormStep2State extends State<IncidentFormStep2> {
                           padding: const EdgeInsets.only(
                               right: Dimensions.marginSize),
                           child: Text(
-                            AppLocalizations.of(context)
-                                .translate('theLocation'),
+                            _languageStore.language.theLocation,
                             style: TextStyle(
                                 fontSize: Dimensions.extraLargeTextSize,
                                 color: Colors.black,
@@ -488,7 +477,7 @@ class _IncidentFormStep2State extends State<IncidentFormStep2> {
                     topRight: Radius.circular(Dimensions.radius))),
             child: Center(
               child: Text(
-                AppLocalizations.of(context).translate('next'),
+                _languageStore.language.next,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: Dimensions.largeTextSize,

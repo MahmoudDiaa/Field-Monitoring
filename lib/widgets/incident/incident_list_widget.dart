@@ -131,8 +131,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
       builder: (context) {
         return incidentStore.loading
             ? CustomProgressIndicatorTextWidget(
-                message: AppLocalizations.of(context)
-                    .translate('loadingIncidentList'),
+                message: _languageStore.language.loadingIncidentList,
               )
             : Material(child: _incidentView());
       },
@@ -240,7 +239,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
                 builder: (context) {
                   return incidentStore.loadingMore
                       ? Text(
-                          AppLocalizations.of(context).translate('gettingMore'))
+                          _languageStore.language.gettingMore)
                       : TextButton(
                           onPressed: () {
                             if (!incidentStore.loading &&
@@ -252,8 +251,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
                                     incidentId: widget.incidentId),
                               );
                           },
-                          child: Text(AppLocalizations.of(context)
-                              .translate('loadmore')));
+                          child: Text(_languageStore.language.loadMore));
                 },
               )
             ],
@@ -266,9 +264,9 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
                 image: null,
                 packageImage: PackageImage.Image_1,
                 title:
-                    '${AppLocalizations.of(context).translate('home_tv_no_post_found')}',
+                    '${_languageStore.language.home_tv_no_post_found}',
                 subTitle:
-                    '${AppLocalizations.of(context).translate('home_tv_no_post_found_line2')}${widget.subCategoryId}',
+                    '${_languageStore.language.home_tv_no_post_found_line2}${widget.subCategoryId}',
                 titleTextStyle: TextStyle(
                   fontSize: 22,
                   color: Color(0xff9da9c7),
@@ -284,7 +282,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
             //   child: Column(
             //     children: [
             //       Text(
-            //         AppLocalizations.of(context).translate('home_tv_no_post_found'),
+            //         _languageStore.language.home_tv_no_post_found'),
             //       ),
             //     ],
             //   ),
@@ -306,7 +304,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
           )
         : Center(
             child: Text(
-              AppLocalizations.of(context).translate('home_tv_no_post_found'),
+              _languageStore.language.home_tv_no_post_found,
             ),
           );
   }
@@ -405,8 +403,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
                               Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, err) => Center(
                                   child: Text(
-                                AppLocalizations.of(context)
-                                    .translate('cannotGetImage'),
+                                _languageStore.language.cannotGetImage,
                               )))
 
                       // Image.network(
@@ -494,7 +491,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
       if (message.isNotEmpty) {
         FlushbarHelper.createError(
           message: message,
-          title: AppLocalizations.of(context).translate('home_tv_error'),
+          title: _languageStore.language.home_tv_error,
           duration: Duration(seconds: 0),
         )..show(context);
       }

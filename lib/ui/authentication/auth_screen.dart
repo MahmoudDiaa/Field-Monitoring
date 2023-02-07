@@ -1,9 +1,10 @@
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:boilerplate/ui/authentication/signup_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/enums.dart';
-import '../../utils/locale/app_localization.dart';
+import '../../stores/language/language_store.dart';
 import '../constants/colors.dart';
 import 'change_password_widget.dart';
 import 'login_widget.dart';
@@ -25,6 +26,7 @@ class AuthenticationScreen extends StatefulWidget {
 
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
   // ignore: close_sinks
+  late LanguageStore _languageStore;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
           if (message.isNotEmpty) {
             FlushbarHelper.createError(
               message: message,
-              title: AppLocalizations.of(context).translate('home_tv_error'),
+              title:_languageStore.language.home_tv_error,
               duration: Duration(seconds: 2),
             )..show(context);
           }
@@ -64,5 +66,11 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _languageStore =Provider.of<LanguageStore>(context);
   }
 }

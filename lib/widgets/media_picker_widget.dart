@@ -10,8 +10,10 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
+import '../stores/language/language_store.dart';
 import '../utils/locale/app_localization.dart';
 
 class MediaPickerWidget extends StatefulWidget {
@@ -61,7 +63,7 @@ class MediaPickerWidget extends StatefulWidget {
 
 class _MediaPickerWidgetState extends State<MediaPickerWidget> {
   List<XFile>? _imageFileList;
-
+late LanguageStore _languageStore;
   void _onImageListChanged() {
     widget.onImageListChanged(_imageFileList ?? <XFile>[]);
     streamController.add(_imageFileList ?? <XFile>[]);
@@ -74,6 +76,13 @@ class _MediaPickerWidgetState extends State<MediaPickerWidget> {
     }
     _onImageListChanged();
     // _imageFileList = value == null ? null : <XFile>[value];
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  _languageStore =Provider.of<LanguageStore>(context);
+
   }
 
   dynamic _pickImageError;
@@ -268,7 +277,7 @@ class _MediaPickerWidgetState extends State<MediaPickerWidget> {
                       streamController.add(_imageFileList!);
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
-                              '${AppLocalizations.of(context).translate('imageDeleted')}')));
+                              '${_languageStore.language.imageDeleted}')));
                     },
                     child: Semantics(
                       label: 'image_picker_example_picked_image',
@@ -463,7 +472,7 @@ class _MediaPickerWidgetState extends State<MediaPickerWidget> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
-                '${AppLocalizations.of(context).translate('mediaPickerDialogTitle')}'),
+                '${_languageStore.language.mediaPickerDialogTitle}'),
             content: Center(
               child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
                   ? FutureBuilder<void>(
@@ -474,7 +483,7 @@ class _MediaPickerWidgetState extends State<MediaPickerWidget> {
                           case ConnectionState.none:
                           case ConnectionState.waiting:
                             return Text(
-                              '${AppLocalizations.of(context).translate('noMediaMessage')}',
+                              '${_languageStore.language.noMediaMessage}',
                               textAlign: TextAlign.center,
                             );
                           case ConnectionState.done:
@@ -487,7 +496,7 @@ class _MediaPickerWidgetState extends State<MediaPickerWidget> {
                               );
                             } else {
                               return Text(
-                                '${AppLocalizations.of(context).translate('noMediaMessage')}',
+                                '${_languageStore.language.noMediaMessage}',
                                 textAlign: TextAlign.center,
                               );
                             }

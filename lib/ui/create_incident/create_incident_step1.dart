@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:boilerplate/models/category/category.dart';
 import 'package:boilerplate/ui/create_incident/create_incident_step2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,12 +12,10 @@ import '../../models/subcategory/subcategory.dart';
 import '../../stores/incident_form/incident_form_store.dart';
 import '../../stores/language/language_store.dart';
 import '../../stores/theme/theme_store.dart';
-import '../../utils/locale/app_localization.dart';
 import '../../widgets/categories_select.dart';
 import '../../widgets/subcategories_select.dart';
 import '../constants/colors.dart';
 import '../constants/dimensions.dart';
-import '../constants/strings.dart';
 
 class IncidentFormStep1 extends StatefulWidget {
   const IncidentFormStep1({Key? key}) : super(key: key);
@@ -115,7 +112,7 @@ class _IncidentFormStep1State extends State<IncidentFormStep1> {
                       child: Container(
                         width: MediaQuery.of(context).size.width,
                         child: Text(
-                          AppLocalizations.of(context).translate('newIncident'),
+                          _languageStore.language.newIncident,
                           style: TextStyle(
                               fontSize: Dimensions.extraLargeTextSize * 1.2,
                               color: Colors.black),
@@ -180,8 +177,7 @@ class _IncidentFormStep1State extends State<IncidentFormStep1> {
                             padding: const EdgeInsets.only(
                                 right: Dimensions.marginSize),
                             child: Text(
-                              AppLocalizations.of(context)
-                                  .translate('mainCategory'),
+                              _languageStore.language.mainCategory,
                               style: TextStyle(
                                   fontSize: Dimensions.extraLargeTextSize,
                                   color: Colors.black,
@@ -235,8 +231,7 @@ class _IncidentFormStep1State extends State<IncidentFormStep1> {
                             validator: (category) {
                               return _incidentFormStore.incident.categoryId ==
                                       null
-                                  ? AppLocalizations.of(context)
-                                      .translate('selectSubCategory')
+                                  ? _languageStore.language.selectSubCategory
                                   : null;
                             },
 
@@ -432,7 +427,7 @@ class _IncidentFormStep1State extends State<IncidentFormStep1> {
                     topRight: Radius.circular(Dimensions.radius))),
             child: Center(
               child: Text(
-                AppLocalizations.of(context).translate('next'),
+                _languageStore.language.next,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: Dimensions.largeTextSize,

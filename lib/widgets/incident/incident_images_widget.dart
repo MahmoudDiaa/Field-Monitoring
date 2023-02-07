@@ -1,7 +1,9 @@
+import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:boilerplate/utils/locale/app_localization.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/incident/incident.dart';
 import 'full-screen-slider.dart';
@@ -16,6 +18,15 @@ class IncidentImagesWidget extends StatefulWidget {
 }
 
 class _IncidentImagesWidgetState extends State<IncidentImagesWidget> {
+  late LanguageStore _languageStore;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _languageStore= Provider.of<LanguageStore>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final double carouselHeight = MediaQuery.of(context).size.height * 0.6;
@@ -47,7 +58,7 @@ class _IncidentImagesWidgetState extends State<IncidentImagesWidget> {
                                 placeholder: (context, url) =>
                                     Center(child: CircularProgressIndicator()),
                                 errorWidget: (context, url, err) => Center(
-                                    child: Text('حاول تحميل الصورة مرة أخرى.')))
+                                    child: Text(_languageStore.language.tryLoadAgain)))
 
                             // Center(
                             //     child: Image.network(
@@ -60,8 +71,7 @@ class _IncidentImagesWidgetState extends State<IncidentImagesWidget> {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => FullscreenSliderDemo(
                                         widget.incident.images,
-                                        title: AppLocalizations.of(context)
-                                            .translate('incidentImages'),
+                                        title: _languageStore.language.incidentImages,
                                       )));
                             },
                           ),
@@ -71,7 +81,7 @@ class _IncidentImagesWidgetState extends State<IncidentImagesWidget> {
             )
           : Center(
               child: Text(
-                  AppLocalizations.of(context).translate('noIncidentImages'))),
+                  _languageStore.language.noIncidentImages)),
     );
   }
 }

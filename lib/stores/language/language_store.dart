@@ -1,7 +1,12 @@
 import 'package:boilerplate/data/repository.dart';
 import 'package:boilerplate/models/language/Language.dart';
 import 'package:boilerplate/stores/error/error_store.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:mobx/mobx.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 part 'language_store.g.dart';
 
@@ -17,16 +22,13 @@ abstract class _LanguageStore with Store {
   final ErrorStore errorStore = ErrorStore();
 
   // supported languages
-  List<Language> supportedLanguages = [
-    Language(code: 'EG', locale: 'ar', language: 'عربي'),
-    Language(code: 'US', locale: 'en', language: 'English'),
-    //Language(code: 'DK', locale: 'da', language: 'Danish'),
-    // Language(code: 'ES', locale: 'es', language: 'España'),
-  ];
+  List<Language> supportedLanguages = AppLocalizations.supportedLocales
+      .map((e) => Language(code: e.countryCode,language: e.languageCode,locale: e.toString()))
+      .toList();
 
   // constructor:---------------------------------------------------------------
   _LanguageStore(Repository repository) : this._repository = repository {
-    init();
+    // init();
   }
 
   // store variables:-----------------------------------------------------------
@@ -36,9 +38,11 @@ abstract class _LanguageStore with Store {
   @computed
   String get locale => _locale;
 
+   late AppLocalizations language;
+
   // actions:-------------------------------------------------------------------
   @action
-  void changeLanguage(String value) {
+  void changeLanguage(String value,BuildContext context) {
     _locale = value;
     _repository.changeLanguage(value).then((_) {
       // write additional logic here
@@ -63,19 +67,13 @@ abstract class _LanguageStore with Store {
 
     return code;
   }
-
-  @action
-  String? getLanguage() {
-    return supportedLanguages[supportedLanguages
-            .indexWhere((language) => language.locale == _locale)]
-        .language;
-  }
-
   // general:-------------------------------------------------------------------
-  void init() async {
+  void init(BuildContext ctx)  {
+    language = AppLocalizations.of(ctx)!;
     // getting current language from shared preference
     if (_repository.currentLanguage != null) {
       _locale = _repository.currentLanguage!;
+
     }
   }
 

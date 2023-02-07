@@ -5,7 +5,7 @@ import '../../data/repository.dart';
 import '../../stores/language/language_store.dart';
 import '../../ui/constants/colors.dart';
 import '../../ui/constants/dimensions.dart';
-import '../../utils/locale/app_localization.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BackWidget extends StatefulWidget {
   @override
@@ -36,7 +36,7 @@ class _BackWidgetState extends State<BackWidget> {
                     color: Colors.white,
                   ),
                   Text(
-                    AppLocalizations.of(context).translate('back'),
+                    AppLocalizations.of(context)!.back,
                     style: TextStyle(
                         color: Colors.white, fontSize: Dimensions.largeTextSize),
                   )

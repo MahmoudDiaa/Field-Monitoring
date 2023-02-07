@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -10,8 +9,6 @@ import '../../stores/language/language_store.dart';
 import '../../ui/constants/colors.dart';
 import '../../ui/constants/custom_style.dart';
 import '../../ui/constants/dimensions.dart';
-import '../../utils/locale/app_localization.dart';
-import '../../utils/map/map_utils.dart';
 import 'incident-employee-actions.dart';
 import 'incident-map-marker.dart';
 import 'incident-mqawel-actions.dart';
@@ -62,8 +59,7 @@ class _AboutIncidentWidgetState extends State<AboutIncidentWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          AppLocalizations.of(context).translate('notes'),
+        Text(_languageStore.language.notes,
           style: TextStyle(
               color: Colors.black,
               fontSize: Dimensions.defaultTextSize,
@@ -75,7 +71,7 @@ class _AboutIncidentWidgetState extends State<AboutIncidentWidget> {
         Center(
           child: Text(
             widget.incident.notes ??
-                AppLocalizations.of(context).translate('noNotes'),
+                _languageStore.language.noNotes,
             style: CustomStyle.textStyle,
           ),
         ),
@@ -160,7 +156,7 @@ class _AboutIncidentWidgetState extends State<AboutIncidentWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AppLocalizations.of(context).translate('incidentLocation'),
+          _languageStore.language.incidentLocation,
           style: TextStyle(
               color: Colors.black,
               fontSize: Dimensions.defaultTextSize,
@@ -192,8 +188,7 @@ class _AboutIncidentWidgetState extends State<AboutIncidentWidget> {
                   },
                 )
               : Center(
-                  child: Text(AppLocalizations.of(context)
-                      .translate('incidentLocationNotAvailable'))),
+                  child: Text(_languageStore.language.incidentLocationNotAvailable)),
         ),
         SizedBox(
           height: Dimensions.heightSize,
@@ -246,7 +241,7 @@ class _AboutIncidentWidgetState extends State<AboutIncidentWidget> {
         //         color: CustomColor.primaryColor,
         //       ),
         //       label: Text(
-        //           AppLocalizations.of(context).translate('openGoogleMap'))),
+        //           _languageStore.language.openGoogleMap'))),
         // ]),
       ],
     );

@@ -1,15 +1,14 @@
-import 'dart:io';
 
+import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/incident/incident.dart';
 import '../../ui/constants/colors.dart';
 import '../../ui/constants/custom_style.dart';
 import '../../ui/constants/dimensions.dart';
-import '../../utils/locale/app_localization.dart';
-import '../../utils/map/map_utils.dart';
 
 class IncidentTransactionsWidget extends StatefulWidget {
   final Incident incident;
@@ -22,6 +21,7 @@ class IncidentTransactionsWidget extends StatefulWidget {
 }
 
 class _IncidentTransactionsWidgetState extends State<IncidentTransactionsWidget> {
+  late LanguageStore _languageStore;
   @override
   Widget build(BuildContext context) {
 
@@ -51,7 +51,7 @@ class _IncidentTransactionsWidgetState extends State<IncidentTransactionsWidget>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AppLocalizations.of(context).translate('notes'),
+          _languageStore.language.notes,
           style: TextStyle(
               color: Colors.black,
               fontSize: Dimensions.defaultTextSize,
@@ -63,7 +63,7 @@ class _IncidentTransactionsWidgetState extends State<IncidentTransactionsWidget>
         Center(
           child: Text(
             widget.incident.notes ??
-                AppLocalizations.of(context).translate('noNotes'),
+                _languageStore.language.noNotes,
             style: CustomStyle.textStyle,
           ),
         ),
@@ -139,7 +139,7 @@ class _IncidentTransactionsWidgetState extends State<IncidentTransactionsWidget>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AppLocalizations.of(context).translate('incidentLocation'),
+          _languageStore.language.incidentLocation,
           style: TextStyle(
               color: Colors.black,
               fontSize: Dimensions.defaultTextSize,
@@ -167,8 +167,7 @@ class _IncidentTransactionsWidgetState extends State<IncidentTransactionsWidget>
                   },
                 )
               : Center(
-                  child: Text(AppLocalizations.of(context)
-                      .translate('incidentLocationNotAvailable'))),
+                  child: Text(_languageStore.language.incidentLocationNotAvailable)),
         ),
         SizedBox(
           height: Dimensions.heightSize,
@@ -202,7 +201,7 @@ class _IncidentTransactionsWidgetState extends State<IncidentTransactionsWidget>
                 color: CustomColor.primaryColor,
               ),
               label: Text(
-                  AppLocalizations.of(context).translate('openGoogleMap'))),
+                  _languageStore.language.openGoogleMap)),
         ]),
       ],
     );
@@ -220,5 +219,12 @@ class _IncidentTransactionsWidgetState extends State<IncidentTransactionsWidget>
     //       title: widget.incident.address ?? 'Incident Address',
     //     );
     // } catch (d) {}
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  _languageStore = Provider.of(context);
+    
   }
 }

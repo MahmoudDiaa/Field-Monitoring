@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/locale/app_localization.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomProgressIndicatorTextWidget extends StatelessWidget {
   String? message;
@@ -10,7 +10,7 @@ class CustomProgressIndicatorTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     this.message =
-        this.message ?? AppLocalizations.of(context).translate('loading');
+        this.message ?? AppLocalizations.of(context)!.loading;
     return Align(
       alignment: Alignment.center,
       child: Container(

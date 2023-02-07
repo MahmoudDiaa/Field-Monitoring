@@ -7,7 +7,7 @@ import '../../constants/enums.dart';
 import '../../data/sharedpref/shared_preference_helper.dart';
 import '../../stores/incident_form/incident_form_store.dart';
 import '../../ui/sdad/incident_sdad_screen.dart';
-import '../../utils/locale/app_localization.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MqawelActionButtons extends StatefulWidget {
   final Incident incident;
@@ -65,7 +65,7 @@ class _MqawelActionButtonsState extends State<MqawelActionButtons> {
                     widget.onSdadDone!(result);
                 },
                 child: Text(
-                    '${AppLocalizations.of(context).translate('incidentSdsd')}'),
+                    '${AppLocalizations.of(context)!.incidentSdsd}'),
               ),
             ],
           )

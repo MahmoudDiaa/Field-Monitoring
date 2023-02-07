@@ -10,7 +10,7 @@ import '../../../utils/dio/dio_error_util.dart';
 
 part 'supervised_incident_store.g.dart';
 
-class SupervisedIncidentStore = _SupervisedIncidentStore with _$IncidentStore;
+class SupervisedIncidentStore = _SupervisedIncidentStore with _$SupervisedIncidentStore;
 
 abstract class _SupervisedIncidentStore with Store {
   // repository instance

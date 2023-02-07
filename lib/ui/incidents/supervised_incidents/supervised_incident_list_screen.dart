@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:boilerplate/stores/incident/supervised_incident/supervised_incident_store.dart';
+import 'package:boilerplate/stores/language/language_store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/enums.dart';
 import '../../../models/incident/incident.dart';
 import '../../../models/subcategory/subcategory.dart';
-import '../../../utils/locale/app_localization.dart';
 import '../../../widgets/incident/incident_item_details.dart';
 import '../../../widgets/incident/incident_list_widget.dart';
 import '../../../widgets/subcategories_select.dart';
@@ -37,14 +37,13 @@ class _SupervisedIncidentListScreenState extends State<SupervisedIncidentListScr
 
   var selectedCatId;
   var selectedSubCatId;
-
-  late AppLocalizations _appLocalizations;
+late LanguageStore _languageStore;
 
   @override
   void didChangeDependencies() {
-    _appLocalizations = AppLocalizations.of(context);
     _subcategoryStreamController = StreamController<SubCategory?>();
     super.didChangeDependencies();
+    _languageStore =Provider.of<LanguageStore>(context);
   }
 
   StreamController<SubCategory?>? _subcategoryStreamController;
@@ -75,7 +74,7 @@ class _SupervisedIncidentListScreenState extends State<SupervisedIncidentListScr
                     padding:
                         const EdgeInsets.only(right: Dimensions.marginSize),
                     child: Text(
-                      '${_appLocalizations.translate('mySupervisedIncidents')}',
+                      '${_languageStore.language.mySupervisedIncidents}',
                       style: TextStyle(
                           fontSize: Dimensions.extraLargeTextSize,
                           color: Colors.black,
@@ -147,7 +146,7 @@ class _SupervisedIncidentListScreenState extends State<SupervisedIncidentListScr
                         ? Padding(
                             padding: const EdgeInsets.only(top: 15.0),
                             child: Text(
-                                '${_appLocalizations.translate('selectSubCategory')}'),
+                                '${_languageStore.language.selectSubCategory}'),
                           )
                         : Container(
                             height: MediaQuery.of(context).size.height - 300,
