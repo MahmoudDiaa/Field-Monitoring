@@ -394,7 +394,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Navigator.of(context).pop();
       },
     ));
+    drawerList.add(ListTile(
+      leading: Icon(Icons.person),
+      title: Text('${_languageStore.language.profile}'),
+      onTap: () {
 
+        Navigator.of(context).pushNamed(Routes.profile);
+      },
+    ));
     if (sharedPreferenceHelper!.authUser!.user!.isHasCreatedPermission()) {
       drawerList.add(ListTile(
         leading: Icon(Icons.list_outlined),
@@ -456,6 +463,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     //   title: Text("Contact"),
     //   onTap: () {},
     // ),
+
     drawerList.add(Divider());
     drawerList.add(ListTile(
       leading: Icon(Icons.security),
@@ -463,6 +471,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
       onTap: () {
         Navigator.of(context).pop();
         Navigator.of(context).pushNamed(Routes.changePassword);
+      },
+    ));
+    drawerList.add(ListTile(
+      leading: Icon(Icons.report_rounded),
+      title: Text('${_languageStore.language.report}'),
+      onTap: () {
+
+        Navigator.of(context).pushNamed(Routes.report);
       },
     ));
     drawerList.add(ListTile(

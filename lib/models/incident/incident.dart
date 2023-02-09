@@ -262,6 +262,7 @@ class Incident {
     var images = [];
     xFiles.forEach((element) {
       images.add({
+
         'ImageBase64': "data:image/png;base64," +
             base64Encode(File(element.path).readAsBytesSync()),
         'isPrimary': false

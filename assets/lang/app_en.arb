@@ -110,5 +110,17 @@
   "loadingMainImage": "Loading Main Image",
   "unKnownState": "UnKnown State!",
   "loadingIncidents": "Loading Incidents.....",
-  "failedLoadImage": "Failed Load Image"
+  "failedLoadImage": "Failed Load Image",
+  "allDayIncidentsCount": "All Incidents Day",
+  "allMonthIncidentsCount": "All MonthIncidents",
+  "doneDayIncidentsCount": "Closed Day Incidents",
+  "doneMonthIncidentsCount": "Closed Month Incidents ",
+  "refusedDayCount": "Reopen Incidents Today",
+  "refusedMonthCount": "Reopen Incidents",
+  "dailyIncidents": "Daily Incidents",
+  "monthlyIncidents": "Monthly Incidents",
+  "report": "Report",
+  "profile":"profile",
+  "information":"Information","email": "E-mail","phone": "Phone","municipalities": "Municipalities","departments": "Departments"
+
 }

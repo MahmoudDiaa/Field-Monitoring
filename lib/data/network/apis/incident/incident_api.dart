@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:boilerplate/data/network/dio_client.dart';
 import 'package:boilerplate/models/incident/incident_list.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../../../constants/enums.dart';
 import '../../../../models/incident/incident.dart';
@@ -10,6 +11,7 @@ import '../../../../models/incident/incident_filter.dart';
 import '../../../sharedpref/shared_preference_helper.dart';
 import '../../api_response_new_entity.dart';
 import '../../constants/endpoints.dart';
+import 'dart:developer';
 
 class IncidentApi {
   final DioClient _dioClient;
@@ -54,6 +56,7 @@ class IncidentApi {
 
   Future<bool?> save(Incident incident) async {
     try {
+      log("incident form log=> ${incident.toMap()}");
       final res = await _dioClient.post(Endpoints.saveIncident,
           data: jsonEncode(incident.toMap()),
           options: Options(

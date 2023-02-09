@@ -199,6 +199,7 @@ abstract class _LoginFormStore with Store {
   // bool to check if current user is logged in
   bool isLoggedIn = false;
 
+  User user=User();
   @action
   Future login() async {
     loading = true;

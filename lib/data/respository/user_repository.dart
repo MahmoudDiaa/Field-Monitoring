@@ -69,5 +69,6 @@ class UserRepository {
   Future<void> saveAuthToken(String token) => _sharedPrefsHelper.saveAuthToken(token);
   Future<void> removeLoggedInUser() => _sharedPrefsHelper.removeLoggedInUser();
 
+  User getUserData()=>_sharedPrefsHelper.authUser!.user!;
   Future<bool> get isLoggedIn => _sharedPrefsHelper.isLoggedIn;
 }

@@ -31,6 +31,8 @@ class User {
   String? userName;
   String? email;
   dynamic mobile;
+  List<String>? department=["إدارة شرق"];
+  List<String>? municipalities=["البلديات"];
   List<String>? roles;
   List<ApiResponseNewUserUserRoles>? userRoles;
 

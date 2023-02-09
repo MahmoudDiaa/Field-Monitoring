@@ -56,6 +56,7 @@ abstract class _UserStore with Store {
   @computed
   bool get isLoading => loginFuture.status == FutureStatus.pending;
 
+
   // actions:-------------------------------------------------------------------
   @action
   Future login(String email, String password) async {
@@ -83,6 +84,11 @@ abstract class _UserStore with Store {
     _repository.saveIsLoggedIn(false);
     _repository.removeLoggedInUser();
   }
+
+  @action
+  User getUser()=>
+    _repository.getUserData();
+
 
   // general methods:-----------------------------------------------------------
   void dispose() {

@@ -97,7 +97,7 @@ Future<void> setupLocator() async {
   getIt.registerSingleton(CategoryStore(getIt<CategoryRepository>()));
   getIt.registerSingleton(SubCategoryStore(getIt<SubCategoryRepository>()));
   getIt.registerSingleton(ThemeStore(getIt<Repository>()));
-  getIt.registerSingleton(UserStore(getIt<UserRepository>()));
+  getIt.registerSingleton(UserStore(getIt<UserRepository>(),));
   getIt.registerSingleton(PriorityStore(getIt<PriorityRepository>()));
   //TODO remove this as we replace it with three another stores
   // getIt.registerSingleton(IncidentStore(getIt<IncidentRepository>()));

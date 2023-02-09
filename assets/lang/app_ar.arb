@@ -16,9 +16,8 @@
   "home_tv_posts": "المنشورات",
   "home_tv_cats": "الفئات",
   "home_tv_error": "خطأ",
-  "successMessageTitle":"عملية ناجحة",
+  "successMessageTitle": "عملية ناجحة",
   "cannotGetImage": "لم يتم تحميل الصورة",
-
   "home_tv_saving_incident": "حفظ البلاغ",
   "home_tv_no_post_found": "لا يوجد بيانات!",
   "home_tv_choose_language": "اختر اللغة",
@@ -106,12 +105,21 @@
   "incident": "بلاغ",
   "createdList": "البلاغات المنشائة",
   "assignedList": "البلاغات المسندة",
-  "supervisedList": "البلاغات المدارة"
-,"map": "الخريطة",
-  "loadingMainImage": "جاري تحميل الصورة الرئيسية","unKnownState": "حالة غير معلومة!","loadingIncidents": "جاري تعميل البلاغات...."
-,"failedLoadImage": "فشل جلب الصورة"
-
-
-
-
+  "supervisedList": "البلاغات المدارة",
+  "map": "الخريطة",
+  "loadingMainImage": "جاري تحميل الصورة الرئيسية",
+  "unKnownState": "حالة غير معلومة!",
+  "loadingIncidents": "جاري تعميل البلاغات....",
+  "failedLoadImage": "فشل جلب الصورة",
+  "allDayIncidentsCount": "مجموع البلاغات اليومي",
+  "allMonthIncidentsCount": "مجموع البلاغات الشهري",
+  "doneDayIncidentsCount": "البلاغات المسددة اليوم",
+  "doneMonthIncidentsCount": "البلاغات المسددة في الشهر",
+  "refusedDayCount": "البلاغات معادة الفتح اليوم",
+  "refusedMonthCount": "البلاغات معادة الفتح الشهري",
+  "dailyIncidents": "البلاغات اليومية",
+  "monthlyIncidents": "البلاغات الشهرية",
+  "report": "التقارير",
+  "profile": "الملف الشخصي",
+  "information":"المعلومات","email": "البريد الاكتروني","phone": "رقم الهاتف","municipalities": "البلديات","departments": "الادارات"
 }
