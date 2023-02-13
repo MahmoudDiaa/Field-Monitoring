@@ -1,5 +1,5 @@
 //TODO remove unused data class
-// import 'package:boilerplate/models/priority/priority.dart';
+// import 'package:Field_Monitoring/models/priority/priority.dart';
 //
 // class PriorityList {
 //   final List<Priority>? priorities;

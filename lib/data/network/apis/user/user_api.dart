@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:boilerplate/data/network/api_response_new_entity.dart';
-import 'package:boilerplate/data/network/dio_client.dart';
+import 'package:Field_Monitoring/data/network/api_response_new_entity.dart';
+import 'package:Field_Monitoring/data/network/dio_client.dart';
 import 'package:dio/dio.dart';
 
 import '../../../sharedpref/shared_preference_helper.dart';

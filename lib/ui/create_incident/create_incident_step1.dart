@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:boilerplate/models/category/category.dart';
-import 'package:boilerplate/ui/create_incident/create_incident_step2.dart';
+import 'package:Field_Monitoring/models/category/category.dart';
+import 'package:Field_Monitoring/ui/create_incident/create_incident_step2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

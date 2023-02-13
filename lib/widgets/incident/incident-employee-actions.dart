@@ -1,5 +1,5 @@
-import 'package:boilerplate/models/incident/incident.dart';
-import 'package:boilerplate/stores/language/language_store.dart';
+import 'package:Field_Monitoring/models/incident/incident.dart';
+import 'package:Field_Monitoring/stores/language/language_store.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';

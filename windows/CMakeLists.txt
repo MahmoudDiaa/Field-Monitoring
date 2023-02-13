@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(flutter_boilerplate_orbits LANGUAGES CXX)
+project(flutter_Field_Monitoring_orbits LANGUAGES CXX)
 
-set(BINARY_NAME "flutter_boilerplate_orbits")
+set(BINARY_NAME "flutter_Field_Monitoring_orbits")
 
 cmake_policy(SET CMP0063 NEW)
 

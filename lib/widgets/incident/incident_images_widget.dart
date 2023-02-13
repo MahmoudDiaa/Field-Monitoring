@@ -1,5 +1,5 @@
-import 'package:boilerplate/stores/language/language_store.dart';
-import 'package:boilerplate/utils/locale/app_localization.dart';
+import 'package:Field_Monitoring/stores/language/language_store.dart';
+import 'package:Field_Monitoring/utils/locale/app_localization.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';

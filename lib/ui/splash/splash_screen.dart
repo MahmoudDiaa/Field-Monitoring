@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:boilerplate/stores/language/language_store.dart';
+import 'package:Field_Monitoring/stores/language/language_store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

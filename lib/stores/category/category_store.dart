@@ -1,5 +1,5 @@
-import 'package:boilerplate/data/respository/category_repository.dart';
-import 'package:boilerplate/stores/error/error_store.dart';
+import 'package:Field_Monitoring/data/respository/category_repository.dart';
+import 'package:Field_Monitoring/stores/error/error_store.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../models/category/category.dart';

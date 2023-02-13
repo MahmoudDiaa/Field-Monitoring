@@ -1,6 +1,6 @@
-import 'package:boilerplate/constants/strings.dart';
-import 'package:boilerplate/generated/json/base/json_field.dart';
-import 'package:boilerplate/generated/json/api_response_new_entity.g.dart';
+import 'package:Field_Monitoring/constants/strings.dart';
+import 'package:Field_Monitoring/generated/json/base/json_field.dart';
+import 'package:Field_Monitoring/generated/json/api_response_new_entity.g.dart';
 import 'dart:convert';
 
 @JsonSerializable()
@@ -15,9 +15,9 @@ class LoginResponseEntity {
   LoginResponseEntity();
 
   factory LoginResponseEntity.fromJson(Map<String, dynamic> json) =>
-      $ApiResponseNewEntityFromJson(json);
+      $LoginResponseEntityFromJson(json);
 
-  Map<String, dynamic> toJson() => $ApiResponseNewEntityToJson(this);
+  Map<String, dynamic> toJson() => $LoginResponseEntityToJson(this);
 
   @override
   String toString() {
@@ -39,9 +39,9 @@ class User {
   User();
 
   factory User.fromJson(Map<String, dynamic> json) =>
-      $ApiResponseNewUserFromJson(json);
+      $UserFromJson(json);
 
-  Map<String, dynamic> toJson() => $ApiResponseNewUserToJson(this);
+  Map<String, dynamic> toJson() => $UserToJson(this);
 
   //assigned is for moqawel
   bool isHasAssignedPermission() => userRoles!.any((userRole) {

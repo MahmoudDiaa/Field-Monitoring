@@ -1,10 +1,11 @@
-import 'package:boilerplate/ui/dashboard/dashboard_screen.dart';
-import 'package:boilerplate/ui/login/login.dart';
-import 'package:boilerplate/ui/profile/profile.dart';
-import 'package:boilerplate/ui/reports/reports.dart';
-import 'package:boilerplate/ui/sdad/incident_finally_sdad_screen.dart';
-import 'package:boilerplate/ui/sdad/incident_sdad_screen.dart';
-import 'package:boilerplate/ui/splash/splash.dart';
+import 'package:Field_Monitoring/ui/dashboard/dashboard_screen.dart';
+import 'package:Field_Monitoring/ui/login/login.dart';
+import 'package:Field_Monitoring/ui/notifcations/notifcations.dart';
+import 'package:Field_Monitoring/ui/profile/profile.dart';
+import 'package:Field_Monitoring/ui/reports/reports.dart';
+import 'package:Field_Monitoring/ui/sdad/incident_finally_sdad_screen.dart';
+import 'package:Field_Monitoring/ui/sdad/incident_sdad_screen.dart';
+import 'package:Field_Monitoring/ui/splash/splash.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/enums.dart';
@@ -27,6 +28,8 @@ class Routes {
   static const String dashboard = '/dashboard';
   static const String report = '/report';
   static const String profile = '/profile';
+  static const String notification = '/notification';
+  static const String notificationDetails = '/notificationDetails';
   static const String changePassword = '/changePassword';
   static const String sdadScreen = '/sdadScreen';
   static const String finallysdadScreen = '/finallySdadScreen';
@@ -50,5 +53,6 @@ class Routes {
     finallysdadScreen: (BuildContext context) => IncidentFinallySdadScreen(),
     report:(BuildContext context)=>ReportScreen(),
     profile:(BuildContext context)=>Profile(),
+    notification:(BuildContext context)=>Notifications()
   };
 }

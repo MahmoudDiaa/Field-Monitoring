@@ -1,13 +1,15 @@
-import 'package:boilerplate/constants/strings.dart';
-import 'package:boilerplate/data/repository.dart';
-import 'package:boilerplate/di/components/service_locator.dart';
-import 'package:boilerplate/stores/category/category_store.dart';
-import 'package:boilerplate/stores/incident/assigned_incident/assigned_incident_store.dart';
-import 'package:boilerplate/stores/incident/created_incident/created_incident_store.dart';
-import 'package:boilerplate/stores/language/language_store.dart';
-import 'package:boilerplate/stores/theme/theme_store.dart';
-import 'package:boilerplate/stores/user/user_store.dart';
-import 'package:boilerplate/utils/routes/routes.dart';
+import 'package:Field_Monitoring/constants/strings.dart';
+import 'package:Field_Monitoring/data/repository.dart';
+import 'package:Field_Monitoring/data/respository/notification_repository.dart';
+import 'package:Field_Monitoring/di/components/service_locator.dart';
+import 'package:Field_Monitoring/stores/category/category_store.dart';
+import 'package:Field_Monitoring/stores/incident/assigned_incident/assigned_incident_store.dart';
+import 'package:Field_Monitoring/stores/incident/created_incident/created_incident_store.dart';
+import 'package:Field_Monitoring/stores/language/language_store.dart';
+import 'package:Field_Monitoring/stores/notifcation/notification_store.dart';
+import 'package:Field_Monitoring/stores/theme/theme_store.dart';
+import 'package:Field_Monitoring/stores/user/user_store.dart';
+import 'package:Field_Monitoring/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -41,6 +43,8 @@ class MyApp extends StatelessWidget {
   final UserStore _userStore = UserStore(getIt<UserRepository>());
   final PriorityStore _priorityStore =
       PriorityStore(getIt<PriorityRepository>());
+  final NotificationStore _notificationStore =
+      NotificationStore(getIt<NotificationRepository>());
 
   //todo remove this as we replace it with three another stores
   // final IncidentStore _incidentStore =
@@ -70,6 +74,7 @@ class MyApp extends StatelessWidget {
         Provider<SupervisedIncidentStore>(
             create: (_) => _supervisedIncidentStore),
         Provider<IncidentFormStore>(create: (_) => _incidentFormStore),
+        Provider<NotificationStore>(create: (_)=>_notificationStore,)
       ],
       child: Observer(
         name: 'global-observer',

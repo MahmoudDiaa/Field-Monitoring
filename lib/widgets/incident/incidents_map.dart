@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:boilerplate/models/dashboard/dashboard.dart';
-import 'package:boilerplate/models/incident/incident.dart';
-import 'package:boilerplate/stores/incident/assigned_incident/assigned_incident_store.dart';
-import 'package:boilerplate/stores/incident/created_incident/created_incident_store.dart';
-import 'package:boilerplate/stores/incident/supervised_incident/supervised_incident_store.dart';
+import 'package:Field_Monitoring/models/dashboard/dashboard.dart';
+import 'package:Field_Monitoring/models/incident/incident.dart';
+import 'package:Field_Monitoring/stores/incident/assigned_incident/assigned_incident_store.dart';
+import 'package:Field_Monitoring/stores/incident/created_incident/created_incident_store.dart';
+import 'package:Field_Monitoring/stores/incident/supervised_incident/supervised_incident_store.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +41,8 @@ class _IncidentsMapState extends State<IncidentsMap> {
   late GoogleMapController mapController;
   final Set<Marker> markers = new Set();
   final List<DashboardWidgets> userPermissions;
-  late LanguageStore _languageStore; 
+  late LanguageStore _languageStore;
+
   // static const LatLng showLocation = const LatLng(27.7089427, 85.3086209);
 
   _IncidentsMapState(this.userPermissions);
@@ -106,15 +107,19 @@ class _IncidentsMapState extends State<IncidentsMap> {
                   ),
                   TextButton(
                       onPressed: () async {
-                        var res =
-                            await placeProvider!.updateCurrentLocation(true);
-                        if (placeProvider!.permissionGranted.toString() ==
-                            "PermissionStatus.granted") {
+                         await placeProvider!
+                            .updateCurrentLocation(true)
+                            .whenComplete(() {
                           setState(() {});
-                        }
+                        }).onError((error, stackTrace) =>
+                                {Geolocator.requestPermission()});
+
+                        // if (placeProvider!.permissionGranted.toString() ==
+                        //     "PermissionStatus.granted") {
+                        //   setState(() {});
+                        // }
                       },
-                      child: Text(
-                          '${_languageStore.language.givePermission}'))
+                      child: Text('${_languageStore.language.givePermission}'))
                 ],
               )),
             );
@@ -276,7 +281,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
   double currentDistance = 500;
   late DashboardWidgets _currentPermission;
 
-  List<double> distanceDropdown=[500,1000,1500,2000];
+  List<double> distanceDropdown = [500, 1000, 1500, 2000];
 
   @override
   Widget build(BuildContext context) {
@@ -285,7 +290,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
       loadData(targetLocation, _currentPermission);
     });
     _permissionStreamController.stream.listen((event) {
-      _currentPermission=event;
+      _currentPermission = event;
       loadData(targetLocation, event);
     });
     return FutureBuilder<PlaceProvider>(
@@ -325,23 +330,27 @@ class _IncidentsMapState extends State<IncidentsMap> {
                                         //icon: Icon(Icons.pin_drop_sharp),
                                         // dropdownColor: CustomColor.thirdColor,
                                         value: currentDistance,
-                                        items: distanceDropdown.map((distance) =>  DropdownMenuItem<double>(
-                                          child: TextButton(
-                                            onPressed: () {
-                                              if (currentDistance == distance)
-                                                return;
-                                              _streamController.add(distance);
-                                            },
-                                            child: Text(
-                                              '${distance.round()} Meter',
-                                              style: TextStyle(
-                                                color:
-                                                CustomColor.primaryColor,
-                                              ),
-                                            ),
-                                          ),
-                                          value: distance,
-                                        )).toList(),
+                                        items: distanceDropdown
+                                            .map((distance) =>
+                                                DropdownMenuItem<double>(
+                                                  child: TextButton(
+                                                    onPressed: () {
+                                                      if (currentDistance ==
+                                                          distance) return;
+                                                      _streamController
+                                                          .add(distance);
+                                                    },
+                                                    child: Text(
+                                                      '${distance.round()} Meter',
+                                                      style: TextStyle(
+                                                        color: CustomColor
+                                                            .primaryColor,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  value: distance,
+                                                ))
+                                            .toList(),
                                         onChanged: (number) {});
                                   },
                                 );
@@ -361,7 +370,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
                       Observer(
                         builder: (context) {
                           print("user permissions ${userPermissions.length}");
-                          return userPermissions.length<=1
+                          return userPermissions.length <= 1
                               ? Container()
                               : StreamBuilder<DashboardWidgets>(
                                   stream: _permissionStreamController,
@@ -370,23 +379,28 @@ class _IncidentsMapState extends State<IncidentsMap> {
                                         //icon: Icon(Icons.pin_drop_sharp),
                                         // dropdownColor: CustomColor.thirdColor,
                                         value: _currentPermission,
-                                        items: userPermissions.map((permission) => DropdownMenuItem<DashboardWidgets>(
-                                          child: TextButton(
-
-                                            onPressed: () {  },
-                                            child: Text(
-                                              permission.name,
-                                              style: TextStyle(
-                                                color: CustomColor.primaryColor,
-                                              ),
-                                            ),
-                                          ),
-                                          value: permission,
-                                        )).toList(),
+                                        items: userPermissions
+                                            .map((permission) =>
+                                                DropdownMenuItem<
+                                                    DashboardWidgets>(
+                                                  child: TextButton(
+                                                    onPressed: () {},
+                                                    child: Text(
+                                                      permission.name,
+                                                      style: TextStyle(
+                                                        color: CustomColor
+                                                            .primaryColor,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  value: permission,
+                                                ))
+                                            .toList(),
                                         onChanged: (permission) {
-                                          if(permission==_currentPermission)
+                                          if (permission == _currentPermission)
                                             return;
-                                          _permissionStreamController.add(permission!);
+                                          _permissionStreamController
+                                              .add(permission!);
                                         });
                                   },
                                 );
@@ -641,7 +655,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
       print("Supervised");
     }
     _languageStore = Provider.of<LanguageStore>(context);
-    _currentPermission=userPermissions.first;
+    _currentPermission = userPermissions.first;
     setStore(userPermissions.first);
     super.didChangeDependencies();
   }
@@ -660,7 +674,6 @@ class _IncidentsMapState extends State<IncidentsMap> {
     }
   }
 
-
   Set<Marker> getIncidentsMarkers() {
     List<Incident>? incdeints = _currentIncidentStore.incidentList == null
         ? <Incident>[]
@@ -675,7 +688,8 @@ class _IncidentsMapState extends State<IncidentsMap> {
 
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => InidentDetailsScreen(
-                          incidentId: e.id,incidentStore: _currentIncidentStore,
+                          incidentId: e.id,
+                          incidentStore: _currentIncidentStore,
                         )));
               },
               localLanguage: _languageStore.locale),
@@ -707,5 +721,4 @@ class _IncidentsMapState extends State<IncidentsMap> {
         break;
     }
   }
-
 }

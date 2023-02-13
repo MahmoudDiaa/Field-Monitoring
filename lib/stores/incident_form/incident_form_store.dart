@@ -1,5 +1,5 @@
-import 'package:boilerplate/models/incident/incident.dart';
-import 'package:boilerplate/stores/error/error_store.dart';
+import 'package:Field_Monitoring/models/incident/incident.dart';
+import 'package:Field_Monitoring/stores/error/error_store.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../constants/enums.dart';

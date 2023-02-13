@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:boilerplate/data/local/entities/incident/transaction/incident_transaction_entity.dart';
-import 'package:boilerplate/data/local/type_converter/converter.dart';
-import 'package:boilerplate/models/incident/incident.dart';
+import 'package:Field_Monitoring/data/local/entities/incident/transaction/incident_transaction_entity.dart';
+import 'package:Field_Monitoring/data/local/type_converter/converter.dart';
+import 'package:Field_Monitoring/models/incident/incident.dart';
 import 'package:floor/floor.dart';
 
 import 'incident_image_entity.dart';

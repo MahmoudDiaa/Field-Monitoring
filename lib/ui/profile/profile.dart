@@ -1,10 +1,10 @@
 //import 'dart:html';
 
-import 'package:boilerplate/data/network/api_response_new_entity.dart';
-import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
-import 'package:boilerplate/stores/language/language_store.dart';
-import 'package:boilerplate/stores/user/user_store.dart';
-import 'package:boilerplate/ui/constants/colors.dart';
+import 'package:Field_Monitoring/data/network/api_response_new_entity.dart';
+import 'package:Field_Monitoring/data/sharedpref/shared_preference_helper.dart';
+import 'package:Field_Monitoring/stores/language/language_store.dart';
+import 'package:Field_Monitoring/stores/user/user_store.dart';
+import 'package:Field_Monitoring/ui/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

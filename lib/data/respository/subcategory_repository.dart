@@ -1,7 +1,7 @@
-import 'package:boilerplate/data/local/dao/subcategory/subcategory_dao.dart';
-import 'package:boilerplate/data/local/entities/subcategory/subcategory_entity.dart';
-import 'package:boilerplate/data/local/mappers/mappers.dart';
-import 'package:boilerplate/data/network/apis/subcategories/subcategory_api.dart';
+import 'package:Field_Monitoring/data/local/dao/subcategory/subcategory_dao.dart';
+import 'package:Field_Monitoring/data/local/entities/subcategory/subcategory_entity.dart';
+import 'package:Field_Monitoring/data/local/mappers/mappers.dart';
+import 'package:Field_Monitoring/data/network/apis/subcategories/subcategory_api.dart';
 import 'package:sembast/sembast.dart';
 
 import '../../models/subcategory/subcategory.dart';

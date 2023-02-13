@@ -1,10 +1,10 @@
-import 'package:boilerplate/data/local/entities/incident/incident_entity.dart';
-import 'package:boilerplate/data/local/entities/priorities/priority_entity.dart';
-import 'package:boilerplate/data/local/entities/subcategory/subcategory_entity.dart';
-import 'package:boilerplate/data/local/entities/user_roles/user_roles.dart';
-import 'package:boilerplate/models/PriorityLevels/priorrity_level.dart';
-import 'package:boilerplate/models/incident/incident.dart';
-import 'package:boilerplate/models/subcategory/subcategory.dart';
+import 'package:Field_Monitoring/data/local/entities/incident/incident_entity.dart';
+import 'package:Field_Monitoring/data/local/entities/priorities/priority_entity.dart';
+import 'package:Field_Monitoring/data/local/entities/subcategory/subcategory_entity.dart';
+import 'package:Field_Monitoring/data/local/entities/user_roles/user_roles.dart';
+import 'package:Field_Monitoring/models/PriorityLevels/priorrity_level.dart';
+import 'package:Field_Monitoring/models/incident/incident.dart';
+import 'package:Field_Monitoring/models/subcategory/subcategory.dart';
 
 import '../../../models/category/category.dart';
 import '../../network/api_response_new_entity.dart';

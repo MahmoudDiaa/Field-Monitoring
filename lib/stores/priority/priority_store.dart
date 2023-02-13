@@ -1,6 +1,6 @@
-import 'package:boilerplate/data/respository/priority_repository.dart';
-import 'package:boilerplate/models/PriorityLevels/Priority_level_list.dart';
-import 'package:boilerplate/stores/error/error_store.dart';
+import 'package:Field_Monitoring/data/respository/priority_repository.dart';
+import 'package:Field_Monitoring/models/PriorityLevels/Priority_level_list.dart';
+import 'package:Field_Monitoring/stores/error/error_store.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../utils/dio/dio_error_util.dart';

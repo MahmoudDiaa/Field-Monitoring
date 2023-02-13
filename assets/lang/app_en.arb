@@ -120,7 +120,12 @@
   "dailyIncidents": "Daily Incidents",
   "monthlyIncidents": "Monthly Incidents",
   "report": "Report",
-  "profile":"profile",
-  "information":"Information","email": "E-mail","phone": "Phone","municipalities": "Municipalities","departments": "Departments"
+  "profile": "profile",
+  "information": "Information",
+  "email": "E-mail",
+  "phone": "Phone",
+  "municipalities": "Municipalities",
+  "departments": "Departments",
+  "notification": "Notification"
 
 }

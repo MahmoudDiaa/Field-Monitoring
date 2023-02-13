@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:boilerplate/stores/incident/supervised_incident/supervised_incident_store.dart';
-import 'package:boilerplate/stores/language/language_store.dart';
+import 'package:Field_Monitoring/stores/incident/supervised_incident/supervised_incident_store.dart';
+import 'package:Field_Monitoring/stores/language/language_store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

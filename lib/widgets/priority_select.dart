@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:boilerplate/stores/language/language_store.dart';
-import 'package:boilerplate/stores/theme/theme_store.dart';
-import 'package:boilerplate/utils/locale/app_localization.dart';
+import 'package:Field_Monitoring/stores/language/language_store.dart';
+import 'package:Field_Monitoring/stores/theme/theme_store.dart';
+import 'package:Field_Monitoring/utils/locale/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';

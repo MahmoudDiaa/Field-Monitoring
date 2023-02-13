@@ -1,5 +1,5 @@
-import 'package:boilerplate/data/network/api_response_new_entity.dart';
-import 'package:boilerplate/stores/error/error_store.dart';
+import 'package:Field_Monitoring/data/network/api_response_new_entity.dart';
+import 'package:Field_Monitoring/stores/error/error_store.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../data/respository/user_repository.dart';

@@ -1,5 +1,5 @@
-import 'package:boilerplate/models/subcategory/subcategory.dart';
-import 'package:boilerplate/models/subcategory/subcategory_query_params.dart';
+import 'package:Field_Monitoring/models/subcategory/subcategory.dart';
+import 'package:Field_Monitoring/models/subcategory/subcategory_query_params.dart';
 
 class SubCategoryList {
   List<SubCategory> subcategories;

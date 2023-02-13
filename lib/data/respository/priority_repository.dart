@@ -1,9 +1,9 @@
-import 'package:boilerplate/data/local/dao/priorities/priorities_dao.dart';
-import 'package:boilerplate/data/local/entities/priorities/priority_entity.dart';
-import 'package:boilerplate/data/local/mappers/mappers.dart';
-import 'package:boilerplate/data/network/apis/priorities/priorities_api.dart';
-import 'package:boilerplate/models/PriorityLevels/Priority_level_list.dart';
-import 'package:boilerplate/models/PriorityLevels/priorrity_level.dart';
+import 'package:Field_Monitoring/data/local/dao/priorities/priorities_dao.dart';
+import 'package:Field_Monitoring/data/local/entities/priorities/priority_entity.dart';
+import 'package:Field_Monitoring/data/local/mappers/mappers.dart';
+import 'package:Field_Monitoring/data/network/apis/priorities/priorities_api.dart';
+import 'package:Field_Monitoring/models/PriorityLevels/Priority_level_list.dart';
+import 'package:Field_Monitoring/models/PriorityLevels/priorrity_level.dart';
 import 'package:sembast/sembast.dart';
 import '../local/constants/db_constants.dart';
 

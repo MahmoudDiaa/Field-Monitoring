@@ -1,6 +1,6 @@
-import 'package:boilerplate/data/network/constants/endpoints.dart';
-import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
-import 'package:boilerplate/models/PriorityLevels/Priority_level_list.dart';
+import 'package:Field_Monitoring/data/network/constants/endpoints.dart';
+import 'package:Field_Monitoring/data/sharedpref/shared_preference_helper.dart';
+import 'package:Field_Monitoring/models/PriorityLevels/Priority_level_list.dart';
 import 'package:dio/dio.dart';
 
 import '../../dio_client.dart';

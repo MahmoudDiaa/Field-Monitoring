@@ -1,4 +1,4 @@
-import 'package:boilerplate/models/user/user.dart';
+import 'package:Field_Monitoring/models/user/user.dart';
 
 class AuthUser {
   int? expiresIn;

@@ -1,4 +1,4 @@
-import 'package:boilerplate/data/local/constants/db_constants.dart';
+import 'package:Field_Monitoring/data/local/constants/db_constants.dart';
 
 import 'package:sembast/sembast.dart';
 

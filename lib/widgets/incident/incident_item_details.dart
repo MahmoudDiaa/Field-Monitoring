@@ -1,6 +1,6 @@
 import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:boilerplate/models/incident/incident.dart';
-import 'package:boilerplate/widgets/incident/transactions_timeline.dart';
+import 'package:Field_Monitoring/models/incident/incident.dart';
+import 'package:Field_Monitoring/widgets/incident/transactions_timeline.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';

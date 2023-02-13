@@ -3,13 +3,13 @@ class Endpoints {
 
   // base url
   // static const String baseUrl = "http://jsonplaceholder.typicode.com";
-  static const String baseUrl1 = "http://51.15.23.9:8085/api/";
+  static const String baseUrl1 = "http://51.15.23.9:8052/api/";
 
   // receiveTimeout
-  static const int receiveTimeout = 15000;
+  static const Duration receiveTimeout = Duration(milliseconds: 15000);
 
   // connectTimeout
-  static const int connectionTimeout = 30000;
+  static const Duration connectionTimeout = Duration(milliseconds: 30000);
 
   // booking endpoints
   // static const String getPosts = baseUrl + "posts";
@@ -19,6 +19,7 @@ class Endpoints {
   static const String getIncident = baseUrl1 + "Incidents/";
   static const String saveIncident = baseUrl1 + "Incidents/";
   static const String getPriorities=baseUrl1+"PriorityLevels";
+  static const String getNotifications=baseUrl1+"Notifications/All";
 
   static const String doneInitially = baseUrl1 + "Incidents/DoneInitially";
 

@@ -121,5 +121,10 @@
   "monthlyIncidents": "البلاغات الشهرية",
   "report": "التقارير",
   "profile": "الملف الشخصي",
-  "information":"المعلومات","email": "البريد الاكتروني","phone": "رقم الهاتف","municipalities": "البلديات","departments": "الادارات"
+  "information": "المعلومات",
+  "email": "البريد الاكتروني",
+  "phone": "رقم الهاتف",
+  "municipalities": "البلديات",
+  "departments": "الادارات",
+  "notification": "الاشعارات"
 }

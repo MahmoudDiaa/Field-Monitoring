@@ -1,8 +1,8 @@
-import 'package:boilerplate/data/local/entities/subcategory/subcategory_entity.dart';
-import 'package:boilerplate/data/local/type_converter/converter.dart';
-import 'package:boilerplate/models/subcategory/subcategory.dart';
+import 'package:Field_Monitoring/data/local/entities/subcategory/subcategory_entity.dart';
+import 'package:Field_Monitoring/data/local/type_converter/converter.dart';
+import 'package:Field_Monitoring/models/subcategory/subcategory.dart';
 import 'package:floor/floor.dart';
-import 'package:boilerplate/models/category/category.dart';
+import 'package:Field_Monitoring/models/category/category.dart';
 
 @entity
 class CategoryEntity {

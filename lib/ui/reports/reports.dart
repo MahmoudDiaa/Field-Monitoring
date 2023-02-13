@@ -1,5 +1,5 @@
-import 'package:boilerplate/stores/language/language_store.dart';
-import 'package:boilerplate/ui/constants/colors.dart';
+import 'package:Field_Monitoring/stores/language/language_store.dart';
+import 'package:Field_Monitoring/ui/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';

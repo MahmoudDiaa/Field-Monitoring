@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.iotecksolutions" "\0"
-            VALUE "FileDescription", "flutter_boilerplate_orbits" "\0"
+            VALUE "FileDescription", "flutter_Field_Monitoring_orbits" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "flutter_boilerplate_orbits" "\0"
+            VALUE "InternalName", "flutter_Field_Monitoring_orbits" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 com.iotecksolutions. All rights reserved." "\0"
-            VALUE "OriginalFilename", "flutter_boilerplate_orbits.exe" "\0"
-            VALUE "ProductName", "flutter_boilerplate_orbits" "\0"
+            VALUE "OriginalFilename", "flutter_Field_Monitoring_orbits.exe" "\0"
+            VALUE "ProductName", "flutter_Field_Monitoring_orbits" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:Field_Monitoring/generated/json/user_roles.g.dart';
+
 import '../../../../generated/json/api_response_new_entity.g.dart';
 import '../../../../generated/json/base/json_field.dart';
 import '../../../network/api_response_new_entity.dart';

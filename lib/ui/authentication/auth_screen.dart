@@ -1,5 +1,5 @@
 import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:boilerplate/ui/authentication/signup_widget.dart';
+import 'package:Field_Monitoring/ui/authentication/signup_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

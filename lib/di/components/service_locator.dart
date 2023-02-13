@@ -1,20 +1,23 @@
-import 'package:boilerplate/data/local/database.dart';
-import 'package:boilerplate/data/network/apis/incident/incident_api.dart';
-import 'package:boilerplate/data/network/apis/priorities/priorities_api.dart';
-import 'package:boilerplate/data/network/dio_client.dart';
-import 'package:boilerplate/data/repository.dart';
-import 'package:boilerplate/data/respository/incident_repository.dart';
-import 'package:boilerplate/data/respository/priority_repository.dart';
-import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
-import 'package:boilerplate/di/module/local_module.dart';
-import 'package:boilerplate/di/module/network_module.dart';
-import 'package:boilerplate/stores/error/error_store.dart';
-import 'package:boilerplate/stores/incident/assigned_incident/assigned_incident_store.dart';
-import 'package:boilerplate/stores/incident/created_incident/created_incident_store.dart';
-import 'package:boilerplate/stores/incident/supervised_incident/supervised_incident_store.dart';
-import 'package:boilerplate/stores/language/language_store.dart';
-import 'package:boilerplate/stores/theme/theme_store.dart';
-import 'package:boilerplate/stores/user/user_store.dart';
+import 'package:Field_Monitoring/data/local/database.dart';
+import 'package:Field_Monitoring/data/network/apis/incident/incident_api.dart';
+import 'package:Field_Monitoring/data/network/apis/notification/notification_api.dart';
+import 'package:Field_Monitoring/data/network/apis/priorities/priorities_api.dart';
+import 'package:Field_Monitoring/data/network/dio_client.dart';
+import 'package:Field_Monitoring/data/repository.dart';
+import 'package:Field_Monitoring/data/respository/incident_repository.dart';
+import 'package:Field_Monitoring/data/respository/notification_repository.dart';
+import 'package:Field_Monitoring/data/respository/priority_repository.dart';
+import 'package:Field_Monitoring/data/sharedpref/shared_preference_helper.dart';
+import 'package:Field_Monitoring/di/module/local_module.dart';
+import 'package:Field_Monitoring/di/module/network_module.dart';
+import 'package:Field_Monitoring/stores/error/error_store.dart';
+import 'package:Field_Monitoring/stores/incident/assigned_incident/assigned_incident_store.dart';
+import 'package:Field_Monitoring/stores/incident/created_incident/created_incident_store.dart';
+import 'package:Field_Monitoring/stores/incident/supervised_incident/supervised_incident_store.dart';
+import 'package:Field_Monitoring/stores/language/language_store.dart';
+import 'package:Field_Monitoring/stores/notifcation/notification_store.dart';
+import 'package:Field_Monitoring/stores/theme/theme_store.dart';
+import 'package:Field_Monitoring/stores/user/user_store.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,6 +34,7 @@ import '../../stores/incident_form/incident_form_store.dart';
 import '../../stores/login_form/login_form_store.dart';
 import '../../stores/priority/priority_store.dart';
 import '../../stores/subcategory/subcategory_store.dart';
+
 final getIt = GetIt.instance;
 
 Future<void> setupLocator() async {
@@ -64,6 +68,8 @@ Future<void> setupLocator() async {
       IncidentApi(getIt<DioClient>(), getIt<SharedPreferenceHelper>()));
   getIt.registerSingleton(
       prioritiesApi(getIt<DioClient>(), getIt<SharedPreferenceHelper>()));
+  getIt.registerSingleton(
+      NotificationApi(getIt<DioClient>(), getIt<SharedPreferenceHelper>()));
   //
   // // data sources
   // getIt.registerSingleton(PostDataSource(await getIt.getAsync<AppDatabase>()));
@@ -74,14 +80,12 @@ Future<void> setupLocator() async {
   // getIt.registerSingleton(IncidentDataSource(await getIt.getAsync<AppDatabase>()));
 
   // repository:----------------------------------------------------------------
-  getIt.registerSingleton(Repository(
-
-    getIt<SharedPreferenceHelper>()
-  ));
+  getIt.registerSingleton(Repository(getIt<SharedPreferenceHelper>()));
   getIt.registerSingleton(CategoryRepository(
       (await getIt.getAsync<AppDatabase>()).categoryDao, getIt<CategoryApi>()));
   getIt.registerSingleton(SubCategoryRepository(
-      (await getIt.getAsync<AppDatabase>()).subCategoryDao, getIt<SubCategoryApi>()));
+      (await getIt.getAsync<AppDatabase>()).subCategoryDao,
+      getIt<SubCategoryApi>()));
   getIt.registerSingleton(UserRepository(
     getIt<UserApi>(),
     getIt<SharedPreferenceHelper>(),
@@ -89,15 +93,20 @@ Future<void> setupLocator() async {
   getIt.registerSingleton(IncidentRepository(
       (await getIt.getAsync<AppDatabase>()).incidentDao, getIt<IncidentApi>()));
   getIt.registerSingleton(PriorityRepository(
-      (await getIt.getAsync<AppDatabase>()).priorityDao, getIt<prioritiesApi>()));
+      (await getIt.getAsync<AppDatabase>()).priorityDao,
+      getIt<prioritiesApi>()));
+  getIt.registerSingleton(NotificationRepository(getIt<NotificationApi>()));
 
   // stores:--------------------------------------------------------------------
   getIt.registerSingleton(LanguageStore(getIt<Repository>()));
+  getIt.registerSingleton(NotificationStore(getIt<NotificationRepository>()));
   // getIt.registerSingleton(PostStore(getIt<Repository>()));
   getIt.registerSingleton(CategoryStore(getIt<CategoryRepository>()));
   getIt.registerSingleton(SubCategoryStore(getIt<SubCategoryRepository>()));
   getIt.registerSingleton(ThemeStore(getIt<Repository>()));
-  getIt.registerSingleton(UserStore(getIt<UserRepository>(),));
+  getIt.registerSingleton(UserStore(
+    getIt<UserRepository>(),
+  ));
   getIt.registerSingleton(PriorityStore(getIt<PriorityRepository>()));
   //TODO remove this as we replace it with three another stores
   // getIt.registerSingleton(IncidentStore(getIt<IncidentRepository>()));

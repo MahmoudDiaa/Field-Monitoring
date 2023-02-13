@@ -1,4 +1,4 @@
-import 'package:boilerplate/data/network/constants/endpoints.dart';
+import 'package:Field_Monitoring/data/network/constants/endpoints.dart';
 
 enum CategoryListViewMode { List, Radiobutton,SubCategoriesGroupedImageGrid }
 

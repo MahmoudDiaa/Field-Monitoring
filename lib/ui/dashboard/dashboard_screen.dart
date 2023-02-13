@@ -1,8 +1,8 @@
-import 'package:boilerplate/models/dashboard/dashboard.dart';
-import 'package:boilerplate/ui/constants/colors.dart';
-import 'package:boilerplate/ui/create_incident/create_incident_step1.dart';
-import 'package:boilerplate/ui/incidents/assigned_incidents/assigned_incident_list_screen.dart';
-import 'package:boilerplate/ui/incidents/supervised_incidents/supervised_incident_list_screen.dart';
+import 'package:Field_Monitoring/models/dashboard/dashboard.dart';
+import 'package:Field_Monitoring/ui/constants/colors.dart';
+import 'package:Field_Monitoring/ui/create_incident/create_incident_step1.dart';
+import 'package:Field_Monitoring/ui/incidents/assigned_incidents/assigned_incident_list_screen.dart';
+import 'package:Field_Monitoring/ui/incidents/supervised_incidents/supervised_incident_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -181,6 +181,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
       },
       icon: Icon(
         Icons.language,
+      ),
+    );
+  }
+  Widget _buildNotificationButton() {
+    return IconButton(
+      color: Colors.white,
+      onPressed: () {
+        Navigator.of(context).pushNamed(Routes.notification);
+      },
+      icon: Icon(
+        Icons.notifications,
       ),
     );
   }
@@ -367,6 +378,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       otherAccountsPictures: [
         _buildLanguageButton(),
         _buildThemeButton(),
+        _buildNotificationButton()
         // CircleAvatar(
         //   backgroundColor: Colors.white,
         //   backgroundImage: NetworkImage(

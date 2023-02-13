@@ -1,5 +1,5 @@
-import 'package:boilerplate/data/network/dio_client.dart';
-import 'package:boilerplate/data/sharedpref/shared_preference_helper.dart';
+import 'package:Field_Monitoring/data/network/dio_client.dart';
+import 'package:Field_Monitoring/data/sharedpref/shared_preference_helper.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../models/category/category_list.dart';

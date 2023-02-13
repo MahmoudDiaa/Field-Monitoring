@@ -1,6 +1,6 @@
 // dao/person_dao.dart
 
-import 'package:boilerplate/data/local/entities/category/category_entity.dart';
+import 'package:Field_Monitoring/data/local/entities/category/category_entity.dart';
 import 'package:floor/floor.dart';
 
 import '../../constants/db_constants.dart';

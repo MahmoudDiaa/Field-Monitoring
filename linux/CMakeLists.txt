@@ -4,10 +4,10 @@ project(runner LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-set(BINARY_NAME "flutter_boilerplate_orbits")
+set(BINARY_NAME "flutter_Field_Monitoring_orbits")
 # The unique GTK application identifier for this application. See:
 # https://wiki.gnome.org/HowDoI/ChooseApplicationID
-set(APPLICATION_ID "com.iotecksolutions.flutter_boilerplate_orbits")
+set(APPLICATION_ID "com.iotecksolutions.flutter_Field_Monitoring_orbits")
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

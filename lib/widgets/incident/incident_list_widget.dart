@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:boilerplate/models/incident/incident.dart';
-import 'package:boilerplate/stores/language/language_store.dart';
-import 'package:boilerplate/stores/theme/theme_store.dart';
-import 'package:boilerplate/utils/locale/app_localization.dart';
+import 'package:Field_Monitoring/models/incident/incident.dart';
+import 'package:Field_Monitoring/stores/language/language_store.dart';
+import 'package:Field_Monitoring/stores/theme/theme_store.dart';
+import 'package:Field_Monitoring/utils/locale/app_localization.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';

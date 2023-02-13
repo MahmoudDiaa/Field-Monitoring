@@ -1,6 +1,6 @@
-import 'package:boilerplate/data/local/entities/incident/incident_entity.dart';
-import 'package:boilerplate/data/local/mappers/mappers.dart';
-import 'package:boilerplate/models/incident/incident.dart';
+import 'package:Field_Monitoring/data/local/entities/incident/incident_entity.dart';
+import 'package:Field_Monitoring/data/local/mappers/mappers.dart';
+import 'package:Field_Monitoring/models/incident/incident.dart';
 import 'package:sembast/sembast.dart';
 
 import '../../constants/enums.dart';

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:boilerplate/data/network/dio_client.dart';
-import 'package:boilerplate/models/incident/incident_list.dart';
+import 'package:Field_Monitoring/data/network/dio_client.dart';
+import 'package:Field_Monitoring/models/incident/incident_list.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 

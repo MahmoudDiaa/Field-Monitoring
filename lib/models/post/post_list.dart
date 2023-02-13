@@ -1,4 +1,4 @@
-import 'package:boilerplate/models/post/post.dart';
+import 'package:Field_Monitoring/models/post/post.dart';
 
 class PostList {
   final List<Post>? posts;

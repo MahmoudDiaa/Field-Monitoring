@@ -1,6 +1,6 @@
-import 'package:boilerplate/data/repository.dart';
-import 'package:boilerplate/models/language/Language.dart';
-import 'package:boilerplate/stores/error/error_store.dart';
+import 'package:Field_Monitoring/data/repository.dart';
+import 'package:Field_Monitoring/models/language/Language.dart';
+import 'package:Field_Monitoring/stores/error/error_store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:mobx/mobx.dart';

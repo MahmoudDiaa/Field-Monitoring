@@ -1,4 +1,4 @@
-import 'package:boilerplate/extension/string_extension.dart';
+import 'package:Field_Monitoring/extension/string_extension.dart';
 import 'package:floor/floor.dart';
 @entity
 class IncidentImageEntity {

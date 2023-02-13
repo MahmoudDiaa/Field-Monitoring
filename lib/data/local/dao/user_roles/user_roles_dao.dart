@@ -1,5 +1,5 @@
 
-import 'package:boilerplate/data/local/entities/user_roles/user_roles.dart';
+import 'package:Field_Monitoring/data/local/entities/user_roles/user_roles.dart';
 import 'package:floor/floor.dart';
 
 import '../../constants/db_constants.dart';
