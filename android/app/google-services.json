@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "343352954397",
+    "project_id": "field-monitoring-124ad",
+    "storage_bucket": "field-monitoring-124ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343352954397:android:75b2216fc227b6e3a680f4",
+        "android_client_info": {
+          "package_name": "com.iotecksolutions.flutter_Field_Monitoring_orbits"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343352954397-a5ibp76ajgg4fk73fe1fomb99uf5cgh2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJGGFYS5wBnVvlj93bhGJelzQRyx2nOcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343352954397-a5ibp76ajgg4fk73fe1fomb99uf5cgh2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
