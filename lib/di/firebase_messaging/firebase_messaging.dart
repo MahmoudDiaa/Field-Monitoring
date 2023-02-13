@@ -1,12 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 initMessaging() async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  print("firebase token ${messaging.getToken()}");
+  print("firebase token ${await messaging.getToken()}");
   await messaging.requestPermission(
     alert: true,
     announcement: false,
@@ -64,10 +62,10 @@ initMessaging() async {
            channelDescription:  channel.description,
             importance: channel.importance,
             priority: Priority.high,
-            icon: android.smallIcon,
-            additionalFlags: Int32List.fromList(<int>[67108864, 134217728])
-            // other print,operties...
-            ,
+            icon: android.smallIcon??"@mipmap/ic_launcher",
+            // additionalFlags: Int32List.fromList(<int>[67108864, 134217728])
+            // // other print,operties...
+            // ,
           ))
       ,payload: "Devices Not");
     }

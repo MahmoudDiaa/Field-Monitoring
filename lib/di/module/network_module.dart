@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:Field_Monitoring/data/network/constants/endpoints.dart';
 import 'package:Field_Monitoring/data/sharedpref/shared_preference_helper.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 abstract class NetworkModule {
   /// A singleton dio provider.
@@ -19,6 +22,7 @@ abstract class NetworkModule {
         responseBody: true,
         requestBody: true,
         requestHeader: true,
+        logPrint: networkLog,
       ))
       ..interceptors.add(
         InterceptorsWrapper(
@@ -39,5 +43,12 @@ abstract class NetworkModule {
       );
 
     return dio;
+  }
+
+  static void networkLog(Object? object) {
+    if (object.toString().contains("error"))
+      log("", error: object.toString());
+    else
+      log(object.toString());
   }
 }
