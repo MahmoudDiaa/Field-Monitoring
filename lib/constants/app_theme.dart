@@ -21,6 +21,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../ui/constants/colors.dart';
+
 class AppThemeData {
   static const _lightFillColor = Colors.black;
   static const _darkFillColor = Colors.white;
@@ -92,21 +94,69 @@ class AppThemeData {
     brightness: Brightness.dark,
   );
 
-  static const _regular = FontWeight.w400;
+  static const _regular = FontWeight.normal;
   static const _medium = FontWeight.w500;
-  static const _semiBold = FontWeight.w600;
+  static const _semiBold = FontWeight.w800;
   static const _bold = FontWeight.w700;
 
-  static final TextTheme _textTheme = TextTheme(
-    headlineMedium: GoogleFonts.montserrat(fontWeight: _bold, fontSize: 20.0),
-    bodySmall: GoogleFonts.oswald(fontWeight: _semiBold, fontSize: 16.0),
-    headlineSmall: GoogleFonts.oswald(fontWeight: _medium, fontSize: 16.0),
-    titleMedium: GoogleFonts.montserrat(fontWeight: _medium, fontSize: 16.0),
-    labelSmall: GoogleFonts.montserrat(fontWeight: _medium, fontSize: 12.0),
-    bodyLarge: GoogleFonts.montserrat(fontWeight: _regular, fontSize: 14.0),
-    titleSmall: GoogleFonts.montserrat(fontWeight: _medium, fontSize: 14.0),
-    bodyMedium: GoogleFonts.montserrat(fontWeight: _regular, fontSize: 16.0),
-    titleLarge: GoogleFonts.montserrat(fontWeight: _bold, fontSize: 16.0),
-    labelLarge: GoogleFonts.montserrat(fontWeight: _semiBold, fontSize: 14.0),
+  static final TextTheme textTheme = GoogleFonts.cairoTextTheme().copyWith(
+    headlineMedium: GoogleFonts.cairoTextTheme()
+        .headlineMedium
+        ?.copyWith(color: CustomColor.primaryColor),
+    bodyLarge: GoogleFonts.cairoTextTheme()
+        .bodyLarge
+        ?.copyWith(color: CustomColor.primaryColor),
+    bodyMedium: GoogleFonts.cairoTextTheme()
+        .bodyMedium
+        ?.copyWith(color: CustomColor.primaryColor),
+    bodySmall: GoogleFonts.cairoTextTheme()
+        .bodySmall
+        ?.copyWith(color: CustomColor.primaryColor),
+    displayLarge: GoogleFonts.cairoTextTheme()
+        .displayLarge
+        ?.copyWith(color: CustomColor.primaryColor),
+    displayMedium: GoogleFonts.cairoTextTheme()
+        .displayMedium
+        ?.copyWith(color: CustomColor.primaryColor),
+    displaySmall: GoogleFonts.cairoTextTheme()
+        .displaySmall
+        ?.copyWith(color: CustomColor.primaryColor),
+    titleSmall: GoogleFonts.cairoTextTheme()
+        .titleSmall
+        ?.copyWith(color: CustomColor.primaryColor),
+    headlineLarge: GoogleFonts.cairoTextTheme()
+        .headlineLarge
+        ?.copyWith(color: CustomColor.primaryColor),
+    headlineSmall: GoogleFonts.cairoTextTheme()
+        .headlineSmall
+        ?.copyWith(color: CustomColor.primaryColor),
+    labelLarge: GoogleFonts.cairoTextTheme()
+        .labelLarge
+        ?.copyWith(color: CustomColor.primaryColor),
+    titleMedium: GoogleFonts.cairoTextTheme()
+        .titleMedium
+        ?.copyWith(color: CustomColor.primaryColor),
+    titleLarge: GoogleFonts.cairoTextTheme()
+        .titleLarge
+        ?.copyWith(color: CustomColor.primaryColor),
+    labelSmall: GoogleFonts.cairoTextTheme()
+        .labelSmall
+        ?.copyWith(color: CustomColor.primaryColor),
+    labelMedium: GoogleFonts.cairoTextTheme()
+        .labelMedium
+        ?.copyWith(color: CustomColor.primaryColor),
   );
+//old one
+static final TextTheme _textTheme = TextTheme(
+  headlineMedium: GoogleFonts.cairo(fontWeight: _bold, fontSize: 20.0),
+  bodySmall: GoogleFonts.cairo(fontWeight: _semiBold, fontSize: 16.0),
+  headlineSmall: GoogleFonts.cairo(fontWeight: _medium, fontSize: 16.0),
+  titleMedium: GoogleFonts.cairo(fontWeight: _medium, fontSize: 16.0),
+  labelSmall: GoogleFonts.cairo(fontWeight: _medium, fontSize: 12.0),
+  bodyLarge: GoogleFonts.cairo(fontWeight: _regular, fontSize: 14.0,fontStyle: FontStyle.normal),
+  titleSmall: GoogleFonts.cairo(fontWeight: _medium, fontSize: 14.0),
+  bodyMedium: GoogleFonts.cairo(fontWeight: _regular, fontSize: 16.0,fontStyle: FontStyle.normal),
+  titleLarge: GoogleFonts.cairo(fontWeight: _bold, fontSize: 16.0),
+  labelLarge: GoogleFonts.cairo(fontWeight: _semiBold, fontSize: 14.0),
+);
 }

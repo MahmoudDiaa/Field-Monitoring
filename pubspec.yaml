@@ -21,7 +21,7 @@ dependencies:
   google_maps_place_picker_mb: 3.0.1
   geolocator: ^9.0.2
   cached_network_image: ^3.2.3
-  carousel_slider: ^4.1.1
+  carousel_slider: ^4.2.1
   url_launcher: ^6.1.5
   rxdart: ^0.27.5
   empty_widget: ^0.0.5
@@ -137,6 +137,7 @@ flutter:
   - assets/icons/
   - assets/icon/
   - assets/lang/
+  - assets/images/splash/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
@@ -157,6 +158,16 @@ flutter:
       style: italic
     - asset: assets/fonts/Product-Sans-Bold.ttf
       weight: 700
+  - family: Cairo
+    fonts:
+      - asset: assets/fonts/Cairo-Bold.ttf
+        weight: 700
+      - asset: assets/fonts/Cairo-Regular.ttf
+        style: normal
+      - asset: assets/fonts/Cairo-ExtraBold.ttf
+        weight: 900
+      - asset: assets/fonts/Cairo-SemiBold.ttf
+        weight: 800
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages

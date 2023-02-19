@@ -1,7 +1,9 @@
+import 'package:Field_Monitoring/constants/app_theme.dart';
 import 'package:Field_Monitoring/constants/strings.dart';
 import 'package:Field_Monitoring/data/repository.dart';
 import 'package:Field_Monitoring/data/respository/notification_repository.dart';
 import 'package:Field_Monitoring/di/components/service_locator.dart';
+import 'package:Field_Monitoring/new_ui/login/login_screen.dart';
 import 'package:Field_Monitoring/stores/category/category_store.dart';
 import 'package:Field_Monitoring/stores/incident/assigned_incident/assigned_incident_store.dart';
 import 'package:Field_Monitoring/stores/incident/created_incident/created_incident_store.dart';
@@ -20,6 +22,8 @@ import '../data/respository/incident_repository.dart';
 import '../data/respository/priority_repository.dart';
 import '../data/respository/subcategory_repository.dart';
 import '../data/respository/user_repository.dart';
+import '../new_ui/login/login_screen.dart';
+import '../new_ui/splash_screen/splash_screen.dart';
 import '../stores/incident/supervised_incident/supervised_incident_store.dart';
 import '../stores/incident_form/incident_form_store.dart';
 import '../stores/priority/priority_store.dart';
@@ -74,7 +78,9 @@ class MyApp extends StatelessWidget {
         Provider<SupervisedIncidentStore>(
             create: (_) => _supervisedIncidentStore),
         Provider<IncidentFormStore>(create: (_) => _incidentFormStore),
-        Provider<NotificationStore>(create: (_)=>_notificationStore,)
+        Provider<NotificationStore>(
+          create: (_) => _notificationStore,
+        )
       ],
       child: Observer(
         name: 'global-observer',
@@ -85,18 +91,21 @@ class MyApp extends StatelessWidget {
             // theme: _themeStore.darkMode
             //     ? AppThemeData.darkThemeData
             //     : AppThemeData.lightThemeData,
-            onGenerateTitle: (ctx){
+            onGenerateTitle: (ctx) {
               _languageStore.init(ctx);
-              return'';
-            },locale: Locale(_languageStore.locale),
+              return '';
+            },
+            locale: Locale(_languageStore.locale),
             theme: ThemeData(
-                primaryColor: CustomColor.primaryColor,
-                fontFamily: 'Montserrat'),
+              primaryColor: CustomColor.primaryColor,
+              fontFamily: 'Cairo',
+              textTheme: AppThemeData.textTheme
+            ),
             routes: Routes.routes,
             supportedLocales: AppLocalizations.supportedLocales,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             //home: _userStore.isLoggedIn ? CategoryListPage() : LoginScreen(),
-            home: SplashScreen2(),
+            home: LoginScreen(),
           );
         },
       ),
