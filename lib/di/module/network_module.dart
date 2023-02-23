@@ -4,11 +4,14 @@ import 'package:Field_Monitoring/data/network/constants/endpoints.dart';
 import 'package:Field_Monitoring/data/sharedpref/shared_preference_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
+@Singleton()
 abstract class NetworkModule {
   /// A singleton dio provider.
   ///
   /// Calling it multiple times will return the same instance.
+  @Singleton()
   static Dio provideDio(SharedPreferenceHelper sharedPrefHelper) {
     final dio = Dio();
 

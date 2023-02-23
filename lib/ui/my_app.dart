@@ -82,32 +82,27 @@ class MyApp extends StatelessWidget {
           create: (_) => _notificationStore,
         )
       ],
-      child: Observer(
-        name: 'global-observer',
-        builder: (BuildContext context) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: Strings.appName,
-            // theme: _themeStore.darkMode
-            //     ? AppThemeData.darkThemeData
-            //     : AppThemeData.lightThemeData,
-            onGenerateTitle: (ctx) {
-              _languageStore.init(ctx);
-              return '';
-            },
-            locale: Locale(_languageStore.locale),
-            theme: ThemeData(
-              primaryColor: CustomColor.primaryColor,
-              fontFamily: 'Cairo',
-              textTheme: AppThemeData.textTheme
-            ),
-            routes: Routes.routes,
-            supportedLocales: AppLocalizations.supportedLocales,
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            //home: _userStore.isLoggedIn ? CategoryListPage() : LoginScreen(),
-            home: LoginScreen(),
-          );
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: Strings.appName,
+        // theme: _themeStore.darkMode
+        //     ? AppThemeData.darkThemeData
+        //     : AppThemeData.lightThemeData,
+        onGenerateTitle: (ctx)  {
+          _languageStore.init(ctx);
+          return '';
         },
+        locale: Locale(_languageStore.locale),
+        theme: ThemeData(
+          primaryColor: CustomColor.primaryColor,
+          fontFamily: 'Cairo',
+          textTheme: AppThemeData.textTheme
+        ),
+        routes: Routes.routes,
+        supportedLocales: AppLocalizations.supportedLocales,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        //home: _userStore.isLoggedIn ? CategoryListPage() : LoginScreen(),
+        home: SplashScreen(),
       ),
     );
   }

@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../network/api_response_new_entity.dart';
 import 'constants/preferences.dart';
 
+@Singleton()
 class SharedPreferenceHelper {
   // shared pref instance
   final SharedPreferences _sharedPreference;

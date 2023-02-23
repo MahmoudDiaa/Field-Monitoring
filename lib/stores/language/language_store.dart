@@ -3,6 +3,7 @@ import 'package:Field_Monitoring/models/language/Language.dart';
 import 'package:Field_Monitoring/stores/error/error_store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,7 +12,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 part 'language_store.g.dart';
 
 class LanguageStore = _LanguageStore with _$LanguageStore;
-
+@Singleton()
 abstract class _LanguageStore with Store {
   static const String TAG = "LanguageStore";
 
@@ -38,7 +39,8 @@ abstract class _LanguageStore with Store {
   @computed
   String get locale => _locale;
 
-   late AppLocalizations language;
+  @observable
+    AppLocalizations? language;
 
   // actions:-------------------------------------------------------------------
   @action
@@ -68,7 +70,7 @@ abstract class _LanguageStore with Store {
     return code;
   }
   // general:-------------------------------------------------------------------
-  void init(BuildContext ctx)  {
+  void init(BuildContext ctx)   {
     language = AppLocalizations.of(ctx)!;
     // getting current language from shared preference
     if (_repository.currentLanguage != null) {
@@ -78,6 +80,7 @@ abstract class _LanguageStore with Store {
   }
 
   // dispose:-------------------------------------------------------------------
+  @disposeMethod
   @override
   dispose() {}
 }

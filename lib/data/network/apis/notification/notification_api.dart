@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../models/notification/notifications_entity.dart';
 import '../../../sharedpref/shared_preference_helper.dart';
 import '../../constants/endpoints.dart';
 import '../../dio_client.dart';
-
+@Singleton()
 class NotificationApi {
   final DioClient _dioClient;
   SharedPreferenceHelper sharedPreferenceHelper;

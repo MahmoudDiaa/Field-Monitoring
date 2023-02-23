@@ -1,5 +1,6 @@
 import 'package:Field_Monitoring/data/network/api_response_new_entity.dart';
 import 'package:Field_Monitoring/stores/error/error_store.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../data/respository/user_repository.dart';
@@ -8,7 +9,7 @@ import '../login_form/login_form_store.dart';
 part 'user_store.g.dart';
 
 class UserStore = _UserStore with _$UserStore;
-
+@Singleton()
 abstract class _UserStore with Store {
   // repository instance
   final UserRepository _repository;
@@ -91,6 +92,7 @@ abstract class _UserStore with Store {
 
 
   // general methods:-----------------------------------------------------------
+  @disposeMethod
   void dispose() {
     for (final d in _disposers) {
       d();

@@ -21,23 +21,21 @@ import '../../dummy_data/near_by.dart';
 
 
 class CreatedIncidentListScreen extends StatefulWidget {
-  final int? initialSubCategoryId;
-  final bool showBack ;
 
- final bool hideSubCategoryWidget;
 
   @override
   _CreatedIncidentListScreenState createState() => _CreatedIncidentListScreenState();
 
   CreatedIncidentListScreen(
-      {this.initialSubCategoryId,
-      this.showBack=false ,
-      this.hideSubCategoryWidget = false});
+    );
 }
 
 class _CreatedIncidentListScreenState extends State<CreatedIncidentListScreen> {
   TextEditingController searchController = TextEditingController();
+   int? initialSubCategoryId;
+   bool showBack=false ;
 
+   bool hideSubCategoryWidget=false;
   var selectedCatId;
   var selectedSubCatId;
 
@@ -54,6 +52,9 @@ class _CreatedIncidentListScreenState extends State<CreatedIncidentListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+    initialSubCategoryId=arguments['initialSubCategoryId'];
+    showBack=arguments['showBack']??false;
     return Scaffold(
       backgroundColor: CustomColor.primaryColor,
       body: Padding(
@@ -86,7 +87,7 @@ class _CreatedIncidentListScreenState extends State<CreatedIncidentListScreen> {
                     ),
                   ),
                 ),
-                widget.showBack == true
+                showBack == true
                     ? Padding(
                         padding: const EdgeInsets.only(
                             right: Dimensions.marginSize,
@@ -120,7 +121,7 @@ class _CreatedIncidentListScreenState extends State<CreatedIncidentListScreen> {
                   height: Dimensions.heightSize * 0.5,
                 ),
 
-                widget.hideSubCategoryWidget
+                hideSubCategoryWidget
                     ? Container()
                     : SubCategoryFormField(
                         gridAndListHeight:
@@ -129,7 +130,7 @@ class _CreatedIncidentListScreenState extends State<CreatedIncidentListScreen> {
                         autoSelectFirstItem: true,
                         subcategoryListView:
                             SubCategoryListViewMode.Radiobutton,
-                        initialSelectedId: widget.initialSubCategoryId,
+                        initialSelectedId: initialSubCategoryId,
                         onChange: (subcategory) {
                           //fetch incidents by sub category
                           _subcategoryStreamController?.add(subcategory);
@@ -146,7 +147,9 @@ class _CreatedIncidentListScreenState extends State<CreatedIncidentListScreen> {
 
                 StreamBuilder<SubCategory?>(
                   builder: (context, snapshot) {
-                    return snapshot.data?.id == null
+
+
+                    return (snapshot.data==null||snapshot.data?.id == null)
                         ? Padding(
                             padding: const EdgeInsets.only(top: 15.0),
                             child: Text(

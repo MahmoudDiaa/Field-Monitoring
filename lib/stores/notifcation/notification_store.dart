@@ -1,5 +1,6 @@
 import 'package:Field_Monitoring/data/respository/notification_repository.dart';
 import 'package:Field_Monitoring/models/notification/notifications_entity.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../utils/dio/dio_error_util.dart';
@@ -8,7 +9,7 @@ import '../error/error_store.dart';
 part 'notification_store.g.dart';
 
 class NotificationStore = _NotificationStore with _$NotificationStore;
-
+@Singleton()
 abstract class _NotificationStore with Store {
   final NotificationRepository _notificationRepository;
 

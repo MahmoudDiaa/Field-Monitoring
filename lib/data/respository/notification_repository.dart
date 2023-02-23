@@ -1,6 +1,7 @@
 import 'package:Field_Monitoring/data/network/apis/notification/notification_api.dart';
 import 'package:Field_Monitoring/models/notification/notifications_entity.dart';
-
+import 'package:injectable/injectable.dart';
+@Singleton()
 class NotificationRepository {
 
   // api objects

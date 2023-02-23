@@ -78,7 +78,7 @@ class _InidentDetailsScreenState extends State<InidentDetailsScreen> {
                         child: Column(
                         children: [
                           headerWidget(context),
-                          detailsWidget(context),
+                           detailsWidget(context),
                         ],
                       ));
               },
@@ -101,13 +101,18 @@ class _InidentDetailsScreenState extends State<InidentDetailsScreen> {
   }
 
   headerWidget(BuildContext context) {
+    print(" headerWidget ${_incidentStore
+        .incident?.primaryImageFromList!=null} ");
+
     return Container(
       height: MediaQuery.of(context).size.height * 0.35,
       child: Stack(
         children: [
+
           CachedNetworkImage(
-              imageUrl: _incidentStore
-                      .incident?.primaryImageFromList?.UrlAfterCheckUrl ??
+              imageUrl:_incidentStore
+                  .incident?.primaryImageFromList!=null?_incidentStore
+                      .incident?.primaryImageFromList?.UrlAfterCheckUrl :
                   '',
               fit: BoxFit.cover,
               width: MediaQuery.of(context).size.width,
@@ -117,7 +122,8 @@ class _InidentDetailsScreenState extends State<InidentDetailsScreen> {
               placeholder: (context, url) =>
                   Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, err) =>
-                  Center(child: Text(_languageStore.language.loadingMainImage))),
+                  Center(child: Text(_languageStore.language.loadingMainImage))
+            ),
           BackWidget(),
           Positioned(
             bottom: Dimensions.heightSize * 2,

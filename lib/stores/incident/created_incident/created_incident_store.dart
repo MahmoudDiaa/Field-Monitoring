@@ -1,5 +1,6 @@
 import 'package:Field_Monitoring/data/respository/incident_repository.dart';
 import 'package:Field_Monitoring/stores/error/error_store.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../models/incident/incident.dart';
@@ -11,17 +12,16 @@ import '../../../utils/dio/dio_error_util.dart';
 part 'created_incident_store.g.dart';
 
 class CreatedIncidentStore = _CreatedIncidentStore with _$CreatedIncidentStore;
-
+@Singleton()
 abstract class _CreatedIncidentStore with Store {
   // repository instance
-  late IncidentRepository _incidentRepository;
+  final IncidentRepository _incidentRepository;
 
   // store for handling errors
   final ErrorStore errorStore = ErrorStore();
 
   // constructor:---------------------------------------------------------------
-  _CreatedIncidentStore(IncidentRepository incidentRepository)
-      : this._incidentRepository = incidentRepository;
+  _CreatedIncidentStore(this._incidentRepository);
 
   static ObservableFuture<IncidentList?> emptyIncidentResponse =
       ObservableFuture.value(null);
@@ -67,9 +67,12 @@ abstract class _CreatedIncidentStore with Store {
         pageNumber: _pageNumber, incidentFilter: incidentFilter);
     fetchIncidentsFuture = ObservableFuture(future);
     future.then((incidentList) {
+      print("create getIncidents ${incidentList}");
       if (incidentList.incidents!.length > 0) _pageNumber++;
       this.incidentList = incidentList;
     }).catchError((error) {
+      print("create getIncidents ${error}");
+
       errorStore.errorMessage = DioErrorUtil.handleError(error);
     });
   }
@@ -97,8 +100,10 @@ abstract class _CreatedIncidentStore with Store {
     final future = _incidentRepository.getIncidentById(id);
     fetchIncidentFuture = ObservableFuture(future);
     future.then((incident) {
+      print("create getIncident ${incident}");
       this.incident = incident;
     }).catchError((error) {
+      print("create getIncident error ${error}");
       errorStore.errorMessage = DioErrorUtil.handleError(error);
     });
   }

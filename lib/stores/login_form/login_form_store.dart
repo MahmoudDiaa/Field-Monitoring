@@ -1,4 +1,5 @@
 import 'package:Field_Monitoring/stores/error/error_store.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:validators/validators.dart';
 
@@ -8,7 +9,7 @@ import '../../data/respository/user_repository.dart';
 part 'login_form_store.g.dart';
 
 class LoginFormStore = _LoginFormStore with _$LoginFormStore;
-
+@Injectable()
 abstract class _LoginFormStore with Store {
   // store for handling form errors
   final LoginFormErrorStore formErrorStore = LoginFormErrorStore();
@@ -325,6 +326,7 @@ abstract class _LoginFormStore with Store {
   }
 
   // general methods:-----------------------------------------------------------
+  @disposeMethod
   void dispose() {
     for (final d in _disposers) {
       d();

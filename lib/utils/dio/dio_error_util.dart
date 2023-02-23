@@ -37,6 +37,8 @@ class DioErrorUtil {
     } else {
       errorDescription = "Unexpected error occured";
     }
+
+    print("handleError $errorDescription");
     return errorDescription;
   }
 }

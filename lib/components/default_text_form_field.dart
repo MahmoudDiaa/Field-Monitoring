@@ -15,7 +15,8 @@ Widget defaultTextFormField(
         bool isClickable = true,
         TextInputAction textInputAction = TextInputAction.next,
         VoidCallback? onPressSuffix,
-        String? textContent}) =>
+        String? textContent
+        ,FocusNode? focusNode }) =>
     Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
       child: Container(
@@ -34,10 +35,10 @@ Widget defaultTextFormField(
           onFieldSubmitted: onSubmit,
           onChanged: onChanged,
           validator: validate,
+          focusNode:focusNode ,
           obscureText: obscure,
           onTap: onTab,
           enabled: isClickable,
-
           textInputAction: textInputAction,
           decoration: InputDecoration(
               hintText: textHint,

@@ -1,4 +1,5 @@
 import 'package:Field_Monitoring/stores/error/error_store.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../data/respository/subcategory_repository.dart';
@@ -10,17 +11,16 @@ import '../../utils/dio/dio_error_util.dart';
 part 'subcategory_store.g.dart';
 
 class SubCategoryStore = _SubCategoryStore with _$SubCategoryStore;
-
+@Singleton()
 abstract class _SubCategoryStore with Store {
   // repository instance
-  late SubCategoryRepository _subcategoryRepository;
+   final SubCategoryRepository _subcategoryRepository;
 
   // store for handling errors
   final ErrorStore errorStore = ErrorStore();
 
   // constructor:---------------------------------------------------------------
-  _SubCategoryStore(SubCategoryRepository categoryRepository)
-      : this._subcategoryRepository = categoryRepository;
+  _SubCategoryStore(this. _subcategoryRepository);
 
   static ObservableFuture<SubCategoryList?> emptySubCategoryResponse =
       ObservableFuture.value(null);

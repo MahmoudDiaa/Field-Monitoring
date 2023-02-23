@@ -2,9 +2,10 @@ import 'package:Field_Monitoring/data/network/dio_client.dart';
 import 'package:Field_Monitoring/data/sharedpref/shared_preference_helper.dart';
 import 'package:Field_Monitoring/models/subcategory/subcategory_list.dart';
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../constants/endpoints.dart';
-
+@Singleton()
 class SubCategoryApi {
   final DioClient _dioClient;
 

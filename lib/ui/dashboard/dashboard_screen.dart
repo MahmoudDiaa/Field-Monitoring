@@ -184,6 +184,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
     );
   }
+
   Widget _buildNotificationButton() {
     return IconButton(
       color: Colors.white,
@@ -292,16 +293,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     widgets.add(HomeScreen());
     indexMap.putIfAbsent(DashboardWidgets.Home, () => widgets.length - 1);
     if (sharedPreferenceHelper!.authUser!.user!.isHasCreatedPermission()) {
-      widgets.add(CreatedIncidentListScreen(hideSubCategoryWidget: false));
+      widgets.add(CreatedIncidentListScreen());
       indexMap.putIfAbsent(DashboardWidgets.Created, () => widgets.length - 1);
       widgets.add(IncidentFormStep1());
     }
     if (sharedPreferenceHelper!.authUser!.user!.isHasAssignedPermission()) {
-      widgets.add(AssignedIncidentListScreen(hideSubCategoryWidget: false));
+      widgets.add(AssignedIncidentListScreen());
       indexMap.putIfAbsent(DashboardWidgets.Assigned, () => widgets.length - 1);
     }
     if (sharedPreferenceHelper!.authUser!.user!.isHasSupervisedPermission()) {
-      widgets.add(SupervisedIncidentListScreen(hideSubCategoryWidget: false));
+      widgets.add(SupervisedIncidentListScreen());
       indexMap.putIfAbsent(
           DashboardWidgets.Supervised, () => widgets.length - 1);
     }
@@ -322,25 +323,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
       bottomBarItems.add(BottomNavigationBarItem(
           icon: Icon(Icons.view_list),
           label: _languageStore.language.createdList,
-          backgroundColor: CustomColor.primaryColor));
+          backgroundColor: CustomColor.secondaryColor));
       bottomBarItems.add(
         BottomNavigationBarItem(
             icon: Icon(Icons.new_label_rounded),
             label: _languageStore.language.newWord,
-            backgroundColor: CustomColor.secondaryColor),
+            backgroundColor: CustomColor.thirdColor),
       );
     }
     if (sharedPreferenceHelper!.authUser!.user!.isHasAssignedPermission()) {
       bottomBarItems.add(BottomNavigationBarItem(
           icon: Icon(Icons.list_alt),
           label: _languageStore.language.assignedList,
-          backgroundColor: CustomColor.secondaryColor));
+          backgroundColor: CustomColor.blueColor));
     }
     if (sharedPreferenceHelper!.authUser!.user!.isHasSupervisedPermission()) {
       bottomBarItems.add(BottomNavigationBarItem(
-          icon: Icon(Icons.view_list_sharp),
+          icon: Icon(
+            Icons.supervisor_account_rounded,
+          ),
           label: _languageStore.language.supervisedList,
-          backgroundColor: CustomColor.primaryColor));
+          backgroundColor: CustomColor.redColor));
     }
 
     bottomBarItems.add(
@@ -357,21 +360,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
     List<Widget> drawerList = [];
 
     drawerList.add(UserAccountsDrawerHeader(
-      accountName: Text('${sharedPreferenceHelper?.authUser?.user?.fullName}'),
-      accountEmail: Column(
+      accountName: Row(
         children: [
-          Text('${sharedPreferenceHelper?.authUser?.user?.userName}'),
-          Text('${sharedPreferenceHelper?.authUser?.user?.roles.toString()}'),
+          Text('${sharedPreferenceHelper?.authUser?.user?.fullName}'),
+          Spacer(),
+          Text(
+            '${sharedPreferenceHelper?.authUser?.user?.roles.toString()}',
+          ),
         ],
       ),
+      accountEmail: Text(
+        '${sharedPreferenceHelper?.authUser?.user?.userName}',
+        style: TextStyle(fontSize: 12),
+      ),
       currentAccountPicture: CircleAvatar(
-        backgroundImage: AssetImage('assets/images/default_user.png'),
+        backgroundImage: AssetImage(
+          'assets/images/default_user.png',
+        ),
+        radius: 5,
         // NetworkImage(
         //     "https://appmaking.co/wp-content/uploads/2021/08/appmaking-logo-colored.png"),
       ),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/menu_background.jpg'),
+          image: AssetImage('assets/images/splash/splash_background.png'),
           fit: BoxFit.fill,
         ),
       ),
@@ -410,7 +422,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       leading: Icon(Icons.person),
       title: Text('${_languageStore.language.profile}'),
       onTap: () {
-
         Navigator.of(context).pushNamed(Routes.profile);
       },
     ));
@@ -489,7 +500,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       leading: Icon(Icons.report_rounded),
       title: Text('${_languageStore.language.report}'),
       onTap: () {
-
         Navigator.of(context).pushNamed(Routes.report);
       },
     ));

@@ -22,20 +22,21 @@ import '../../ui/constants/dimensions.dart';
 import '../progress_indicator/progress_indicator_text_widget.dart';
 import 'incident-employee-actions.dart';
 import 'incident-mqawel-actions.dart';
-
+//ignore: must_be_immutable
 class _IncidentListWidget extends StatefulWidget {
-  void Function(Incident?)? onSelectedIncidentChanged;
-  IncidentListViewMode incidentListView;
+  final void Function(Incident?)? onSelectedIncidentChanged;
+  final IncidentListViewMode incidentListView;
 
-  int? initialSelectedId;
 
-  int? subCategoryId;
+   int? initialSelectedId;
 
-  int? categoryId;
-  String? incidentId;
+  final int? subCategoryId;
 
-  double height;
-   dynamic incidentStore;
+  final int? categoryId;
+  final String? incidentId;
+
+  final double height;
+  final  dynamic incidentStore;
   _IncidentListWidget(
       {this.onSelectedIncidentChanged,
       this.incidentListView = IncidentListViewMode.Radiobutton,
@@ -52,7 +53,6 @@ class _IncidentListWidget extends StatefulWidget {
 class _IncidentListWidgetState extends State<_IncidentListWidget> {
   //stores:---------------------------------------------------------------------
 
-  late ThemeStore _themeStore;
   late LanguageStore _languageStore;
   late IncidentFormStore _incidentFormStore;
   dynamic incidentStore;
@@ -77,11 +77,13 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
 
     // initializing stores
     _languageStore = Provider.of<LanguageStore>(context);
-    _themeStore = Provider.of<ThemeStore>(context);
   }
 
   void loadData() {
     if (!incidentStore.loading) {
+      print("loadData  incident list widget $incidentStore");
+      print("loadData  incident list widget $incidentStore");
+
       incidentStore.getIncidents(
         incidentFilter: IncidentFilter(
             subCategoryId: widget.subCategoryId,
@@ -172,6 +174,8 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
   late ScrollController _scrollController;
 
   Future _onRefreshList() async {
+    print("_onRefreshList  incident list widget");
+
     incidentStore.getIncidents(
       incidentFilter: IncidentFilter(
           subCategoryId: widget.subCategoryId,
@@ -194,8 +198,8 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
                     children: [
                       NotificationListener<UserScrollNotification>(
                         onNotification: (notification) {
-                          final ScrollDirection direction =
-                              notification.direction;
+                          // final ScrollDirection direction =
+                          //     notification.direction;
                           //print('-----------: ${notification.metrics.}');
                           if (notification.metrics.extentAfter < 1000 &&
                               notification.direction ==
@@ -487,16 +491,13 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
 
   // General Methods:-----------------------------------------------------------
   _showErrorMessage(String message) {
-    Future.delayed(Duration(milliseconds: 0), () {
-      if (message.isNotEmpty) {
-        FlushbarHelper.createError(
-          message: message,
-          title: _languageStore.language.home_tv_error,
-          duration: Duration(seconds: 0),
-        )..show(context);
-      }
-    });
-
+    if (message.isNotEmpty) {
+      Future(() => FlushbarHelper.createError(
+        message: message,
+        title: _languageStore.language.home_tv_error,
+        duration: Duration(seconds: 1),
+      )..show(context));
+    }
     return SizedBox.shrink();
   }
 }

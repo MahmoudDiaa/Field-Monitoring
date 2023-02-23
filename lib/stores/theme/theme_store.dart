@@ -1,12 +1,13 @@
 import 'package:Field_Monitoring/data/repository.dart';
 import 'package:Field_Monitoring/stores/error/error_store.dart';
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 part 'theme_store.g.dart';
 
 class ThemeStore = _ThemeStore with _$ThemeStore;
-
+@Singleton()
 abstract class _ThemeStore with Store {
   final String TAG = "_ThemeStore";
 
@@ -25,8 +26,7 @@ abstract class _ThemeStore with Store {
   bool get darkMode => _darkMode;
 
   // constructor:---------------------------------------------------------------
-  _ThemeStore(Repository repository)
-      : this._repository = repository {
+  _ThemeStore(this._repository) {
     init();
   }
 
@@ -47,6 +47,7 @@ abstract class _ThemeStore with Store {
 
   // dispose:-------------------------------------------------------------------
   @override
+  @disposeMethod
   dispose() {
 
   }

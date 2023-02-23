@@ -25,7 +25,7 @@ class _SubCategoryListWidget extends StatefulWidget {
   final void Function(SubCategory?)? onSelectedSubCategoryChanged;
   final SubCategoryListViewMode subcategoryListView;
 
-   int? initialSelectedId;
+  int? initialSelectedId;
 
   final bool categoryIdIsMandatory;
 
@@ -33,7 +33,7 @@ class _SubCategoryListWidget extends StatefulWidget {
 
   final bool? autoSelectFirstItem;
 
- final double gridAndListHeight;
+  final double gridAndListHeight;
   final LanguageStore _languageStore = LanguageStore(getIt<Repository>());
 
   _SubCategoryListWidget(
@@ -46,7 +46,7 @@ class _SubCategoryListWidget extends StatefulWidget {
       this.autoSelectFirstItem = false,
       required this.gridAndListHeight});
 
-final  int? categoryId;
+  final int? categoryId;
 
   @override
   _SubCategoryListWidgetState createState() => _SubCategoryListWidgetState();
@@ -106,13 +106,16 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
   bool initialed = false;
 
   setInitialSelectedSubCategory() {
+    debugPrint("setInitialSelectedSubCategory first");
     if (initialed) return;
     if (_selectedSubCategory == null && widget.initialSelectedId != null) {
       if (_subcategoryStore.subcategoryList?.subcategories != null) {
-        if (_subcategoryStore.subcategoryList!.subcategories.any((element) => element.id == widget.initialSelectedId) ==
+        if (_subcategoryStore.subcategoryList!.subcategories
+                .any((element) => element.id == widget.initialSelectedId) ==
             true) {
           _selectedSubCategory = _subcategoryStore
-              .subcategoryList!.subcategories.firstWhere((element) => element.id == widget.initialSelectedId);
+              .subcategoryList!.subcategories
+              .firstWhere((element) => element.id == widget.initialSelectedId);
           widget.initialSelectedId = null;
           Future.delayed(Duration(seconds: 1), () {
             _onSubCategoryTap(_selectedSubCategory);
@@ -126,13 +129,14 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
       });
     }
     initialed = true;
+
+    debugPrint("setInitialSelectedSubCategory end");
   }
 
   Widget _buildMainContent() {
     if (widget.categoryIdIsMandatory == true && widget.categoryId == null)
       return Center(
-        child: Text(
-            '${_languageStore.language.categoryIsMandatory}'),
+        child: Text('${_languageStore.language.categoryIsMandatory}'),
       );
     return Observer(
       builder: (context) {
@@ -228,8 +232,9 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
                                 colorBlendMode: BlendMode.softLight,
                                 placeholder: (context, url) =>
                                     Center(child: CircularProgressIndicator()),
-                                errorWidget: (context, url, err) =>
-                                    Center(child: Text(_languageStore.language.failedLoadImage))),
+                                errorWidget: (context, url, err) => Center(
+                                    child: Text(_languageStore
+                                        .language.failedLoadImage))),
                           ),
                           Expanded(
                             flex: 2,
@@ -251,11 +256,10 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
                                           fontSize: 13.0,
                                           fontFamily: 'Roboto',
                                           color: new Color(0xFF212121),
-                                          fontWeight:
-                                              subCategories[index].id ==
-                                                      _selectedSubCategory?.id
-                                                  ? FontWeight.bold
-                                                  : FontWeight.normal,
+                                          fontWeight: subCategories[index].id ==
+                                                  _selectedSubCategory?.id
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
                                         ),
                                       ),
                                     ),
@@ -321,8 +325,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
             child: EmptyWidget(
             image: null,
             packageImage: PackageImage.Image_1,
-            title:
-                '${_languageStore.language.home_tv_no_post_found}',
+            title: '${_languageStore.language.home_tv_no_post_found}',
             // subTitle:
             // '${_languageStore.language.home_tv_no_post_found_line2')}',
             titleTextStyle: TextStyle(
@@ -372,8 +375,7 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
             child: EmptyWidget(
             image: null,
             packageImage: PackageImage.Image_1,
-            title:
-                '${_languageStore.language.home_tv_no_post_found}',
+            title: '${_languageStore.language.home_tv_no_post_found}',
             // subTitle:
             // '${_languageStore.language.home_tv_no_post_found_line2')}',
             titleTextStyle: TextStyle(
@@ -457,12 +459,14 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
   }
 
   Widget _buildRadiobuttonListView() {
+
     return _subcategoryStore.subcategoryList != null
         ? Container(
             height: 30.0,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              children: _subcategoryStore.subcategoryList!.subcategories.map((e) => _buildRadioItem(e))
+              children: _subcategoryStore.subcategoryList!.subcategories
+                  .map((e) => _buildRadioItem(e))
                   .toList(),
             ),
           )
@@ -471,6 +475,8 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
               _languageStore.language.home_tv_no_post_found,
             ),
           );
+
+
   }
 
   SubCategory? _selectedSubCategory;
@@ -478,14 +484,16 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
 
   _onSubCategoryTap(SubCategory? subcategory) {
     _selectedSubCategory = subcategory;
-    if (widget.onSelectedSubCategoryChanged != null)
+    if (widget.onSelectedSubCategoryChanged != null && subcategory != null) {
       widget.onSelectedSubCategoryChanged!(subcategory);
-    _selectedSubCategoryStreamController.add(subcategory);
+      _selectedSubCategoryStreamController.add(subcategory);
+    }
 
     // });
   }
 
   Widget _buildRadioItem(SubCategory subcategory) {
+
     var dd = InkWell(
       onTap: () {
         _onSubCategoryTap(subcategory);
@@ -523,11 +531,10 @@ class _SubCategoryListWidgetState extends State<_SubCategoryListWidget> {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         softWrap: false,
-        style:
-            _subcategoryStore.subcategoryList?.subcategories[position].id ==
-                    _selectedSubCategory?.id
-                ? Theme.of(context).textTheme.titleMedium
-                : Theme.of(context).textTheme.bodyLarge,
+        style: _subcategoryStore.subcategoryList?.subcategories[position].id ==
+                _selectedSubCategory?.id
+            ? Theme.of(context).textTheme.titleMedium
+            : Theme.of(context).textTheme.bodyLarge,
       ),
       subtitle: Text(
         '${_subcategoryStore.subcategoryList?.subcategories[position].localizedName(_languageStore.locale)}',

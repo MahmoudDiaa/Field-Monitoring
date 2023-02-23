@@ -83,10 +83,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
     startTimer();
   }
 
-  startTimer() {
-    var _duration = Duration(milliseconds: 2000);
-    return Timer(_duration, navigate);
-  }
+
 
   @override
   void didChangeDependencies() {
@@ -94,7 +91,10 @@ class _SplashScreen2State extends State<SplashScreen2> {
     super.didChangeDependencies();
 
   }
-
+  startTimer() {
+    var _duration = Duration(milliseconds: 2000);
+    return Timer(_duration, navigate);
+  }
   navigate() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 

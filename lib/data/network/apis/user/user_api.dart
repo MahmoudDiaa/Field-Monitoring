@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:Field_Monitoring/data/network/api_response_new_entity.dart';
 import 'package:Field_Monitoring/data/network/dio_client.dart';
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../sharedpref/shared_preference_helper.dart';
 import '../../constants/endpoints.dart';
-
+@Singleton()
 class UserApi {
   final DioClient _dioClient;
   LoginResponseEntity? apiResponse;

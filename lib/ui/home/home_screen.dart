@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
-
 import '../../constants/enums.dart';
 import '../../data/sharedpref/shared_preference_helper.dart';
 import '../../models/category/category.dart';
+import '../../utils/routes/routes.dart';
 import '../../widgets/categories_select.dart';
 import '../barber_details/barber_details_screen.dart';
 import '../constants/colors.dart';
@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void didChangeDependencies() {
     sharedPreferenceHelper = GetIt.instance<SharedPreferenceHelper>();
     super.didChangeDependencies();
-    _languageStore=Provider.of<LanguageStore>(context);
+    _languageStore = Provider.of<LanguageStore>(context);
   }
 
   @override
@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Stack(
                   children: [
                     Image.asset(
-                      'assets/images/home_bg.png',
+                      'assets/images/splash/splash_background.png',
                       height: 250.0,
                       width: MediaQuery.of(context).size.width,
                       fit: BoxFit.fitWidth,
@@ -194,12 +194,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       //     )));
                     },
                     onSubCategoryChange: (subCategory) {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>sharedPreferenceHelper!.authUser!.user!.isHasCreatedPermission()?CreatedIncidentListScreen(
-                                initialSubCategoryId: subCategory?.id,
-                                showBack: true,
-                                //initialSubCategoryId: e.id,
-                              ):AssignedIncidentListScreen()));
+                      sharedPreferenceHelper!.authUser!.user!
+                              .isHasCreatedPermission()
+                          ? Navigator.of(context)
+                              .pushNamed(Routes.createdIncident, arguments: {
+                              "initialSubCategoryId": subCategory?.id,
+                              "showBack": true,
+                            })
+                          : Navigator.of(context)
+                              .pushNamed(Routes.createdIncident);
+
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) =>sharedPreferenceHelper!.authUser!.user!.isHasCreatedPermission()?CreatedIncidentListScreen(
+                      //           initialSubCategoryId: subCategory?.id,
+                      //           showBack: true,
+                      //           //initialSubCategoryId: e.id,
+                      //         ):AssignedIncidentListScreen()));
                     },
                     onSaved: (category) {},
                     validator: (category) {

@@ -20,6 +20,7 @@ import 'package:Field_Monitoring/stores/theme/theme_store.dart';
 import 'package:Field_Monitoring/stores/user/user_store.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/network/apis/categories/category_api.dart';
@@ -36,7 +37,11 @@ import '../../stores/priority/priority_store.dart';
 import '../../stores/subcategory/subcategory_store.dart';
 
 final getIt = GetIt.instance;
-
+@InjectableInit(
+  initializerName: 'init', // default
+  preferRelativeImports: true, // default
+  asExtension: false, // default
+)
 Future<void> setupLocator() async {
   // factories:-----------------------------------------------------------------
   getIt.registerFactory(() => ErrorStore());

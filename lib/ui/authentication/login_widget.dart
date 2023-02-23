@@ -48,7 +48,6 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   //final _emailController = TextEditingController(text: "demo@orbits.com");
-  final _emailController = TextEditingController();
   bool _toggleVisibility = true;
   bool checkedValue = false;
 

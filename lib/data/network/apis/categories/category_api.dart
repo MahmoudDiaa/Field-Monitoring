@@ -1,10 +1,11 @@
 import 'package:Field_Monitoring/data/network/dio_client.dart';
 import 'package:Field_Monitoring/data/sharedpref/shared_preference_helper.dart';
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../models/category/category_list.dart';
 import '../../constants/endpoints.dart';
-
+@Singleton()
 class CategoryApi {
   final DioClient _dioClient;
 

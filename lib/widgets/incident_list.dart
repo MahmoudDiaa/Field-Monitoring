@@ -60,6 +60,7 @@ class _IncidentListWidgetState extends State<_IncidentListWidget> {
 
     // check to see if already called api
     if (!_incidentStore.loading) {
+      print("didChangeDependencies incident list ");
       _incidentStore.getIncidents();
     }
   }

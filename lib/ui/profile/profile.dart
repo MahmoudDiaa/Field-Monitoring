@@ -69,8 +69,8 @@ class _ProfileState extends State<Profile> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: user.userRoles
-                          !.map((e) => Text(
+                      children: user.userRoles!
+                          .map((e) => Text(
                                 e.roleName!,
                                 style: TextStyle(
                                   color: Colors.white,
@@ -91,7 +91,7 @@ class _ProfileState extends State<Profile> {
                           margin: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
                           child: Container(
                               width: 310.0,
-                              height: 310.0,
+                              height: MediaQuery.of(context).size.height/2.3,
                               child: Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: Column(
@@ -166,7 +166,7 @@ class _ProfileState extends State<Profile> {
                                               ),
                                             ),
                                             Text(
-                                              user.mobile??"123456789",
+                                              user.mobile ?? "123456789",
                                               style: TextStyle(
                                                 fontSize: 12.0,
                                                 color: Colors.grey[400],
@@ -196,7 +196,8 @@ class _ProfileState extends State<Profile> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              _languageStore.language.departments,
+                                              _languageStore
+                                                  .language.departments,
                                               style: TextStyle(
                                                 fontSize: 15.0,
                                               ),
@@ -232,13 +233,15 @@ class _ProfileState extends State<Profile> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              _languageStore.language.municipalities,
+                                              _languageStore
+                                                  .language.municipalities,
                                               style: TextStyle(
                                                 fontSize: 15.0,
                                               ),
                                             ),
                                             Text(
-                                              user.municipalities!.first??"البلديات",
+                                              user.municipalities!.first ??
+                                                  "البلديات",
                                               style: TextStyle(
                                                 fontSize: 12.0,
                                                 color: Colors.grey[400],
@@ -261,66 +264,75 @@ class _ProfileState extends State<Profile> {
               right: 20.0,
               child: Card(
                   child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(4.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                        child: Column(
-                      children: [
-                        Text(
-                          'Battles',
-                          style: TextStyle(
-                              color: Colors.grey[400], fontSize: 14.0),
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Text(
-                          "0000",
-                          style: TextStyle(
-                            fontSize: 15.0,
+                    // Expanded(
+                    //   child: Container(
+                    //       padding: EdgeInsets.all(8),
+                    //       child: Column(
+                    //         children: [
+                    //           Text(
+                    //             'Battles',
+                    //             style: TextStyle(
+                    //                 color: Colors.grey[400], fontSize: 14.0),
+                    //           ),
+                    //           SizedBox(
+                    //             height: 5.0,
+                    //           ),
+                    //           Text(
+                    //             "0000",
+                    //             style: TextStyle(
+                    //               fontSize: 15.0,
+                    //             ),
+                    //           )
+                    //         ],
+                    //       )),
+                    // ),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        child: Column(children: [
+                          Text(
+                            _languageStore.language.allMonthIncidentsCount,
+                            style: TextStyle(
+                                color: Colors.grey[400], fontSize: 12.0),
                           ),
-                        )
-                      ],
-                    )),
-                    Container(
-                      child: Column(children: [
-                        Text(
-                          _languageStore.language.allMonthIncidentsCount,
-                          style: TextStyle(
-                              color: Colors.grey[400], fontSize: 14.0),
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Text(
-                          '100',
-                          style: TextStyle(
-                            fontSize: 15.0,
+                          SizedBox(
+                            height: 5.0,
                           ),
-                        )
-                      ]),
+                          Text(
+                            '100',
+                            style: TextStyle(
+                              fontSize: 15.0,
+                            ),
+                          )
+                        ]),
+                      ),
                     ),
-                    Container(
-                        child: Column(
-                      children: [
-                        Text(
-                          _languageStore.language.allDayIncidentsCount,
-                          style: TextStyle(
-                              color: Colors.grey[400], fontSize: 14.0),
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Text(
-                          '19',
-                          style: TextStyle(
-                            fontSize: 15.0,
-                          ),
-                        )
-                      ],
-                    )),
+                    Expanded(
+                      child: Container(
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            children: [
+                              Text(
+                                _languageStore.language.allDayIncidentsCount,
+                                style: TextStyle(
+                                    color: Colors.grey[400], fontSize: 12.0),
+                              ),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+                              Text(
+                                '19',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                ),
+                              )
+                            ],
+                          )),
+                    ),
                   ],
                 ),
               )))

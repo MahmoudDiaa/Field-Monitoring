@@ -1,4 +1,5 @@
 import 'package:Field_Monitoring/stores/error/error_store.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:validators/validators.dart';
 
@@ -10,6 +11,7 @@ part 'forget_password_form_store.g.dart';
 class ForgetPasswordFormStore = _ForgetPasswordFormStore
     with _$ForgetPasswordFormStore;
 
+@Injectable()
 abstract class _ForgetPasswordFormStore with Store {
   // store for handling form errors
   final ForgetPasswordFormErrorStore forgetPasswordFormErrorStore =
@@ -229,7 +231,8 @@ abstract class _ForgetPasswordFormStore with Store {
     return future;
   }
 
-  // general methods:-----------------------------------------------------------
+  // general methods:----------------------------------------------------------
+  @disposeMethod
   void dispose() {
     for (final d in _disposers) {
       d();

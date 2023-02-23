@@ -1,6 +1,7 @@
 import 'package:Field_Monitoring/data/local/entities/incident/incident_entity.dart';
 import 'package:Field_Monitoring/data/local/mappers/mappers.dart';
 import 'package:Field_Monitoring/models/incident/incident.dart';
+import 'package:injectable/injectable.dart';
 import 'package:sembast/sembast.dart';
 
 import '../../constants/enums.dart';
@@ -10,6 +11,7 @@ import '../local/constants/db_constants.dart';
 import '../local/dao/incident/incident_dao.dart';
 import '../network/apis/incident/incident_api.dart';
 
+@Singleton()
 class IncidentRepository {
   // data source object
   final IncidentDao _incidentDao;
@@ -28,6 +30,7 @@ class IncidentRepository {
     return await _incidentApi
         .getIncidents(pageNumber, incidentFilter)
         .then((incidentsList) {
+          print("incident repo");
       incidentsList.incidents?.forEach((incident) {
         _incidentDao.insertIncident(IncidentEntity.fromRemote(incident));
       });

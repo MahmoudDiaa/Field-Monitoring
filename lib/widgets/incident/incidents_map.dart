@@ -14,6 +14,7 @@ import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 import 'package:google_maps_place_picker_mb/providers/place_provider.dart';
+import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
@@ -108,11 +109,18 @@ class _IncidentsMapState extends State<IncidentsMap> {
                   TextButton(
                       onPressed: () async {
                          await placeProvider!
-                            .updateCurrentLocation(true)
-                            .whenComplete(() {
-                          setState(() {});
-                        }).onError((error, stackTrace) =>
-                                {Geolocator.requestPermission()});
+                            .updateCurrentLocation(true).whenComplete(() {
+
+                           setState(()  {
+                              Geolocator.getLastKnownPosition(forceAndroidLocationManager: true).then((value) {
+                                placeProvider!.currentPosition=  value;
+                             });
+
+                           });
+                         })
+
+                             .onError((error, stackTrace) =>
+                         Geolocator.requestPermission());
 
                         // if (placeProvider!.permissionGranted.toString() ==
                         //     "PermissionStatus.granted") {
@@ -369,7 +377,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
                       ),
                       Observer(
                         builder: (context) {
-                          print("user permissions ${userPermissions.length}");
+                          print("user permissions ${userPermissions}");
                           return userPermissions.length <= 1
                               ? Container()
                               : StreamBuilder<DashboardWidgets>(

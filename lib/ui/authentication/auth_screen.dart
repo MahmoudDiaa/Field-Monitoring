@@ -1,4 +1,3 @@
-import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:Field_Monitoring/ui/authentication/signup_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,22 +29,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _showError(String message) {
-      if (message.isNotEmpty) {
-        Future.delayed(Duration(milliseconds: 0), () {
-          if (message.isNotEmpty) {
-            FlushbarHelper.createError(
-              message: message,
-              title:_languageStore.language.home_tv_error,
-              duration: Duration(seconds: 2),
-            )..show(context);
-          }
-        });
-      }
-
-      return SizedBox.shrink();
-    }
-
     return Scaffold(
         backgroundColor: CustomColor.primaryColor,
         body: WillPopScope(
@@ -71,6 +54,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _languageStore =Provider.of<LanguageStore>(context);
+    _languageStore = Provider.of<LanguageStore>(context);
   }
 }

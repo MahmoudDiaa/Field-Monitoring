@@ -1,8 +1,10 @@
 
+import 'package:injectable/injectable.dart';
+
 import '../network/api_response_new_entity.dart';
 import '../network/apis/user/user_api.dart';
 import '../sharedpref/shared_preference_helper.dart';
-
+@Singleton()
 class UserRepository {
   // api objects
   final UserApi _userApi;

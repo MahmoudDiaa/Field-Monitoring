@@ -32,6 +32,22 @@ mixin _$LanguageStore on _LanguageStore, Store {
     });
   }
 
+  late final _$languageAtom =
+      Atom(name: '_LanguageStore.language', context: context) ;
+
+  @override
+   AppLocalizations get language {
+    _$languageAtom.reportRead();
+    return super.language!;
+  }
+
+  @override
+  set language(dynamic value) {
+    _$languageAtom.reportWrite(value, super.language, () {
+      super.language = value;
+    });
+  }
+
   late final _$_LanguageStoreActionController =
       ActionController(name: '_LanguageStore', context: context);
 
@@ -60,6 +76,7 @@ mixin _$LanguageStore on _LanguageStore, Store {
   @override
   String toString() {
     return '''
+language: ${language},
 locale: ${locale}
     ''';
   }

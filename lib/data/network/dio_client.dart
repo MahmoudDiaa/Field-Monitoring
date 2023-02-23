@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-
+import 'package:injectable/injectable.dart';
+@Singleton()
 class DioClient {
   // dio instance
   final Dio _dio;
@@ -44,6 +45,32 @@ class DioClient {
       final Response response = await _dio.post(
         uri,
         data: data,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return response.data;
+    } catch (e) {
+      throw e;
+    }
+  }
+  //post form Data
+  Future<dynamic> postDataForm(
+      String uri, {
+        data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+        CancelToken? cancelToken,
+        ProgressCallback? onSendProgress,
+        ProgressCallback? onReceiveProgress,
+      }) async {
+    try {
+      FormData formData = FormData.fromMap(data);
+      final Response response = await _dio.post(
+        uri,
+        data: formData,
         queryParameters: queryParameters,
         options: options,
         cancelToken: cancelToken,

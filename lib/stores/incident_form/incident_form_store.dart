@@ -1,5 +1,6 @@
 import 'package:Field_Monitoring/models/incident/incident.dart';
 import 'package:Field_Monitoring/stores/error/error_store.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../constants/enums.dart';
@@ -8,7 +9,7 @@ import '../../data/respository/incident_repository.dart';
 part 'incident_form_store.g.dart';
 
 class IncidentFormStore = _IncidentFormStore with _$IncidentFormStore;
-
+@Singleton()
 abstract class _IncidentFormStore with Store {
   // store for handling form errors
   final IncidentFormErrorStore formErrorStore = IncidentFormErrorStore();
@@ -20,13 +21,13 @@ abstract class _IncidentFormStore with Store {
   final ErrorStore errorStore = ErrorStore();
 
   _IncidentFormStore(this._incidentrepository) {
-    _setupValidations();
+    // _setupValidations();
   }
 
   // disposers:-----------------------------------------------------------------
   late List<ReactionDisposer> _disposers;
-
-  void _setupValidations() {
+  @postConstruct
+  void init() {
     _disposers = [
       reaction((_) => incident, validateIncident),
       reaction((_) => incident, validateIncidentTakeAction),
@@ -187,6 +188,7 @@ abstract class _IncidentFormStore with Store {
   }
 
   // general methods:-----------------------------------------------------------
+  @disposeMethod
   void dispose() {
     for (final d in _disposers) {
       d();

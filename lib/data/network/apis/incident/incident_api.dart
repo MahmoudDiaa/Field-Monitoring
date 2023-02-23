@@ -4,6 +4,7 @@ import 'package:Field_Monitoring/data/network/dio_client.dart';
 import 'package:Field_Monitoring/models/incident/incident_list.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../constants/enums.dart';
 import '../../../../models/incident/incident.dart';
@@ -12,7 +13,7 @@ import '../../../sharedpref/shared_preference_helper.dart';
 import '../../api_response_new_entity.dart';
 import '../../constants/endpoints.dart';
 import 'dart:developer';
-
+@Singleton()
 class IncidentApi {
   final DioClient _dioClient;
   SharedPreferenceHelper sharedPreferenceHelper;
@@ -27,7 +28,8 @@ class IncidentApi {
     try {
       final res = await _dioClient.post(
           '${Endpoints.getIncidents}?currentPage=${pageNumber}',
-          data: {
+          data:
+          {
             "pageSize": 10,
             "categoryId": incidentFilter?.categoryId,
             "subCategoryId": incidentFilter?.subCategoryId,
@@ -57,12 +59,12 @@ class IncidentApi {
   Future<bool?> save(Incident incident) async {
     try {
       log("incident form log=> ${incident.toMap()}");
-      final res = await _dioClient.post(Endpoints.saveIncident,
+      final res = await _dioClient.postDataForm(Endpoints.saveIncident,
           data: jsonEncode(incident.toMap()),
           options: Options(
             headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
+              'Content-Type': 'multipart/form-data',
+              'Accept': 'multipart/form-data',
               'Authorization':
                   'Bearer ${sharedPreferenceHelper.authUser?.accessToken ?? ''}',
             },
@@ -78,13 +80,13 @@ class IncidentApi {
   Future<bool?> saveWorkFlowStep(
       Incident incident, IncidentStatusEnum incidentStatusEnum) async {
     try {
-      final res = await _dioClient.post(
+      final res = await _dioClient.postDataForm(
           incidentStatusEnum.workflowSubmitEndpointName ?? '',
           data: jsonEncode(incident.toWorkflowMap(incidentStatusEnum)),
           options: Options(
             headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
+              'Content-Type': 'multipart/form-data',
+              'Accept': 'multipart/form-data',
               'Authorization':
                   'Bearer ${sharedPreferenceHelper.authUser?.accessToken ?? ''}',
             },

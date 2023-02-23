@@ -12,22 +12,33 @@ import 'incident_image.dart';
 import 'dart:convert';
 
 class Incident {
+  //for post request
   int? categoryId;
-  PickResult? mapPlace;
-  List<IncidentImage> images = [];
-
+  int? subCategoryId;
   List<XFile> xFiles = [];
+  PickResult? mapPlace;
+  int? amountUnitId;
+  double? amountValue;
+  String? lat;
+  String? long;
+  String? notes;
+  int? priority;
+
+  List<IncidentImage> images = [];
 
   List<IncidentTransaction> transactions = [];
 
   IncidentImage? get primaryImageFromList {
     if (images.length == 0) return null;
-    return images.firstWhere((element) => element.isPrimary == true);
+
+    try {
+      return images.firstWhere((element) => element.isPrimary == true);
+    } catch (e, s) {
+      print(s);
+      return null;
+    }
   }
 
-  double? amountValue;
-  int? subCategoryId;
-  int? amountUnitId;
   String? amountUnitName;
 
   String? get primaryImageUrl {
@@ -41,7 +52,6 @@ class Incident {
 
       case Strings.arabicCode:
         return this.incidentCategoryArabicName;
-
     }
     return 'unknown language code';
   }
@@ -53,7 +63,6 @@ class Incident {
 
       case Strings.arabicCode:
         return this.incidentSubCategoryArabicName;
-
     }
     return 'unknown language code';
   }
@@ -65,7 +74,6 @@ class Incident {
 
       case Strings.arabicCode:
         return this.incidentStatusArabicName;
-
     }
     return 'unknown language code';
   }
@@ -77,7 +85,6 @@ class Incident {
 
       case Strings.arabicCode:
         return this.priorityTextArabic;
-
     }
     return 'unknown language code';
   }
@@ -96,9 +103,7 @@ class Incident {
   }
 
   String? id;
-  String? lat;
-  String? long;
-  String? notes;
+
   DateTime? createDate;
   String? createHijriDate;
   String? createTime;
@@ -119,7 +124,7 @@ class Incident {
   String? userFullName;
   int? imagesCount;
   int? transactonCount;
-  int? priority;
+
   String? priorityTextArabic;
   String? priorityTextEnglish;
   int? incidentStatusId;
@@ -197,18 +202,14 @@ class Incident {
       case 1:
         return lan == 'ar' ? 'منخفضة' : 'Low';
 
-
       case 2:
         return lan == 'ar' ? 'متوسط' : 'Medium';
-
 
       case 3:
         return lan == 'ar' ? 'عالي' : 'High';
 
-
       default:
         return lan == 'ar' ? 'غير محدد' : 'Unknown';
-
     }
   }
 
@@ -262,7 +263,6 @@ class Incident {
     var images = [];
     xFiles.forEach((element) {
       images.add({
-
         'ImageBase64': "data:image/png;base64," +
             base64Encode(File(element.path).readAsBytesSync()),
         'isPrimary': false
@@ -274,8 +274,10 @@ class Incident {
     data['CategoryId'] = this.categoryId;
     data['SubCategoryId'] = this.subCategoryId;
     data['IsImagesBase64'] = true;
-    data['lat'] = this.mapPlace?.geometry?.location.lat.toString()??"27.503035";
-    data['long'] = this.mapPlace?.geometry?.location.lng.toString()??"41.709509";
+    data['lat'] =
+        this.mapPlace?.geometry?.location.lat.toString() ?? "27.503035";
+    data['long'] =
+        this.mapPlace?.geometry?.location.lng.toString() ?? "41.709509";
     data['districtName'] = mapPlace?.addressComponents?[1].longName;
     data['streetName'] = mapPlace?.addressComponents?[0].longName;
     data['address'] = mapPlace?.addressComponents == null

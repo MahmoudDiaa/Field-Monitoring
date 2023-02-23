@@ -1,5 +1,6 @@
 import 'package:Field_Monitoring/data/respository/incident_repository.dart';
 import 'package:Field_Monitoring/stores/error/error_store.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../models/incident/incident.dart';
@@ -7,21 +8,21 @@ import '../../../models/incident/incident_filter.dart';
 import '../../../models/incident/incident_list.dart';
 import '../../../utils/dio/dio_error_util.dart';
 
-
 part 'supervised_incident_store.g.dart';
 
-class SupervisedIncidentStore = _SupervisedIncidentStore with _$SupervisedIncidentStore;
+class SupervisedIncidentStore = _SupervisedIncidentStore
+    with _$SupervisedIncidentStore;
 
+@Singleton()
 abstract class _SupervisedIncidentStore with Store {
   // repository instance
-  late IncidentRepository _incidentRepository;
+  final IncidentRepository _incidentRepository;
 
   // store for handling errors
   final ErrorStore errorStore = ErrorStore();
 
   // constructor:---------------------------------------------------------------
-  _SupervisedIncidentStore(IncidentRepository incidentRepository)
-      : this._incidentRepository = incidentRepository;
+  _SupervisedIncidentStore(this._incidentRepository);
 
   static ObservableFuture<IncidentList?> emptyIncidentResponse =
       ObservableFuture.value(null);

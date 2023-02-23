@@ -3,6 +3,10 @@ import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../data/sharedpref/constants/preferences.dart';
+import '../../utils/routes/routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -25,6 +29,13 @@ class _SplashScreenState extends State<SplashScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+  startTimer();
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -36,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 Expanded(
                   child: Container(
                       child: Image.asset(
-                    'assets/images/splash/splash_background.png',
+                        'assets/images/background_new.jpeg',
                     fit: BoxFit.fitHeight,
                   )),
                   flex: 3,
@@ -81,5 +92,17 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
+  startTimer() {
+    var _duration = Duration(milliseconds: 2000);
+    return Timer(_duration, navigate);
+  }
+  navigate() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
 
+    if (preferences.getBool(Preferences.is_logged_in) ?? false) {
+      Navigator.of(context).pushReplacementNamed(Routes.dashboard);
+    } else {
+      Navigator.of(context).pushReplacementNamed(Routes.login);
+    }
+  }
 }
