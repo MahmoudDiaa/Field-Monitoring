@@ -29,24 +29,21 @@ import 'incident-map-marker.dart';
 import 'incident_item_details.dart';
 
 class IncidentsMap extends StatefulWidget {
-  List<DashboardWidgets> userPermissions;
-
-  IncidentsMap(this.userPermissions);
 
   @override
-  _IncidentsMapState createState() => _IncidentsMapState(userPermissions);
+  _IncidentsMapState createState() => _IncidentsMapState();
 }
 
 class _IncidentsMapState extends State<IncidentsMap> {
   Future<PlaceProvider>? _futureProvider;
   late GoogleMapController mapController;
   final Set<Marker> markers = new Set();
-  final List<DashboardWidgets> userPermissions;
+   List<DashboardWidgets> userPermissions=[];
   late LanguageStore _languageStore;
 
   // static const LatLng showLocation = const LatLng(27.7089427, 85.3086209);
 
-  _IncidentsMapState(this.userPermissions);
+  _IncidentsMapState();
 
   @override
   void initState() {
@@ -293,6 +290,7 @@ class _IncidentsMapState extends State<IncidentsMap> {
 
   @override
   Widget build(BuildContext context) {
+
     _streamController.stream.listen((event) {
       currentDistance = event;
       loadData(targetLocation, _currentPermission);
@@ -649,6 +647,8 @@ class _IncidentsMapState extends State<IncidentsMap> {
 
   @override
   void didChangeDependencies() {
+    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+    userPermissions=arguments['userPermissions'];
     print("didChangeDependencies");
     if (userPermissions.contains(DashboardWidgets.Created)) {
       print("Created");
@@ -663,7 +663,9 @@ class _IncidentsMapState extends State<IncidentsMap> {
       print("Supervised");
     }
     _languageStore = Provider.of<LanguageStore>(context);
+
     _currentPermission = userPermissions.first;
+    print("argments ${_currentPermission}");
     setStore(userPermissions.first);
     super.didChangeDependencies();
   }

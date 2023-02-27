@@ -126,6 +126,19 @@
   "phone": "Phone",
   "municipalities": "Municipalities",
   "departments": "Departments",
-  "notification": "Notification"
+  "notification": "Notification",
+  "welcome": "Welcome",
+  "incidentCount": "Incident Count",
+  "yourCurrentIncidents": "Your Current Incidents",
+  "ownedIncidents": "Owned Incidents",
+  "seeMore": "See More",
+  "section": "Section",
+  "incidentDate": "Incident Date",
+  "incidentMap": "Incident Map",
+  "myReports": "My Reports",
+  "addNewIncident": "Add New Incident",
+  "chooseCategory": "Choose Category",
+  "images": "Images",
+  "search": "Search"
 
 }

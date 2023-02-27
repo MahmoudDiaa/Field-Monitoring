@@ -3,7 +3,7 @@ import 'package:Field_Monitoring/constants/strings.dart';
 import 'package:Field_Monitoring/data/repository.dart';
 import 'package:Field_Monitoring/data/respository/notification_repository.dart';
 import 'package:Field_Monitoring/di/components/service_locator.dart';
-import 'package:Field_Monitoring/new_ui/login/login_screen.dart';
+import 'package:Field_Monitoring/new_ui/splash_screen/splash_screen.dart';
 import 'package:Field_Monitoring/stores/category/category_store.dart';
 import 'package:Field_Monitoring/stores/incident/assigned_incident/assigned_incident_store.dart';
 import 'package:Field_Monitoring/stores/incident/created_incident/created_incident_store.dart';
@@ -14,7 +14,6 @@ import 'package:Field_Monitoring/stores/user/user_store.dart';
 import 'package:Field_Monitoring/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import '../data/respository/category_repository.dart';
@@ -22,14 +21,12 @@ import '../data/respository/incident_repository.dart';
 import '../data/respository/priority_repository.dart';
 import '../data/respository/subcategory_repository.dart';
 import '../data/respository/user_repository.dart';
-import '../new_ui/login/login_screen.dart';
-import '../new_ui/splash_screen/splash_screen.dart';
+import '../new_ui/add_incident/add_new_incident_home/add_new_incident_home.dart';
 import '../stores/incident/supervised_incident/supervised_incident_store.dart';
 import '../stores/incident_form/incident_form_store.dart';
 import '../stores/priority/priority_store.dart';
 import '../stores/subcategory/subcategory_store.dart';
 import 'constants/colors.dart';
-import 'splash/splash_screen.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -92,7 +89,7 @@ class MyApp extends StatelessWidget {
           _languageStore.init(ctx);
           return '';
         },
-        locale: Locale(_languageStore.locale),
+        locale: Locale('ar'),
         theme: ThemeData(
           primaryColor: CustomColor.primaryColor,
           fontFamily: 'Cairo',

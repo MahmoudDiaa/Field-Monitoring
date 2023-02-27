@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../constants/images.dart';
 import '../../data/sharedpref/constants/preferences.dart';
 import '../../utils/routes/routes.dart';
 
@@ -17,22 +18,15 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   var images = [
-    SvgPicture.asset(
-      'assets/images/splash/splash_screen_leaf.svg',
-    ),
-    SvgPicture.asset(
-      'assets/images/splash/splash_screen_building.svg',
-    ),
-    SvgPicture.asset(
-      'assets/images/splash/splash_screen_location.svg',
-    ),
+    SvgPicture.asset(splashScreenLeaf),
+    SvgPicture.asset(splashScreenBuilding),
+    SvgPicture.asset(splashScreenLocation),
   ];
 
   @override
   void initState() {
     super.initState();
-  startTimer();
-
+    startTimer();
   }
 
   @override
@@ -47,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 Expanded(
                   child: Container(
                       child: Image.asset(
-                        'assets/images/background_new.jpeg',
+                    splashScreenBackground,
                     fit: BoxFit.fitHeight,
                   )),
                   flex: 3,
@@ -92,15 +86,17 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
+
   startTimer() {
     var _duration = Duration(milliseconds: 2000);
     return Timer(_duration, navigate);
   }
+
   navigate() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     if (preferences.getBool(Preferences.is_logged_in) ?? false) {
-      Navigator.of(context).pushReplacementNamed(Routes.dashboard);
+      Navigator.of(context).pushReplacementNamed(Routes.home);
     } else {
       Navigator.of(context).pushReplacementNamed(Routes.login);
     }

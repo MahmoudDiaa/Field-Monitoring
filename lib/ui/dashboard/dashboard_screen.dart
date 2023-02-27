@@ -1,3 +1,4 @@
+import 'package:Field_Monitoring/constants/images.dart';
 import 'package:Field_Monitoring/models/dashboard/dashboard.dart';
 import 'package:Field_Monitoring/ui/constants/colors.dart';
 import 'package:Field_Monitoring/ui/create_incident/create_incident_step1.dart';
@@ -266,7 +267,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       case 2:
         return IncidentFormStep1();
       case 3:
-        return IncidentsMap(indexMap.keys.toList());
+        return IncidentsMap();
       // case 3:
       //   return Center(
       //     child: Column(
@@ -308,7 +309,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
     var permissionIndex = indexMap;
     permissionIndex.remove(DashboardWidgets.Home);
-    widgets.add(IncidentsMap(permissionIndex.keys.toList()));
+    // widgets.add(IncidentsMap(permissionIndex.keys.toList()));
+    widgets.add(IncidentsMap());
 
     return widgets;
   }
@@ -383,7 +385,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/splash/splash_background.png'),
+          image: AssetImage(splashScreenBackground),
           fit: BoxFit.fill,
         ),
       ),

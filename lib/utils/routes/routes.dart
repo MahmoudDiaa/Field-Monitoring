@@ -1,3 +1,5 @@
+import 'package:Field_Monitoring/new_ui/add_incident/add_new_incident_home/add_new_incident_home.dart';
+import 'package:Field_Monitoring/new_ui/home/home_page.dart';
 import 'package:Field_Monitoring/new_ui/login/login_screen.dart';
 import 'package:Field_Monitoring/new_ui/splash_screen/splash_screen.dart';
 import 'package:Field_Monitoring/ui/dashboard/dashboard_screen.dart';
@@ -14,6 +16,7 @@ import '../../ui/create_incident/create_incident_step1.dart';
 import '../../ui/home/categories.dart';
 import '../../ui/home/home_screen.dart';
 import '../../ui/incidents/created_incidents/created_incident_list_screen.dart';
+import '../../widgets/incident/incidents_map.dart';
 
 class Routes {
   Routes._();
@@ -35,6 +38,7 @@ class Routes {
   static const String changePassword = '/changePassword';
   static const String sdadScreen = '/sdadScreen';
   static const String finallysdadScreen = '/finallySdadScreen';
+  static const String map = '/map';
 
   static final routes = <String, WidgetBuilder>{
     splash: (BuildContext context) => SplashScreen(),
@@ -46,15 +50,16 @@ class Routes {
     changePassword: (BuildContext context) => AuthenticationScreen(
           authScreenMode: AuthScreenMode.ChangePassword,
         ),
-    home: (BuildContext context) => HomeScreen(),
+    home: (BuildContext context) => HomeScreenNew(),
     categoryList: (BuildContext context) => CategoryListPage(),
-    incidentFormStep1: (BuildContext context) => IncidentFormStep1(),
+    // incidentFormStep1: (BuildContext context) => IncidentFormStep1(),
+    incidentFormStep1: (BuildContext context) => AddNewIncidentHome(),
     dashboard: (BuildContext context) => DashboardScreen(),
     sdadScreen: (BuildContext context) => IncidentSdadScreen(),
     finallysdadScreen: (BuildContext context) => IncidentFinallySdadScreen(),
     report: (BuildContext context) => ReportScreen(),
     profile: (BuildContext context) => Profile(),
     notification: (BuildContext context) => Notifications(),
-  createdIncident:(BuildContext context)=>CreatedIncidentListScreen()
+  createdIncident:(BuildContext context)=>CreatedIncidentListScreen(),map:(_)=>IncidentsMap(),
   };
 }

@@ -10,7 +10,12 @@ class CustomColor {
   static Color redDarkColor = Color(0xFF2B0100);
   static Color redColor = Color(0xFFD90404);
   static Color greyColor = Color(0xFF707070);
-  static Color greenColor = Color(0xFF1CB281);
+  static Color lightGreenColor = Color(0xFF1CB281);
+  static Color moreLightGreenColor = Color(0xFFB1EFDB);
+
+  static Color darkGreenColor = Color(0xFF238B76);
+  static Color midGreenColor = Color(0xFF009CA2);
+
   static Color greenLightColor = Color(0xFFE5F6E7);
   static Color blueColor = Color(0xFF307AFF);
 }

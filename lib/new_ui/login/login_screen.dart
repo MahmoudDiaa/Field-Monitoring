@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/default_text_form_field.dart';
+import '../../constants/images.dart';
 import '../../data/respository/user_repository.dart';
 import '../../data/sharedpref/constants/preferences.dart';
 import '../../stores/login_form/login_form_store.dart';
@@ -87,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Container(
                           child: Stack(alignment: Alignment.center, children: [
                         Image.asset(
-                          'assets/images/background_new.jpeg',
+                        splashScreenBackground2,
                           fit: BoxFit.fill,
                           height: double.infinity,
                           width: double.infinity,
@@ -179,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           .textTheme
                                           .bodyLarge
                                           ?.copyWith(color: Colors.white),
-                                      color: CustomColor.greenColor,
+                                      color: CustomColor.midGreenColor,
                                       onPressed: () {
                                         if (_store.canLogin) {
                                           DeviceUtils.hideKeyboard(context);
@@ -279,7 +280,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     Future.delayed(Duration(milliseconds: 0), () {
       Navigator.of(context).pushNamedAndRemoveUntil(
-          Routes.dashboard, (Route<dynamic> route) => false);
+          Routes.home, (Route<dynamic> route) => false);
     });
 
     return Container();

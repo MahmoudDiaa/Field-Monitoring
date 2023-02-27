@@ -54,7 +54,7 @@
   "finishAndSend": "إرسال البلاغ",
   "lastStep": "الخطوة الأخيره",
   "quantity": "الكمية",
-  "notes": "ملاحظات",
+  "notes": "الملاحظات",
   "priority": "الأولوية",
   "sendingIncident": "إرسال البلاغ",
   "sendIncidentConfirmation": "هل أنت متأكد من إرسال البلاغ؟",
@@ -126,5 +126,18 @@
   "phone": "رقم الهاتف",
   "municipalities": "البلديات",
   "departments": "الادارات",
-  "notification": "الاشعارات"
+  "notification": "الاشعارات",
+  "welcome": "أهلا بك",
+  "incidentCount": "عدد البلاغات",
+  "yourCurrentIncidents": "الخاصة بك للشهر الحالي",
+  "ownedIncidents": "البلاغات الخاصة بي",
+  "seeMore": "شاهد الكل",
+  "section": "القسم",
+  "incidentDate": "تاريخ البلاغ",
+  "incidentMap": "خريطة البلاغات",
+  "myReports": "أحصائياتي",
+  "addNewIncident": "أضافة بلاغ جديد",
+  "chooseCategory": "اختيار الفئة",
+  "images": "الصور",
+  "search": "بحث"
 }

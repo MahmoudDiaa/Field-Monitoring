@@ -364,7 +364,7 @@ late LanguageStore _languageStore;
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
+                    padding: const EdgeInsets.only(top: 4.0),
                     child: const Icon(Icons.image, color: Colors.white),
                   ),
                   Text(
