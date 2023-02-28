@@ -50,7 +50,7 @@
   "list": "القائمة",
   "theImages": "الصور",
   "theLocation": "الموقع",
-  "next": "التالي",
+  "next": "الـــتـــالـــي",
   "finishAndSend": "إرسال البلاغ",
   "lastStep": "الخطوة الأخيره",
   "quantity": "الكمية",
@@ -139,5 +139,10 @@
   "addNewIncident": "أضافة بلاغ جديد",
   "chooseCategory": "اختيار الفئة",
   "images": "الصور",
-  "search": "بحث"
+  "search": "بحث",
+  "previous": "السابق",
+  "uploadImage": "رفع صورة",
+  "pickUpImage": "التقاط صورة",
+  "change": "أستبدال",
+  "delete": "مسح"
 }

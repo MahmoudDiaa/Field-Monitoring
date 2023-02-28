@@ -139,6 +139,9 @@
   "addNewIncident": "Add New Incident",
   "chooseCategory": "Choose Category",
   "images": "Images",
-  "search": "Search"
-
+  "search": "Search",
+  "previous": "Previous",
+  "uploadImage": "Upload Image",
+  "pickUpImage": "Pick Up Image",
+  "change": "Change","delete": "Delete"
 }

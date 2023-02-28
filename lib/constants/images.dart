@@ -23,3 +23,5 @@ const homeNotification = 'assets/images/home/notifications.svg';
 // for add incident
 
 const addIncidentCheck = 'assets/images/add_incident/check.svg';
+const addIncidentLeftArrow = 'assets/images/add_incident/arrow_left.svg';
+const addIncidentFolderOpen = 'assets/images/add_incident/folder_open.svg';
