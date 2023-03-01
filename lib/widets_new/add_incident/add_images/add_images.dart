@@ -37,22 +37,28 @@ class _AddImagesScreenState extends State<AddImagesScreen> {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Align(
-          alignment: FractionalOffset.center,
-          child: _imageFileList!.length > 0
-              ? Column(
-                  children: _imageFileList!
-                      .map((image) => PreviewIncidentImage(
-                            image,
-                            languageStore: widget.languageStore,
-                          ))
-                      .toList(),
-                )
-              : Column(
+        _imageFileList!.length > 0
+            ? Column(
+                children: _imageFileList!
+                    .map((image) => PreviewIncidentImage(
+                          image,
+                          languageStore: widget.languageStore,
+                        ))
+                    .toList(),
+              )
+            : Container(
+          height: MediaQuery.of(context).size.height * 0.5,
+              child: Column(
+          mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SvgPicture.asset(addIncidentFolderOpen),
+
+                    SvgPicture.asset(
+                      addIncidentFolderOpen,
+                      alignment: Alignment.center,
+
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Text(
@@ -61,12 +67,11 @@ class _AddImagesScreenState extends State<AddImagesScreen> {
                     )
                   ],
                 ),
-        ),
+            ),
         Spacer(),
         Align(
           alignment: FractionalOffset.bottomCenter,
           child: Container(
-
             child: IntrinsicHeight(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -74,9 +79,7 @@ class _AddImagesScreenState extends State<AddImagesScreen> {
                 children: [
                   Spacer(),
                   InkWell(
-                      onTap: () =>
-                          _onImageButtonPressed(ImageSource.gallery),
-
+                      onTap: () => _onImageButtonPressed(ImageSource.gallery),
                       child: Row(
                         children: [
                           Icon(
@@ -95,12 +98,12 @@ class _AddImagesScreenState extends State<AddImagesScreen> {
                                 ?.copyWith(color: Colors.black),
                           ),
                         ],
-                      )),   Spacer(),
-                  VerticalDivider(),   Spacer(),
+                      )),
+                  Spacer(),
+                  VerticalDivider(),
+                  Spacer(),
                   InkWell(
-                      onTap: () =>
-                          _onImageButtonPressed(ImageSource.camera),
-                    
+                      onTap: () => _onImageButtonPressed(ImageSource.camera),
                       child: Row(
                         children: [
                           Icon(
@@ -119,7 +122,8 @@ class _AddImagesScreenState extends State<AddImagesScreen> {
                                 ?.copyWith(color: Colors.black),
                           ),
                         ],
-                      )),   Spacer(),
+                      )),
+                  Spacer(),
                 ],
               ),
             ),

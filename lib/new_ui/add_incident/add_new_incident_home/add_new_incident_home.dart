@@ -12,6 +12,7 @@ import '../../../constants/images.dart';
 import '../../../stores/category/category_store.dart';
 import '../../../stores/incident_form/incident_form_store.dart';
 import '../../../stores/language/language_store.dart';
+import '../../../widets_new/add_incident/add_details/add_details_screen.dart';
 
 class AddNewIncidentHome extends StatefulWidget {
   const AddNewIncidentHome({Key? key}) : super(key: key);
@@ -131,7 +132,7 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
                                 languageStore: _languageStore,
                                 onImageListChanged: (List<XFile> value) {},
                               )
-                            : Center(
+                            : currentStepperIndex==2?AddDetailsScreen( _languageStore,_incidentFormStore ):Center(
                                 child: Container(
                                     width: 20,
                                     height: 20,
@@ -174,7 +175,7 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
               color: CustomColor.lightGreenColor,
               onPressed: () {
                 setState(() {
-                  if (subCategoryDone || imageDone) currentStepperIndex++;
+                  if ((subCategoryDone || imageDone)&&currentStepperIndex<=2) currentStepperIndex++;
                 });
               }),
         ),
@@ -192,7 +193,12 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
                   .titleMedium
                   ?.copyWith(color: CustomColor.lightGreenColor),
               color: Colors.white,
-              onPressed: () {}),
+              onPressed: () {
+                if(currentStepperIndex>0)
+                setState(() {
+                  currentStepperIndex--;
+                });
+              }),
         ),
       );
 }
