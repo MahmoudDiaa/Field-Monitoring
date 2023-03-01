@@ -58,6 +58,7 @@ Widget defaultNoteTextFormField(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   prefixWidget != null ? prefixWidget : Container(),
+
                   SizedBox(
                     width: 2,
                   )
