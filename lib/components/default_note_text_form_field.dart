@@ -16,8 +16,8 @@ Widget defaultNoteTextFormField(
         TextInputAction textInputAction = TextInputAction.next,
         VoidCallback? onPressSuffix,
         String? textContent,
-          double? height,
-          double? width,
+        double? height,
+        double? width,
         FocusNode? focusNode}) =>
     Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
@@ -36,6 +36,7 @@ Widget defaultNoteTextFormField(
         child: TextFormField(
           controller: controller,
           onFieldSubmitted: onSubmit,
+          keyboardType: textInputType,
           onChanged: onChanged,
           validator: validate,
           focusNode: focusNode,
@@ -58,19 +59,20 @@ Widget defaultNoteTextFormField(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   prefixWidget != null ? prefixWidget : Container(),
-
                   SizedBox(
                     width: 2,
                   )
                 ],
               ),
-              suffixIcon: suffixWidget!=null?Container(
-                color: Colors.grey[200],
-                height: 60,
-                width: 20,
-                padding: EdgeInsets.all(4),
-                child: Center(child: suffixWidget),
-              ):Container(),
+              suffixIcon: suffixWidget != null
+                  ? Container(
+                      color: Colors.grey[200],
+                      height: 60,
+                      width: 20,
+                      padding: EdgeInsets.all(4),
+                      child: Center(child: suffixWidget),
+                    )
+                  : null,
               fillColor: Colors.white),
         ),
       ),

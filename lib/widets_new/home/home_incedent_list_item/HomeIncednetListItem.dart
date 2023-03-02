@@ -19,50 +19,47 @@ class HomeIncidentListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      elevation: 10,
-      color: Colors.grey[200],
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CircleAvatar(
-                radius: 40,
-                backgroundImage: AssetImage(image),
+    return Expanded(
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        elevation: 10,
+        color: Colors.grey[200],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundImage: AssetImage(image),
+                ),
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Row(
-                //   children: [
-                //
-                //   ],
-                // ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
-                sections(
-                    image: homeFolder,
-                    title: languageStore.language.section,
-                    subTitle: section),
-                // SizedBox(
-                //   width: 20,
-                // ),
-                sections(
-                    image: homeCalendar,
-                    title: languageStore.language.incidentDate,
-                    subTitle: date),
-                sections(
-                    image: homeNotes,
-                    title: languageStore.language.notes,
-                    subTitle: notes),
-              ],
-            )
-          ],
+                  sections(
+                      image: homeFolder,
+                      title: languageStore.language.section,
+                      subTitle: section),
+                  // SizedBox(
+                  //   width: 20,
+                  // ),
+                  sections(
+                      image: homeCalendar,
+                      title: languageStore.language.incidentDate,
+                      subTitle: date),
+                  sections(
+                      image: homeNotes,
+                      title: languageStore.language.notes,
+                      subTitle: notes),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -72,8 +69,7 @@ class HomeIncidentListItem extends StatelessWidget {
     required String image,
     required String title,
     required String subTitle,
-  }) =>
-      Row(
+  }) => Row(
         children: [
           SvgPicture.asset(image),
           SizedBox(
@@ -83,7 +79,15 @@ class HomeIncidentListItem extends StatelessWidget {
             "${title}: ",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          Text(subTitle)
+          SizedBox(
+            width: 130,
+            child: Text(
+              subTitle,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              softWrap: false,
+            ),
+          )
         ],
       );
 }

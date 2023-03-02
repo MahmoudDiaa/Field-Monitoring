@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Container(
                           child: Stack(alignment: Alignment.center, children: [
                         Image.asset(
-                        splashScreenBackground2,
+                          splashScreenBackground2,
                           fit: BoxFit.fill,
                           height: double.infinity,
                           width: double.infinity,
@@ -173,24 +173,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20),
                                   child:
-                                  //login button
-                                  defaultButton(
-                                      label: _languageStore.language.login,
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(color: Colors.white),
-                                      color: CustomColor.midGreenColor,
-                                      onPressed: () {
-                                        if (_store.canLogin) {
-                                          DeviceUtils.hideKeyboard(context);
-                                          _store.login();
-                                        } else {
-                                          _showErrorMessage(_languageStore
-                                              .language
-                                              .login_error_fill_fields);
-                                        }
-                                      }),
+                                      //login button
+                                      defaultButton(
+                                          label: _languageStore.language.login,
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(color: Colors.white),
+                                          color: CustomColor.midGreenColor,
+                                          onPressed: () {
+                                            if (_store.canLogin) {
+                                              DeviceUtils.hideKeyboard(context);
+                                              _store.login();
+                                            } else {
+                                              _showErrorMessage(_languageStore
+                                                  .language
+                                                  .login_error_fill_fields);
+                                            }
+                                          }),
                                 ),
                                 SizedBox(
                                   height: 30,
@@ -236,20 +236,31 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Positioned(
-              bottom: 420,
-              top: 0,
-              width: 100,
-              child: RawMaterialButton(
-                  onPressed: null,
-                  child: CarouselSlider(
-                    items: images,
-                    options: CarouselOptions(
-                        autoPlay: true,
-                        scrollPhysics: NeverScrollableScrollPhysics()),
-                  ),
-                  shape: CircleBorder(),
-                  fillColor: Colors.white),
-            ),
+                bottom: 550,
+                top: 160,
+                width: 100,
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      image: DecorationImage(
+                          image: AssetImage(logo),
+                          fit: BoxFit.contain,
+                          alignment: Alignment.center),
+                      borderRadius: BorderRadius.circular(50)),
+                )
+                // RawMaterialButton(
+                //     onPressed: null,
+                //     child: CarouselSlider(
+                //       items: images,
+                //       options: CarouselOptions(
+                //           autoPlay: true,
+                //           scrollPhysics: NeverScrollableScrollPhysics()),
+                //     ),
+                //     shape: CircleBorder(),
+                //     fillColor: Colors.white),
+                ),
           ],
         ),
       ),

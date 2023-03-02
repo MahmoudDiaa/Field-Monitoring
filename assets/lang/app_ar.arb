@@ -130,7 +130,7 @@
   "welcome": "أهلا بك",
   "incidentCount": "عدد البلاغات",
   "yourCurrentIncidents": "الخاصة بك للشهر الحالي",
-  "ownedIncidents": "البلاغات الخاصة بي",
+  "ownedIncidents": "اخر البلاغات ",
   "seeMore": "شاهد الكل",
   "section": "القسم",
   "incidentDate": "تاريخ البلاغ",
@@ -144,5 +144,11 @@
   "uploadImage": "رفع صورة",
   "pickUpImage": "التقاط صورة",
   "change": "أستبدال",
-  "delete": "مسح"
+  "delete": "مسح",
+  "choosePriority": "أختار الاولوية",
+  "send": "أرسال",
+  "incidentSendDone": "تم ارسال البلاغ بنجاح",
+  "reviewIncident": "مراجعة البلاغ",
+  "subCategory": "الفئة الفرعية",
+  "returnHome": "العودة للرئيسية"
 }

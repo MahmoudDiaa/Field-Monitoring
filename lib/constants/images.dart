@@ -4,6 +4,8 @@ const splashScreenBackground2 = 'assets/images/splash/background_new.jpeg';
 const splashScreenBuilding = 'assets/images/splash/splash_screen_building.svg';
 const splashScreenLeaf = 'assets/images/splash/splash_screen_leaf.svg';
 const splashScreenLocation = 'assets/images/splash/splash_screen_location.svg';
+const logo = 'assets/images/splash/logo_new.png';
+
 
 //home
 const homeBottomBarChartDots = 'assets/images/home/bottom_bar_chart_dots.svg';
@@ -25,3 +27,5 @@ const homeNotification = 'assets/images/home/notifications.svg';
 const addIncidentCheck = 'assets/images/add_incident/check.svg';
 const addIncidentLeftArrow = 'assets/images/add_incident/arrow_left.svg';
 const addIncidentFolderOpen = 'assets/images/add_incident/folder_open.svg';
+const addIncidentSend = 'assets/images/add_incident/send.svg';
+const addIncidentDone = 'assets/images/add_incident/done.svg';

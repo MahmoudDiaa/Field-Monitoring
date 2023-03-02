@@ -12,6 +12,7 @@ class CustomGoogleMap {
     ),
     mapType: MapType.normal,
     markers: Set<Marker>.of(_markers),
+
     onMapCreated: (GoogleMapController controller) {
       //_controller.complete(controller);
     },

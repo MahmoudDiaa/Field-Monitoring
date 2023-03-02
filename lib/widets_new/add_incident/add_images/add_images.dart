@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:Field_Monitoring/stores/language/language_store.dart';
 import 'package:Field_Monitoring/ui/constants/colors.dart';
 import 'package:Field_Monitoring/widets_new/add_incident/preview_incident_image/preview_incident_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,7 +18,7 @@ class AddImagesScreen extends StatefulWidget {
   final double? imageMaxWidth;
   final double? imageMaxHeight;
   final int? imageQuality;
-  final ValueChanged<List<XFile>> onImageListChanged;
+  final ValueChanged<List<MultipartFile>> onImageListChanged;
 
   const AddImagesScreen(
       {Key? key,
@@ -48,16 +49,15 @@ class _AddImagesScreenState extends State<AddImagesScreen> {
                     .toList(),
               )
             : Container(
-          height: MediaQuery.of(context).size.height * 0.5,
-              child: Column(
-          mainAxisSize: MainAxisSize.max,
+                height: MediaQuery.of(context).size.height * 0.5,
+                width: double.infinity,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-
                     SvgPicture.asset(
                       addIncidentFolderOpen,
                       alignment: Alignment.center,
-
                     ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
@@ -67,7 +67,7 @@ class _AddImagesScreenState extends State<AddImagesScreen> {
                     )
                   ],
                 ),
-            ),
+              ),
         Spacer(),
         Align(
           alignment: FractionalOffset.bottomCenter,
@@ -170,7 +170,6 @@ class _AddImagesScreenState extends State<AddImagesScreen> {
       await controller.initialize();
       await controller.setLooping(true);
       await controller.play();
-      setState(() {});
     }
   }
 
@@ -219,7 +218,7 @@ class _AddImagesScreenState extends State<AddImagesScreen> {
     }
   }
 
-  void _setImageFileListFromFile(XFile? value) {
+  void _setImageFileListFromFile(XFile? value) async {
     _imageFileList = _imageFileList ?? <XFile>[];
     if (value != null) {
       _imageFileList!.add(value);
@@ -228,8 +227,13 @@ class _AddImagesScreenState extends State<AddImagesScreen> {
     // _imageFileList = value == null ? null : <XFile>[value];
   }
 
-  void _onImageListChanged() {
-    widget.onImageListChanged(_imageFileList ?? <XFile>[]);
+  void _onImageListChanged() async {
+    List<MultipartFile> files = [];
+    _imageFileList?.forEach((element) async {
+      files.add(await MultipartFile.fromFile(element.path,
+          filename: element.name, ));
+    });
+    widget.onImageListChanged(files);
     streamController.add(_imageFileList ?? <XFile>[]);
   }
 }

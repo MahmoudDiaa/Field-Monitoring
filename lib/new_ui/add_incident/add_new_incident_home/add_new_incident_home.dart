@@ -1,18 +1,23 @@
 import 'package:Field_Monitoring/ui/constants/colors.dart';
 import 'package:Field_Monitoring/widets_new/add_incident/add_images/add_images.dart';
 import 'package:Field_Monitoring/widets_new/add_incident/choose_category/choose_category.dart';
+import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../components/default_button.dart';
 import '../../../constants/images.dart';
+import '../../../models/PriorityLevels/priorrity_level.dart';
 import '../../../stores/category/category_store.dart';
 import '../../../stores/incident_form/incident_form_store.dart';
 import '../../../stores/language/language_store.dart';
+import '../../../utils/routes/routes.dart';
 import '../../../widets_new/add_incident/add_details/add_details_screen.dart';
+import '../../../widets_new/add_incident/incident_details/incident_details.dart';
 
 class AddNewIncidentHome extends StatefulWidget {
   const AddNewIncidentHome({Key? key}) : super(key: key);
@@ -30,6 +35,8 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
   bool subCategoryDone = false;
   bool imageDone = false;
   bool noteDone = false;
+
+  final ScrollController _controller = ScrollController();
 
   @override
   void didChangeDependencies() async {
@@ -58,6 +65,8 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
           toolbarHeight: 100,
           backgroundColor: CustomColor.primaryColor),
       body: CustomScrollView(
+        scrollDirection: Axis.vertical,
+        controller: _controller,
         slivers: [
           SliverFillRemaining(
             hasScrollBody: false,
@@ -111,8 +120,17 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
                                 _categoryStore.categoryList!.categories!,
                             languageStore: _languageStore,
                             callback: (categoryMap) {
+                              //
+                              _incidentFormStore
+                                      .incident.incidentCategoryArabicName =
+                                  categoryMap.entries.first.key.arabicName;
+                              _incidentFormStore
+                                      .incident.incidentSubCategoryArabicName =
+                                  categoryMap.entries.first.value.arabicName;
+
                               _incidentFormStore.incident.categoryId =
                                   categoryMap.entries.first.key.id!;
+
                               _incidentFormStore.incident.subCategoryId =
                                   categoryMap.entries.first.value.id;
                               _incidentFormStore.incident.amountUnitId =
@@ -128,16 +146,55 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
                             ? AddImagesScreen(
                                 imageMaxHeight: 500,
                                 imageMaxWidth: 500,
-                                imageQuality:100 ,
+                                imageQuality: 100,
                                 languageStore: _languageStore,
-                                onImageListChanged: (List<XFile> value) {},
+                                onImageListChanged:
+                                    (List<MultipartFile> value) {
+                                  print("onImageListChanged ${value.length}");
+                                  _incidentFormStore.incident.imagesFiles =
+                                      value;
+                                  imageDone = true;
+                                },
                               )
-                            : currentStepperIndex==2?AddDetailsScreen( _languageStore,_incidentFormStore ):Center(
-                                child: Container(
-                                    width: 20,
-                                    height: 20,
-                                    child: CircularProgressIndicator()),
-                              ),
+                            : currentStepperIndex == 2
+                                ? AddDetailsScreen(
+                                    _languageStore,
+                                    _incidentFormStore,
+                                    onChangePriority: (PriorityLevel value) {
+                                      _incidentFormStore.incident.priority =
+                                          value.id;
+                                      _incidentFormStore
+                                              .incident.priorityTextArabic =
+                                          value.arabicName;
+                                    },
+                                    onChangeNote: (String value) {
+                                      _incidentFormStore.incident.notes = value;
+                                    },
+                                    onChangeUnitValue: (String value) {
+                                      print("onChangeUnitValue $value");
+                                      _incidentFormStore.incident.amountValue =
+                                          int.parse(value);
+                                      noteDone = true;
+                                    },
+                                    onChangeLocation: (Position value) {
+                                      _incidentFormStore.incident.lat =
+                                          value.latitude.toString();
+                                      _incidentFormStore.incident.long =
+                                          value.longitude.toString();
+                                      noteDone = true;
+                                    },
+                                  )
+                                : currentStepperIndex == 3
+                                    ? IncidentDetailsScreen(
+                                        languageStore: _languageStore,
+                                        incident: _incidentFormStore.incident,
+                                      )
+                                    : Center(
+                                        child: Container(
+                                            width: 20,
+                                            height: 20,
+                                            child: CircularProgressIndicator()),
+                                      ),
                   ),
                 ),
                 // Spacer(),
@@ -166,8 +223,14 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
         child: Container(
           width: 140,
           child: defaultButton(
-              label: _languageStore.language.next,
-              startIcon: addIncidentLeftArrow,
+              label: currentStepperIndex == 2
+                  ? _languageStore.language.send
+                  : currentStepperIndex == 3
+                      ? _languageStore.language.addNewIncident
+                      : _languageStore.language.next,
+              startIcon: currentStepperIndex == 2
+                  ? addIncidentSend:currentStepperIndex==3?null
+                  : addIncidentLeftArrow,
               textStyle: Theme.of(context)
                   .textTheme
                   .titleMedium
@@ -175,7 +238,26 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
               color: CustomColor.lightGreenColor,
               onPressed: () {
                 setState(() {
-                  if ((subCategoryDone || imageDone)&&currentStepperIndex<=2) currentStepperIndex++;
+                  if ((subCategoryDone || imageDone) &&
+                      currentStepperIndex <= 1) {
+                    currentStepperIndex++;
+                    _controller.animateTo(
+                      _controller.position.minScrollExtent,
+                      duration: Duration(seconds: 1),
+                      curve: Curves.fastOutSlowIn,
+                    );
+                  }
+                  if (subCategoryDone &&
+                      imageDone &&
+                      noteDone &&
+                      currentStepperIndex == 2) {
+                    _incidentFormStore.save().then((value) {
+                      // _showDoneMessage("تمت اضافة البلاغ بنجاح");
+                      setState(() {
+                        currentStepperIndex++;
+                      });
+                    });
+                  }
                 });
               }),
         ),
@@ -187,18 +269,35 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
           width: 140,
           child: defaultButton(
               borderColor: CustomColor.lightGreenColor,
-              label: _languageStore.language.previous,
+              label:  currentStepperIndex == 3
+          ? _languageStore.language.returnHome:_languageStore.language.previous,
               textStyle: Theme.of(context)
                   .textTheme
                   .titleMedium
                   ?.copyWith(color: CustomColor.lightGreenColor),
               color: Colors.white,
               onPressed: () {
-                if(currentStepperIndex>0)
-                setState(() {
-                  currentStepperIndex--;
-                });
+                if (currentStepperIndex > 0)
+                  setState(() {
+                    currentStepperIndex--;
+                  });
               }),
         ),
       );
+
+  _showDoneMessage(String message) {
+    if (message.isNotEmpty) {
+      Future.delayed(Duration(milliseconds: 0), () {
+        if (message.isNotEmpty) {
+          FlushbarHelper.createSuccess(
+            message: message,
+            title: _languageStore.language.incidentFinish,
+            duration: Duration(seconds: 3),
+          )..show(context);
+        }
+      });
+    }
+    Future.delayed(Duration(seconds: 1),
+        () => Navigator.of(context).pushReplacementNamed(Routes.home));
+  }
 }

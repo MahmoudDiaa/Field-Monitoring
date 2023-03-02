@@ -143,5 +143,12 @@
   "previous": "Previous",
   "uploadImage": "Upload Image",
   "pickUpImage": "Pick Up Image",
-  "change": "Change","delete": "Delete"
+  "change": "Change",
+  "delete": "Delete",
+  "choosePriority": "Choose Priority",
+  "send": "Send",
+  "incidentSendDone": "Incident Send Done",
+  "reviewIncident": "Review Incident",
+  "subCategory": "SubCategory",
+  "returnHome": "Return Home"
 }

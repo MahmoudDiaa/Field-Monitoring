@@ -141,7 +141,7 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
 
                                       try {
                                         _incidentFormStore.incident
-                                            .amountValue = double.parse(value);
+                                            .amountValue = int.parse(value);
                                       } catch (e) {}
                                     },
                                     onChanged: (value) {
@@ -151,7 +151,7 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
                                       // });
                                       try {
                                         _incidentFormStore.incident
-                                            .amountValue = double.parse(value);
+                                            .amountValue = int.parse(value);
                                       } catch (e) {}
                                     },
                                     validator: (value) {
@@ -406,7 +406,7 @@ class _IncidentFormStep3State extends State<IncidentFormStep3> {
               //       double.parse(value);
               // });
               try {
-                _incidentFormStore.incident.amountValue = double.parse(value);
+                _incidentFormStore.incident.amountValue = int.parse(value);
               } catch (e) {}
             },
             validator: (value) {

@@ -51,15 +51,16 @@ class _SplashScreenState extends State<SplashScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'مـــن أجـــل بــيــئــة أفــضــل',
+                        'منصة معالجة التشوة البصري',
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w700),
                       ),
-                      Text(
-                        'For Better Environment',
+  Text(
+                        'حائل الأجمل',
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w100),
-                      )
+                            fontSize: 20, fontWeight: FontWeight.w700),
+                      ),
+
                     ],
                   ),
                   flex: 2,
@@ -70,16 +71,27 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 100,
               width: 100,
               margin: EdgeInsets.only(top: 150),
-              child: RawMaterialButton(
-                  onPressed: null,
-                  child: CarouselSlider(
-                    items: images,
-                    options: CarouselOptions(
-                        autoPlay: true,
-                        scrollPhysics: NeverScrollableScrollPhysics()),
-                  ),
-                  shape: CircleBorder(),
-                  fillColor: Colors.white),
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    image: DecorationImage(
+                        image: AssetImage(logo),
+                        fit: BoxFit.contain,
+                        alignment: Alignment.center),
+                    borderRadius: BorderRadius.circular(50)),
+              ),
+              // child: RawMaterialButton(
+              //     onPressed: null,
+              //     child: CarouselSlider(
+              //       items: images,
+              //       options: CarouselOptions(
+              //           autoPlay: true,
+              //           scrollPhysics: NeverScrollableScrollPhysics()),
+              //     ),
+              //     shape: CircleBorder(),
+              //     fillColor: Colors.white),
             )
           ],
         ),

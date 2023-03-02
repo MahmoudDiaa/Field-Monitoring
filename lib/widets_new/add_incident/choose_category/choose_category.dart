@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mobx/mobx.dart';
 
 import '../../../components/default_search_text_form_filed.dart';
 import '../../../constants/images.dart';
@@ -26,13 +27,14 @@ class ChooseCategory extends StatefulWidget {
 }
 
 class _ChooseCategoryState extends State<ChooseCategory> {
+  @observable
   Category? _selectedCategory;
   int? _selectedSubCatIndex;
   TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
-    _selectedCategory = widget.categories.first;
+
     super.initState();
   }
 
@@ -87,11 +89,11 @@ class _ChooseCategoryState extends State<ChooseCategory> {
                             ),
                           ),
                           Observer(
-                              builder: (context) => _selectedCategory!.id ==
+                              builder: (context) =>_selectedCategory!=null&& _selectedCategory!.id ==
                                       category.id
                                   ? Container(
                                       height:
-                                          40.0 * category.subCategories!.length,
+                                          45.0 * category.subCategories!.length,
                                       color:
                                           CustomColor.listBackgroundGreyColor,
                                       child: ListView.builder(
@@ -106,7 +108,7 @@ class _ChooseCategoryState extends State<ChooseCategory> {
                                               ? CustomColor.moreLightGreenColor
                                               : CustomColor
                                                   .listBackgroundGreyColor,
-                                          height: 40,
+                                          height: 45,
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 40, vertical: 8),
                                           child: InkWell(

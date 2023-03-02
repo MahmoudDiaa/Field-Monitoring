@@ -9,7 +9,7 @@
     <application
         android:name="${applicationName}"
         android:allowClearUserData="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="flutter_Field_Monitoring_orbits"
         android:usesCleartextTraffic="true"
         tools:replace="android:label">

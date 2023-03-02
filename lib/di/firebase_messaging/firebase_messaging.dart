@@ -4,7 +4,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 initMessaging() async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  print("firebase token ${await messaging.getToken()}");
   await messaging.requestPermission(
     alert: true,
     announcement: false,

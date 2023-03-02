@@ -1,5 +1,5 @@
-import 'package:Field_Monitoring/stores/incident/incident_store.dart';
 import 'package:Field_Monitoring/stores/language/language_store.dart';
+import 'package:Field_Monitoring/stores/user/user_store.dart';
 import 'package:Field_Monitoring/ui/constants/colors.dart';
 import 'package:Field_Monitoring/widets_new/home/home_incedent_list_item/HomeIncednetListItem.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +7,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/images.dart';
 import '../../data/sharedpref/shared_preference_helper.dart';
@@ -23,6 +24,7 @@ class HomeScreenNew extends StatefulWidget {
 
 class _HomeScreenNewState extends State<HomeScreenNew> {
   late LanguageStore _languageStore;
+  late UserStore _userStore;
   SharedPreferenceHelper? sharedPreferenceHelper;
   late CreatedIncidentStore _incidentStore;
   List<DashboardWidgets> userPermissions = [
@@ -51,9 +53,17 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                         //appbar
                         Row(
                           children: [
-                            _languageStore.language.localeName == 'ar'
-                                ? SvgPicture.asset(homeMenuAr)
-                                : SvgPicture.asset(homeMenu),
+                            //todo un comment this
+                            // _languageStore.language.localeName == 'ar'
+                            //     ? SvgPicture.asset(homeMenuAr)
+                            //     : SvgPicture.asset(homeMenu),
+                            InkWell(child: Icon(Icons.logout,color: Colors.white,),onTap: (){
+                              SharedPreferences.getInstance().then((preference) {
+                                _userStore.logout();
+                                Navigator.of(context).pushReplacementNamed(Routes.login);
+                              });
+
+                            }),
                             Spacer(),
                             Column(
                               children: [
@@ -216,8 +226,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                                                         .incidents![index]
                                                         .createDate
                                                         .toString()
-                                                        .split(' ')[0] ??
-                                                    "",
+                                                        .split(' ')[0],
                                                 notes: _incidentStore
                                                         .incidentList!
                                                         .incidents![index]
@@ -433,6 +442,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
     super.didChangeDependencies();
     _languageStore = Provider.of<LanguageStore>(context);
     _incidentStore = Provider.of<CreatedIncidentStore>(context);
+    _userStore = Provider.of<UserStore>(context);
     if (!_incidentStore.loading) {
       _incidentStore.getIncidents();
     }

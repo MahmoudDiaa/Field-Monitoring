@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:Field_Monitoring/models/incident/transaction/incident_transaction.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
@@ -15,10 +16,13 @@ class Incident {
   //for post request
   int? categoryId;
   int? subCategoryId;
+  List<MultipartFile> imagesFiles = [];
+
+//old
   List<XFile> xFiles = [];
   PickResult? mapPlace;
   int? amountUnitId;
-  double? amountValue;
+  int? amountValue;
   String? lat;
   String? long;
   String? notes;
@@ -289,6 +293,51 @@ class Incident {
     data['Images'] = images;
     data['priority'] = priority;
     data['incidentStatusId'] = incidentStatusId;
+
+    // data['id'] = this.id;
+
+    // data['createDate'] = this.createDate;
+    // data['createHijriDate'] = this.createHijriDate;
+    // data['createTime'] = this.createTime;
+    // data['incidentStatusArabicName'] = this.incidentStatusArabicName;
+    // data['incidentStatusEnglishName'] = this.incidentStatusEnglishName;
+    // data['incidentStatusColor'] = this.incidentStatusColor;
+    // data['incidentUnitArabicName'] = this.incidentUnitArabicName;
+    // data['incidentUnitEnglishName'] = this.incidentUnitEnglishName;
+    // data['unitValue'] = this.unitValue;
+    // data['incidentCategoryArabicName'] = this.incidentCategoryArabicName;
+    // data['incidentCategoryEnglishName'] = this.incidentCategoryEnglishName;
+    // data['incidentSubCategoryArabicName'] = this.incidentSubCategoryArabicName;
+    // data['incidentSubCategoryEnglishName'] =
+    //     this.incidentSubCategoryEnglishName;
+    // data['isNew'] = this.isNew;
+    // data['userFullName'] = this.userFullName;
+    // data['imagesCount'] = this.imagesCount;
+    // data['transactonCount'] = this.transactonCount;
+    return data;
+  }
+
+  Map<String, dynamic> toMapFormData() {
+
+
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['CategoryId'] = this.categoryId;
+    data['SubCategoryId'] = this.subCategoryId;
+    data['Images'] = imagesFiles;
+
+    data['lat'] =
+        this.mapPlace?.geometry?.location.lat.toString() ?? "27.503035";
+    data['long'] =
+        this.mapPlace?.geometry?.location.lng.toString() ?? "41.709509";
+    data['districtName'] = mapPlace?.addressComponents?[1].longName ?? "districtName";
+    data['streetName'] = mapPlace?.addressComponents?[0].longName ?? 'streetName';
+    data['address'] = mapPlace?.addressComponents == null
+        ? 'address'
+        : mapPlace?.addressComponents?.map((e) => e.longName).toString();
+    data['AmountUnitId'] = this.amountUnitId;
+    data['UnitValue'] = this.amountValue??1;
+    data['notes'] = this.notes;
+    data['priority'] = priority;
 
     // data['id'] = this.id;
 

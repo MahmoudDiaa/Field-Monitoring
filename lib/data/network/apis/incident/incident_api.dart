@@ -40,6 +40,7 @@ class IncidentApi {
                     "long": incidentFilter?.latlng?.longitude,
                     "distanceInMeter": incidentFilter?.distance
                   },
+            "icidentFilterModel":{}
           },
           options: Options(
             headers: {
@@ -58,9 +59,9 @@ class IncidentApi {
 
   Future<bool?> save(Incident incident) async {
     try {
-      log("incident form log=> ${incident.toMap()}");
+      log("incident form log=> ${incident.toMapFormData()}");
       final res = await _dioClient.postDataForm(Endpoints.saveIncident,
-          data: jsonEncode(incident.toMap()),
+          data: incident.toMapFormData(),
           options: Options(
             headers: {
               'Content-Type': 'multipart/form-data',
