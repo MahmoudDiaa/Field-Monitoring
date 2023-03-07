@@ -19,47 +19,45 @@ class HomeIncidentListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        elevation: 10,
-        color: Colors.grey[200],
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: CircleAvatar(
-                  radius: 40,
-                  backgroundImage: AssetImage(image),
-                ),
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      elevation: 10,
+      color: Colors.grey[200],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: CircleAvatar(
+                radius: 40,
+                backgroundImage: AssetImage(image),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
 
-                  sections(
-                      image: homeFolder,
-                      title: languageStore.language.section,
-                      subTitle: section),
-                  // SizedBox(
-                  //   width: 20,
-                  // ),
-                  sections(
-                      image: homeCalendar,
-                      title: languageStore.language.incidentDate,
-                      subTitle: date),
-                  sections(
-                      image: homeNotes,
-                      title: languageStore.language.notes,
-                      subTitle: notes),
-                ],
-              )
-            ],
-          ),
+                sections(
+                    image: homeFolder,
+                    title: languageStore.language.section,
+                    subTitle: section),
+                // SizedBox(
+                //   width: 20,
+                // ),
+                sections(
+                    image: homeCalendar,
+                    title: languageStore.language.incidentDate,
+                    subTitle: date),
+                sections(
+                    image: homeNotes,
+                    title: languageStore.language.notes,
+                    subTitle: notes),
+              ],
+            )
+          ],
         ),
       ),
     );

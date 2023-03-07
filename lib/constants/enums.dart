@@ -1,8 +1,13 @@
 import 'package:Field_Monitoring/data/network/constants/endpoints.dart';
 
-enum CategoryListViewMode { List, Radiobutton,SubCategoriesGroupedImageGrid }
+enum CategoryListViewMode { List, Radiobutton, SubCategoriesGroupedImageGrid }
 
-enum SubCategoryListViewMode { ImageList, ImageGrid,ImageGridGrouped, Radiobutton }
+enum SubCategoryListViewMode {
+  ImageList,
+  ImageGrid,
+  ImageGridGrouped,
+  Radiobutton
+}
 
 enum PriorityListViewMode { List, Radiobutton }
 
@@ -16,6 +21,7 @@ enum IncidentStatusEnum {
   Solved,
   Upped,
   SolvedInitially,
+  Canceled,
   Unkown
 }
 
@@ -23,15 +29,15 @@ extension IncidentStatusExtension on IncidentStatusEnum {
   int? get id {
     switch (this) {
       case IncidentStatusEnum.Assigned:
-        return 2;
+        return 11;
       case IncidentStatusEnum.Solved:
-        return 3;
+        return 12;
       case IncidentStatusEnum.New:
-        return 1;
+        return 10;
       case IncidentStatusEnum.SolvedInitially:
-        return 5;
+        return 14;
       case IncidentStatusEnum.Upped:
-        return 4;
+        return 15;
       default:
         return null;
     }

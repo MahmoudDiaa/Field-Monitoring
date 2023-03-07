@@ -32,10 +32,20 @@ class _ChooseCategoryState extends State<ChooseCategory> {
   int? _selectedSubCatIndex;
   TextEditingController searchController = TextEditingController();
 
+  List<Category> categories = <Category>[];
+  Map<int, String> categoriesImages = {
+    5: addIncidentRoads,
+    6: addIncidentBuilding,
+    7: addIncidentLighting,
+    8: addIncidentSideWalk,
+    9: addIncidentCleaning,
+    10: addIncidentSigns,
+  };
+
   @override
   void initState() {
-
     super.initState();
+    categories = widget.categories.toList();
   }
 
   @override
@@ -48,6 +58,22 @@ class _ChooseCategoryState extends State<ChooseCategory> {
               textHint: widget.languageStore.language.search,
               suffixIcon: Icons.search,
               controller: searchController,
+              onChanged: (String value) {
+                if (value.isNotEmpty) {
+                  categories
+                      .map((e) => e.subCategories!.forEach((element) {
+                            element.show = element.arabicName!.contains(value);
+                          }))
+                      .toList();
+                } else {
+                  categories
+                      .map((e) => e.subCategories!.forEach((element) {
+                            element.show = true;
+                          }))
+                      .toList();
+                }
+                setState(() => categories);
+              },
               textInputType: TextInputType.text),
         ),
         Container(
@@ -61,90 +87,116 @@ class _ChooseCategoryState extends State<ChooseCategory> {
               color: CustomColor.categoryBackground),
           child: SingleChildScrollView(
             child: Column(
-              children: widget.categories
+              children: categories
                   .map((category) => Column(
                         children: [
-                          ListTile(
-                            title: Text(
-                              category.arabicName!,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(color: Colors.black),
-                            ),
-                            leading: Radio<Category>(
-                              value: category,
-                              focusColor: CustomColor.lightGreenColor,
-                              hoverColor: CustomColor.lightGreenColor,
-                              activeColor: CustomColor.lightGreenColor,
-                              fillColor: MaterialStateProperty.all(
-                                  CustomColor.lightGreenColor),
-                              groupValue: _selectedCategory,
-                              onChanged: (category) {
-                                setState(() {
-                                  _selectedSubCatIndex = null;
-                                  _selectedCategory = category;
-                                });
-                              },
-                            ),
-                          ),
+                          //radio button
+                          category.isShow()
+                              ? ListTile(
+                                  title: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                          categoriesImages[category.id!]!),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        category.arabicName!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                  leading: Radio<Category>(
+                                    value: category,
+                                    focusColor: CustomColor.lightGreenColor,
+                                    hoverColor: CustomColor.lightGreenColor,
+                                    activeColor: CustomColor.lightGreenColor,
+                                    fillColor: MaterialStateProperty.all(
+                                        CustomColor.lightGreenColor),
+                                    groupValue: _selectedCategory,
+                                    onChanged: (category) {
+                                      setState(() {
+                                        _selectedSubCatIndex = null;
+                                        _selectedCategory = category;
+                                      });
+                                    },
+                                  ),
+                                )
+                              : SizedBox(),
+                          //subcategory list
                           Observer(
-                              builder: (context) =>_selectedCategory!=null&& _selectedCategory!.id ==
-                                      category.id
+                              builder: (context) => _selectedCategory != null &&
+                                      _selectedCategory!.id == category.id &&
+                                      category.subCategories!
+                                              .listFilterLength() >
+                                          0
                                   ? Container(
-                                      height:
-                                          45.0 * category.subCategories!.length,
+                                      height: 45.0 *
+                                          category.subCategories!
+                                              .listFilterLength(),
                                       color:
                                           CustomColor.listBackgroundGreyColor,
                                       child: ListView.builder(
                                         itemCount:
                                             category.subCategories!.length,
                                         physics: NeverScrollableScrollPhysics(),
-                                        itemBuilder:
-                                            (BuildContext context, int index) =>
-                                                Container(
-                                          color: _selectedSubCatIndex != null &&
-                                                  _selectedSubCatIndex == index
-                                              ? CustomColor.moreLightGreenColor
-                                              : CustomColor
-                                                  .listBackgroundGreyColor,
-                                          height: 45,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 40, vertical: 8),
-                                          child: InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                _selectedSubCatIndex = index;
-                                                widget.callback(
-                                                    {category: category.subCategories![index]});
-                                              });
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Text(category
-                                                    .subCategories![index]
-                                                    .arabicName!),
-                                                Spacer(),
-                                                _selectedSubCatIndex != null &&
-                                                        _selectedSubCatIndex ==
-                                                            index
-                                                    ? SvgPicture.asset(
-                                                        addIncidentCheck)
-                                                    : Container()
-                                              ],
-                                            ),
-                                          ),
-                                        ),
+                                        itemBuilder: (BuildContext context,
+                                                int index) =>
+                                            category.subCategories![index].show
+                                                ? InkWell(
+                                                    onTap: () => setState(() {
+                                                      _selectedSubCatIndex =
+                                                          index;
+                                                      widget.callback({
+                                                        category: category
+                                                                .subCategories![
+                                                            index]
+                                                      });
+                                                    }),
+                                                    child: Container(
+                                                      color: _selectedSubCatIndex !=
+                                                                  null &&
+                                                              _selectedSubCatIndex ==
+                                                                  index
+                                                          ? CustomColor
+                                                              .moreLightGreenColor
+                                                          : CustomColor
+                                                              .listBackgroundGreyColor,
+                                                      height: 45,
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 40,
+                                                              vertical: 8),
+                                                      child: Row(
+                                                        children: [
+                                                          Text(category
+                                                              .subCategories![
+                                                                  index]
+                                                              .arabicName!),
+                                                          Spacer(),
+                                                          _selectedSubCatIndex !=
+                                                                      null &&
+                                                                  _selectedSubCatIndex ==
+                                                                      index
+                                                              ? SvgPicture.asset(
+                                                                  addIncidentCheck)
+                                                              : Container()
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+                                                : SizedBox(),
                                       ),
                                     )
                                   : Container(
                                       height: 0,
                                       width: 0,
                                     )),
-                          category.id !=
-                                  widget
-                                      .categories[widget.categories.length - 1]
-                                      .id
+                          category.id != categories[categories.length - 1].id &&
+                                  category.isShow()
                               ? Divider(
                                   thickness: 1,
                                   color: Colors.grey[300],

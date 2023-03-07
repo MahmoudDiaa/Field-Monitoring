@@ -128,8 +128,7 @@
   "departments": "Departments",
   "notification": "Notification",
   "welcome": "Welcome",
-  "incidentCount": "Incident Count",
-  "yourCurrentIncidents": "Your Current Incidents",
+  "incidentCount": "Incident Count Your Current Incidents",
   "ownedIncidents": "Owned Incidents",
   "seeMore": "See More",
   "section": "Section",
@@ -150,5 +149,7 @@
   "incidentSendDone": "Incident Send Done",
   "reviewIncident": "Review Incident",
   "subCategory": "SubCategory",
-  "returnHome": "Return Home"
+  "returnHome": "Return Home",
+  "reopenedIncident": "Reopened Incident",
+  "acceptedIncident": "Accepted Incident","yourProgress": "Your Progress"
 }

@@ -102,6 +102,7 @@ dependencies:
   im_stepper: ^1.0.1+1
   cupertino_stepper: ^0.2.1
   easy_stepper: ^0.3.2
+  percent_indicator: ^4.2.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

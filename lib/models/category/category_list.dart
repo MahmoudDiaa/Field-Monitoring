@@ -3,7 +3,7 @@ import 'package:floor/floor.dart';
 import 'category.dart';
 @entity
 class CategoryList {
-  final List<Category>? categories;
+   List<Category>? categories;
 
   CategoryList({
     this.categories,

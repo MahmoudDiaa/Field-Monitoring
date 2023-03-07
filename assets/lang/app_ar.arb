@@ -128,8 +128,7 @@
   "departments": "الادارات",
   "notification": "الاشعارات",
   "welcome": "أهلا بك",
-  "incidentCount": "عدد البلاغات",
-  "yourCurrentIncidents": "الخاصة بك للشهر الحالي",
+  "incidentCount": "عدد البلاغات الخاصة بك للشهر الحالي",
   "ownedIncidents": "اخر البلاغات ",
   "seeMore": "شاهد الكل",
   "section": "القسم",
@@ -150,5 +149,8 @@
   "incidentSendDone": "تم ارسال البلاغ بنجاح",
   "reviewIncident": "مراجعة البلاغ",
   "subCategory": "الفئة الفرعية",
-  "returnHome": "العودة للرئيسية"
+  "returnHome": "العودة للرئيسية",
+  "reopenedIncident": "بلاغات معاد فتحها",
+  "acceptedIncident": "بلاغات تم قبولها",
+  "yourProgress": "نسبة تقدمك"
 }

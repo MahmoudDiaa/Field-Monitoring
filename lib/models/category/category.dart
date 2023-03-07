@@ -11,7 +11,9 @@ class Category {
   String? icon;
   int? order;
   String? color;
-  List<SubCategory>? subCategories=[];
+   List<SubCategory>? subCategories;
+
+
 
   String? localizedName(String language) {
     switch (language) {
@@ -20,11 +22,23 @@ class Category {
 
       case Strings.arabicCode:
         return this.arabicName;
-
     }
     return 'unknown language code';
   }
 
+
+  bool isShow(){
+    return subCategories!.listFilterLength()>0;
+
+  }
+
+  // int lengthShownSubCat(){
+  //   int i=0;
+  //   subCategories!.forEach((element) {
+  //     element.show?i++:i;
+  //   });
+  //   return i;
+  // }
   Category(
       {this.id,
       this.incidentsCount,
@@ -37,16 +51,17 @@ class Category {
       this.subCategories});
 
   factory Category.fromMap(Map<String, dynamic> json) => Category(
-        id: json['id'],
-        incidentsCount: json['incidentsCount'],
-        subCategoryCount: json['subCategoryCount'],
-        arabicName: json['arabicName'],
-        englishName: json['englishName'],
-        icon: json['icon'],
-        order: json['order'],
-        color: json['color'],
-        subCategories: (json['subCategoryList'] as List<dynamic>).map((e) => SubCategory.fromMap(e)).toList()
-      );
+      id: json['id'],
+      incidentsCount: json['incidentsCount'],
+      subCategoryCount: json['subCategoryCount'],
+      arabicName: json['arabicName'],
+      englishName: json['englishName'],
+      icon: json['icon'],
+      order: json['order'],
+      color: json['color'],
+      subCategories: (json['subCategoryList'] as List<dynamic>)
+          .map((e) => SubCategory.fromMap(e))
+          .toList());
 
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -60,6 +75,18 @@ class Category {
     data['color'] = this.color;
     return data;
   }
+}
 
+
+extension LengthFilter on List<SubCategory>{
+  int listFilterLength(){
+
+    int i=0;
+    this.forEach((element) {
+      element.show?i++:i;
+    });
+    return i;
+
+  }
 
 }

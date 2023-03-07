@@ -387,19 +387,28 @@ class Incident {
     data['status'] = incidentStatus.id;
     return data;
   }
-
+  /*
+         10* جديد
+         11* مخصص
+         14* تمت المعالجة المبدأية
+          12* تمت تأكيد المعالجة
+          15 * معادة الفتح
+        16 * تم الإلغاء
+         */
   IncidentStatusEnum get status {
     switch (incidentStatusId) {
-      case 1:
+      case 10:
         return IncidentStatusEnum.New;
-      case 2:
+      case 11:
         return IncidentStatusEnum.Assigned;
-      case 3:
+      case 12:
         return IncidentStatusEnum.Solved;
-      case 4:
+      case 15:
         return IncidentStatusEnum.Upped;
-      case 5:
+      case 14:
         return IncidentStatusEnum.SolvedInitially;
+      case 12:
+        return IncidentStatusEnum.Canceled;
       default:
         return IncidentStatusEnum.Unkown;
     }

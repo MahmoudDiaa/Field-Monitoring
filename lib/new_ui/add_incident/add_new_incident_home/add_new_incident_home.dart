@@ -1,3 +1,4 @@
+import 'package:Field_Monitoring/models/incident/incident.dart';
 import 'package:Field_Monitoring/ui/constants/colors.dart';
 import 'package:Field_Monitoring/widets_new/add_incident/add_images/add_images.dart';
 import 'package:Field_Monitoring/widets_new/add_incident/choose_category/choose_category.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+import '../../../models/category/category.dart' as cat;
 
 import '../../../components/default_button.dart';
 import '../../../constants/images.dart';
@@ -150,10 +152,11 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
                                 languageStore: _languageStore,
                                 onImageListChanged:
                                     (List<MultipartFile> value) {
-                                  print("onImageListChanged ${value.length}");
                                   _incidentFormStore.incident.imagesFiles =
                                       value;
-                                  imageDone = true;
+                                  imageDone = _incidentFormStore
+                                          .incident.imagesFiles.length >
+                                      0;
                                 },
                               )
                             : currentStepperIndex == 2
@@ -185,7 +188,7 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
                                     },
                                   )
                                 : currentStepperIndex == 3
-                                    ? IncidentDetailsScreen(
+                                    ? IncidentDetailsWidget(
                                         languageStore: _languageStore,
                                         incident: _incidentFormStore.incident,
                                       )
@@ -229,8 +232,10 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
                       ? _languageStore.language.addNewIncident
                       : _languageStore.language.next,
               startIcon: currentStepperIndex == 2
-                  ? addIncidentSend:currentStepperIndex==3?null
-                  : addIncidentLeftArrow,
+                  ? addIncidentSend
+                  : currentStepperIndex == 3
+                      ? null
+                      : addIncidentLeftArrow,
               textStyle: Theme.of(context)
                   .textTheme
                   .titleMedium
@@ -246,10 +251,16 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
                       duration: Duration(seconds: 1),
                       curve: Curves.fastOutSlowIn,
                     );
-                  }
-                  if (subCategoryDone &&
+                  } else if (!subCategoryDone && currentStepperIndex == 0) {
+                    _showErrorMessage(
+                        _languageStore.language.categoryIsMandatory);
+                  } else if (subCategoryDone &&
+                      currentStepperIndex == 1 &&
+                      !imageDone) {
+                    _showErrorMessage(_languageStore.language.pickUpImage);
+                  } else if (subCategoryDone &&
                       imageDone &&
-                      noteDone &&
+                      _isNoteDone() &&
                       currentStepperIndex == 2) {
                     _incidentFormStore.save().then((value) {
                       // _showDoneMessage("تمت اضافة البلاغ بنجاح");
@@ -257,6 +268,17 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
                         currentStepperIndex++;
                       });
                     });
+                  }else if(currentStepperIndex==2){
+
+                    _showErrorMessage(_languageStore.language.login_error_fill_fields);
+                  }
+                  else if(currentStepperIndex==3){
+                    _incidentFormStore.incident=Incident();
+                    setState(() {
+                      currentStepperIndex==0;
+                    });
+
+
                   }
                 });
               }),
@@ -269,8 +291,9 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
           width: 140,
           child: defaultButton(
               borderColor: CustomColor.lightGreenColor,
-              label:  currentStepperIndex == 3
-          ? _languageStore.language.returnHome:_languageStore.language.previous,
+              label: currentStepperIndex == 3
+                  ? _languageStore.language.returnHome
+                  : _languageStore.language.previous,
               textStyle: Theme.of(context)
                   .textTheme
                   .titleMedium
@@ -281,11 +304,43 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
                   setState(() {
                     currentStepperIndex--;
                   });
+                if(currentStepperIndex==3){
+                  Navigator.of(context).pushReplacementNamed(Routes.home);
+
+                }
               }),
         ),
       );
 
   _showDoneMessage(String message) {
+    if (message.isNotEmpty) {
+      Future.delayed(Duration(milliseconds: 0), () {
+        if (message.isNotEmpty) {
+          FlushbarHelper.createSuccess(
+            message: message,
+            title: _languageStore.language.incidentFinish,
+            duration: Duration(seconds: 3),
+          )..show(context);
+        }
+      });
+    }
+    Future.delayed(Duration(seconds: 1),
+        () => Navigator.of(context).pushReplacementNamed(Routes.home));
+  }
+
+  bool _isNoteDone() {
+    Incident incident = _incidentFormStore.incident;
+    return incident.lat != null &&
+        incident.long != null &&
+        incident.lat!.isNotEmpty &&
+        incident.long!.isNotEmpty &&
+        incident.notes != null &&
+        incident.notes!.isNotEmpty &&
+        incident.amountValue != null &&
+        incident.priority != null;
+  }
+
+  _showErrorMessage(String message) {
     if (message.isNotEmpty) {
       Future.delayed(Duration(milliseconds: 0), () {
         if (message.isNotEmpty) {

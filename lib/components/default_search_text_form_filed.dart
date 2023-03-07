@@ -7,7 +7,7 @@ Widget defaultSearchTextFormField(
       required TextEditingController controller,
       required TextInputType textInputType,
       ValueChanged? onSubmit,
-      ValueChanged? onChanged,
+      ValueChanged<String>? onChanged,
       FormFieldValidator? validate,
       String? label,
       bool obscure = false,

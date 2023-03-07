@@ -18,6 +18,8 @@ class SubCategory {
   String? color;
   String? file;
 
+  bool show=true;
+
   String? localizedName(String language) {
     switch (language) {
       case Strings.englishCode:

@@ -3,22 +3,27 @@ import 'dart:io';
 import 'package:Field_Monitoring/models/incident/incident.dart';
 import 'package:Field_Monitoring/stores/language/language_store.dart';
 import 'package:Field_Monitoring/ui/constants/colors.dart';
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../../constants/images.dart';
 
-class IncidentDetailsScreen extends StatelessWidget {
+class IncidentDetailsWidget extends StatefulWidget {
   final LanguageStore languageStore;
   final Incident incident;
 
-  const IncidentDetailsScreen(
+  const IncidentDetailsWidget(
       {Key? key, required this.languageStore, required this.incident})
       : super(key: key);
 
+  @override
+  State<IncidentDetailsWidget> createState() => _IncidentDetailsWidgetState();
+}
+
+class _IncidentDetailsWidgetState extends State<IncidentDetailsWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,7 +35,7 @@ class IncidentDetailsScreen extends StatelessWidget {
           ),
           Center(
             child: Text(
-              languageStore.language.incidentSendDone,
+              widget.languageStore.language.incidentSendDone,
               style: Theme.of(context)
                   .textTheme
                   .titleLarge!
@@ -42,25 +47,25 @@ class IncidentDetailsScreen extends StatelessWidget {
             height: 20,
           ),
           Divider(thickness: 2),
-          Text(languageStore.language.reviewIncident),
+          Text(widget.languageStore.language.reviewIncident),
           SizedBox(
             height: 12,
           ),
           detailsItems(
-              firstTitle: languageStore.language.mainCategory,
-              firstSubTitle: incident.incidentCategoryArabicName ??
-                  languageStore.language.home_tv_no_post_found,
-              secondTitle: languageStore.language.subCategory,
-              secondSubTitle: incident.incidentSubCategoryArabicName ??
-                  languageStore.language.home_tv_no_post_found,
+              firstTitle: widget.languageStore.language.mainCategory,
+              firstSubTitle: widget.incident.incidentCategoryArabicName ??
+                  widget.languageStore.language.home_tv_no_post_found,
+              secondTitle: widget.languageStore.language.subCategory,
+              secondSubTitle: widget.incident.incidentSubCategoryArabicName ??
+                  widget.languageStore.language.home_tv_no_post_found,
               context: context),
           detailsItems(
-              firstTitle: incident.amountUnitName ??
-                  languageStore.language.home_tv_no_post_found,
-              firstSubTitle: incident.amountValue.toString(),
-              secondTitle: languageStore.language.priority,
-              secondSubTitle:
-                  incident.priorityTextArabic ?? incident.priority.toString(),
+              firstTitle: widget.incident.amountUnitName ??
+                  widget.languageStore.language.home_tv_no_post_found,
+              firstSubTitle: widget.incident.amountValue.toString(),
+              secondTitle: widget.languageStore.language.priority,
+              secondSubTitle: widget.incident.priorityTextArabic ??
+                  widget.incident.priority.toString(),
               context: context),
           SizedBox(
             height: 12,
@@ -68,9 +73,9 @@ class IncidentDetailsScreen extends StatelessWidget {
           SizedBox(
             height: 12,
           ),
-          itemSpaced(data: languageStore.language.notes),
+          itemSpaced(data: widget.languageStore.language.notes),
           itemSpaced(
-            data: incident.notes!,
+            data: widget.incident.notes!,
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge
@@ -79,18 +84,25 @@ class IncidentDetailsScreen extends StatelessWidget {
           SizedBox(
             height: 12,
           ),
-          itemSpaced(data: languageStore.language.images),
-          incident.imagesFiles.isNotEmpty
+          itemSpaced(data: widget.languageStore.language.images),
+          widget.incident.imagesFiles.isNotEmpty
               ? CarouselSlider(
-                  items: incident.imagesFiles
-                      .map((e) => Image.file(File(e.finalize())))
-                      .toList(),
+                  items: widget.incident.imagesFiles.map((e) {
+                    Widget image = Container();
+
+                    // /data/user/0/com.iotecksolutions.flutter_Field_Monitoring_orbits/cache/scaled_IMG_20230302_165739.jpg
+
+                    image = Image.file(File(
+                        "/data/user/0/com.iotecksolutions.flutter_Field_Monitoring_orbits/cache/${e.filename!}"));
+
+                    return image;
+                  }).toList(),
                   options: CarouselOptions(
                       autoPlay: true,
                       scrollPhysics: NeverScrollableScrollPhysics()),
                 )
-              : Text(languageStore.language.cannotGetImage),
-          itemSpaced(data: languageStore.language.theLocation),
+              : Text(widget.languageStore.language.cannotGetImage),
+          itemSpaced(data: widget.languageStore.language.theLocation),
           SizedBox(
             height: 12,
           ),
@@ -98,20 +110,20 @@ class IncidentDetailsScreen extends StatelessWidget {
               height: 100,
               child: GoogleMap(
                 initialCameraPosition: CameraPosition(
-                  target: incident.lat != null
-                      ? LatLng(double.parse(incident.lat!),
-                          double.parse(incident.long!))
+                  target: widget.incident.lat != null
+                      ? LatLng(double.parse(widget.incident.lat!),
+                          double.parse(widget.incident.long!))
                       : LatLng(0, 0),
                   zoom: 5,
                 ),
                 mapType: MapType.normal,
                 markers: [
                   Marker(
-                    markerId: MarkerId(incident.notes!),
+                    markerId: MarkerId(widget.incident.notes!),
                     icon: BitmapDescriptor.defaultMarker,
-                    position: incident.lat != null
-                        ? LatLng(double.parse(incident.lat!),
-                            double.parse(incident.long!))
+                    position: widget.incident.lat != null
+                        ? LatLng(double.parse(widget.incident.lat!),
+                            double.parse(widget.incident.long!))
                         : LatLng(0, 0),
                   )
                 ].toSet(),
