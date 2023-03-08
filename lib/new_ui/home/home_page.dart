@@ -1,13 +1,11 @@
 import 'package:Field_Monitoring/stores/language/language_store.dart';
 import 'package:Field_Monitoring/stores/user/user_store.dart';
 import 'package:Field_Monitoring/ui/constants/colors.dart';
-import 'package:Field_Monitoring/utils/device/device_utils.dart';
 import 'package:Field_Monitoring/widets_new/home/home_incedent_list_item/HomeIncednetListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -355,6 +353,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                                                           .incidents![index]
                                                           .incidentSubCategoryArabicName ??
                                                       "",
+                                            incident: _incidentStore.incidentList!.incidents![index],
                                                 )
                                               : SizedBox()),
                                 ),

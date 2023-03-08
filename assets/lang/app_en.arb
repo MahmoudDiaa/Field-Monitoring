@@ -151,5 +151,11 @@
   "subCategory": "SubCategory",
   "returnHome": "Return Home",
   "reopenedIncident": "Reopened Incident",
-  "acceptedIncident": "Accepted Incident","yourProgress": "Your Progress"
+  "acceptedIncident": "Accepted Incident",
+  "yourProgress": "Your Progress",
+  "statusNote": "Status Note",
+  "incidentDetails": "Incident Details",
+  "showIncidentDetailsData": "Show Incident Details",
+  "hideIncidentDetailsData": "Hide Incident Data"
+
 }

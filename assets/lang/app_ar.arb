@@ -152,5 +152,9 @@
   "returnHome": "العودة للرئيسية",
   "reopenedIncident": "بلاغات معاد فتحها",
   "acceptedIncident": "بلاغات تم قبولها",
-  "yourProgress": "نسبة تقدمك"
+  "yourProgress": "نسبة تقدمك",
+  "statusNote": "ملاحظات الحالة",
+  "incidentDetails": "تفاصيل البلاغ",
+  "showIncidentDetailsData": "إظهار تفاصيل البلاغ",
+  "hideIncidentDetailsData": "إخفاء تفاصيل البلاغ"
 }

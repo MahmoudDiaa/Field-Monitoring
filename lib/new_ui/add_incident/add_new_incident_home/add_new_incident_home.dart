@@ -2,6 +2,7 @@ import 'package:Field_Monitoring/models/incident/incident.dart';
 import 'package:Field_Monitoring/ui/constants/colors.dart';
 import 'package:Field_Monitoring/widets_new/add_incident/add_images/add_images.dart';
 import 'package:Field_Monitoring/widets_new/add_incident/choose_category/choose_category.dart';
+import 'package:Field_Monitoring/widets_new/common/default_appbar.dart';
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_stepper/easy_stepper.dart';
@@ -56,16 +57,7 @@ class _AddNewIncidentHomeState extends State<AddNewIncidentHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(Icons.close),
-            )
-          ],
-          title: Text(_languageStore.language.addNewIncident),
-          toolbarHeight: 100,
-          backgroundColor: CustomColor.primaryColor),
+      appBar:defaultAppBar(_languageStore.language.addNewIncident),
       body: CustomScrollView(
         scrollDirection: Axis.vertical,
         controller: _controller,

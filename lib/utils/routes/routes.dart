@@ -1,5 +1,6 @@
 import 'package:Field_Monitoring/new_ui/add_incident/add_new_incident_home/add_new_incident_home.dart';
 import 'package:Field_Monitoring/new_ui/home/home_page.dart';
+import 'package:Field_Monitoring/new_ui/incident_details/incident_details.dart';
 import 'package:Field_Monitoring/new_ui/login/login_screen.dart';
 import 'package:Field_Monitoring/new_ui/splash_screen/splash_screen.dart';
 import 'package:Field_Monitoring/ui/dashboard/dashboard_screen.dart';
@@ -12,9 +13,7 @@ import 'package:flutter/material.dart';
 
 import '../../constants/enums.dart';
 import '../../ui/authentication/auth_screen.dart';
-import '../../ui/create_incident/create_incident_step1.dart';
 import '../../ui/home/categories.dart';
-import '../../ui/home/home_screen.dart';
 import '../../ui/incidents/created_incidents/created_incident_list_screen.dart';
 import '../../widgets/incident/incidents_map.dart';
 
@@ -25,6 +24,7 @@ class Routes {
   static const String splash = '/splash';
   static const String login = '/login';
   static const String signup = '/signup';
+  static const String incidentDetails = '/incidentDetails';
 
   static const String home = '/home';
   static const String categoryList = '/categoryList';
@@ -42,8 +42,8 @@ class Routes {
 
   static final routes = <String, WidgetBuilder>{
     splash: (BuildContext context) => SplashScreen(),
-    login: (BuildContext context) =>LoginScreen(),
-        // AuthenticationScreen(authScreenMode: AuthScreenMode.Login),
+    login: (BuildContext context) => LoginScreen(),
+    // AuthenticationScreen(authScreenMode: AuthScreenMode.Login),
     signup: (BuildContext context) => AuthenticationScreen(
           authScreenMode: AuthScreenMode.SignUp,
         ),
@@ -60,6 +60,8 @@ class Routes {
     report: (BuildContext context) => ReportScreen(),
     profile: (BuildContext context) => Profile(),
     notification: (BuildContext context) => Notifications(),
-  createdIncident:(BuildContext context)=>CreatedIncidentListScreen(),map:(_)=>IncidentsMap(),
+    createdIncident: (BuildContext context) => CreatedIncidentListScreen(),
+    map: (_) => IncidentsMap(),
+    incidentDetails:(_)=>IncidentDetailsScreen(),
   };
 }
