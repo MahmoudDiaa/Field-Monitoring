@@ -7,6 +7,7 @@ import 'package:sembast/sembast.dart';
 import '../../constants/enums.dart';
 import '../../models/incident/incident_filter.dart';
 import '../../models/incident/incident_list.dart';
+import '../../models/incident_details/incident_details_response_entity.dart';
 import '../local/constants/db_constants.dart';
 import '../local/dao/incident/incident_dao.dart';
 import '../network/apis/incident/incident_api.dart';
@@ -38,8 +39,8 @@ class IncidentRepository {
       return incidentsList;
     }).catchError((error) => throw error);
   }
-
-  Future<Incident> getIncidentById(String id) async {
+  //use the new api for details
+  Future<IncidentDetailsResponseData> getIncidentById(String id) async {
     return await _incidentApi.getIncident(id).then((incident) {
       return incident;
     }).catchError((error) => throw error);

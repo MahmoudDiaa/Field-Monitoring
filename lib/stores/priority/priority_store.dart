@@ -9,7 +9,6 @@ import '../../utils/dio/dio_error_util.dart';
 part 'priority_store.g.dart';
 
 class PriorityStore = _PriorityStore with _$PriorityStore;
-@Singleton()
 abstract class _PriorityStore with Store {
   // repository instance
   late PriorityRepository _priorityRepository;

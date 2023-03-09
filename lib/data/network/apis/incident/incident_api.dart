@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Field_Monitoring/data/network/dio_client.dart';
 import 'package:Field_Monitoring/models/incident/incident_list.dart';
+import 'package:Field_Monitoring/models/incident_details/incident_details_response_entity.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
@@ -100,7 +101,7 @@ class IncidentApi {
     }
   }
 
-  Future<Incident> getIncident(String id) async {
+  Future<IncidentDetailsResponseData> getIncident(String id) async {
     try {
       final res = await _dioClient.get('${Endpoints.getIncident}${id}',
           options: Options(
@@ -111,7 +112,7 @@ class IncidentApi {
                   'Bearer ${sharedPreferenceHelper.authUser?.accessToken ?? ''}',
             },
           ));
-      return Incident.fromMap(res['data']);
+      return IncidentDetailsResponseData.fromJson(res['data']);
     } catch (e) {
       print(e.toString());
       throw e;

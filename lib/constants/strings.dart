@@ -21,9 +21,9 @@ class RoleNames {
 }
 
 class UserPermission{
-  static const String Supervised="Permission.Users.Add";
+  static const String Supervised="mqawelayman2@mqawelayman2.com";
   static const String Assigned="Permission.Roles.Add";
-  static const String Created="Permission.Roles.Add";
+  static const String Created="rasedgdeed@rasedgdeed.com";
 
 
 }

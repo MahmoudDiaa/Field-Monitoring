@@ -44,14 +44,18 @@ class User {
   Map<String, dynamic> toJson() => $UserToJson(this);
 
   //assigned is for moqawel
-  bool isHasAssignedPermission() => userRoles!.any((userRole) {
-        return userRole.permissions!.contains(UserPermission.Assigned);
-      });
+  bool isHasAssignedPermission() => email==UserPermission.Supervised;
+      //todo undo in release
+  // userRoles!.any((userRole) {
+      //   return userRole.permissions!.contains(UserPermission.Assigned);
+      // });
 
   // created is for Rased
-  bool isHasCreatedPermission() => userRoles!.any((userRole) {
-        return userRole.permissions!.contains(UserPermission.Created);
-      });
+  bool isHasCreatedPermission() =>email==UserPermission.Created;
+      //todo undo in release
+  // userRoles!.any((userRole) {
+      //   return userRole.permissions!.contains(UserPermission.Created);
+      // });
   // supervised is for supervisor
   bool isHasSupervisedPermission() => userRoles!.any((userRole) {
         return userRole.permissions!.contains(UserPermission.Supervised);

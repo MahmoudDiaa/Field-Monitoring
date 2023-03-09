@@ -156,5 +156,9 @@
   "statusNote": "ملاحظات الحالة",
   "incidentDetails": "تفاصيل البلاغ",
   "showIncidentDetailsData": "إظهار تفاصيل البلاغ",
-  "hideIncidentDetailsData": "إخفاء تفاصيل البلاغ"
+  "hideIncidentDetailsData": "إخفاء تفاصيل البلاغ",
+  "showDetailsData": "إظهار تفاصيل البلاغ",
+  "hideDetailsData": "إخفاء تفاصيل البلاغ",
+  "incidentUpdate": "تحديثات البلاغ"
+
 }

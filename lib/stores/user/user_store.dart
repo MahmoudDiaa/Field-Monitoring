@@ -9,7 +9,6 @@ import '../login_form/login_form_store.dart';
 part 'user_store.g.dart';
 
 class UserStore = _UserStore with _$UserStore;
-@Singleton()
 abstract class _UserStore with Store {
   // repository instance
   final UserRepository _repository;

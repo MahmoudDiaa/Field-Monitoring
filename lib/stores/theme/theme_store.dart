@@ -7,7 +7,6 @@ import 'package:mobx/mobx.dart';
 part 'theme_store.g.dart';
 
 class ThemeStore = _ThemeStore with _$ThemeStore;
-@Singleton()
 abstract class _ThemeStore with Store {
   final String TAG = "_ThemeStore";
 

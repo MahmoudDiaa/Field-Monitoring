@@ -9,7 +9,6 @@ import '../../data/respository/incident_repository.dart';
 part 'incident_form_store.g.dart';
 
 class IncidentFormStore = _IncidentFormStore with _$IncidentFormStore;
-@Singleton()
 abstract class _IncidentFormStore with Store {
   // store for handling form errors
   final IncidentFormErrorStore formErrorStore = IncidentFormErrorStore();

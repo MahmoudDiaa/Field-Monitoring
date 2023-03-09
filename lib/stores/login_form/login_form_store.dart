@@ -9,7 +9,6 @@ import '../../data/respository/user_repository.dart';
 part 'login_form_store.g.dart';
 
 class LoginFormStore = _LoginFormStore with _$LoginFormStore;
-@Injectable()
 abstract class _LoginFormStore with Store {
   // store for handling form errors
   final LoginFormErrorStore formErrorStore = LoginFormErrorStore();

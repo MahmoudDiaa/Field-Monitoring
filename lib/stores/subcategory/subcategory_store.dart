@@ -11,7 +11,6 @@ import '../../utils/dio/dio_error_util.dart';
 part 'subcategory_store.g.dart';
 
 class SubCategoryStore = _SubCategoryStore with _$SubCategoryStore;
-@Singleton()
 abstract class _SubCategoryStore with Store {
   // repository instance
    final SubCategoryRepository _subcategoryRepository;

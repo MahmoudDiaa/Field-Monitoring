@@ -11,7 +11,6 @@ part 'forget_password_form_store.g.dart';
 class ForgetPasswordFormStore = _ForgetPasswordFormStore
     with _$ForgetPasswordFormStore;
 
-@Injectable()
 abstract class _ForgetPasswordFormStore with Store {
   // store for handling form errors
   final ForgetPasswordFormErrorStore forgetPasswordFormErrorStore =

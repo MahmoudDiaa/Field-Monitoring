@@ -5,6 +5,7 @@ import 'package:mobx/mobx.dart';
 import '../../models/incident/incident.dart';
 import '../../models/incident/incident_filter.dart';
 import '../../models/incident/incident_list.dart';
+import '../../models/incident_details/incident_details_response_entity.dart';
 import '../../utils/dio/dio_error_util.dart';
 
 part 'incident_store.g.dart';
@@ -34,14 +35,14 @@ abstract class _IncidentStore with Store {
       ObservableFuture<IncidentList?>(emptyIncidentResponse);
 
   @observable
-  ObservableFuture<Incident?> fetchIncidentFuture =
-      ObservableFuture<Incident?>(ObservableFuture.value(null));
+  ObservableFuture<IncidentDetailsResponseData?> fetchIncidentFuture =
+      ObservableFuture<IncidentDetailsResponseData?>(ObservableFuture.value(null));
 
   @observable
   IncidentList? incidentList;
 
   @observable
-  Incident? incident;
+  IncidentDetailsResponseData? incident;
 
   @observable
   bool success = false;

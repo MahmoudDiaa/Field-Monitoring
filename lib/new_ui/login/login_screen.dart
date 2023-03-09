@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     controller: _userEmailController,
                                     textInputType: TextInputType.emailAddress,
                                     onChanged: (value) => _store
-                                        .setUserId(_userEmailController.text),
+                                        .setUserId(_userEmailController.text.trim()),
                                     validate: (value) {
                                       if (value == null ||
                                           value.toString().isEmpty)

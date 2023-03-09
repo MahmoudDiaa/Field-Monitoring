@@ -156,6 +156,9 @@
   "statusNote": "Status Note",
   "incidentDetails": "Incident Details",
   "showIncidentDetailsData": "Show Incident Details",
-  "hideIncidentDetailsData": "Hide Incident Data"
+  "hideIncidentDetailsData": "Hide Incident Data",
+  "showDetailsData": "Show Incident Details",
+  "hideDetailsData": "Hide Incident Data",
+  "incidentUpdate": "Incident Update"
 
 }

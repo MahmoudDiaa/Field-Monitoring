@@ -9,7 +9,6 @@ import '../error/error_store.dart';
 part 'notification_store.g.dart';
 
 class NotificationStore = _NotificationStore with _$NotificationStore;
-@Singleton()
 abstract class _NotificationStore with Store {
   final NotificationRepository _notificationRepository;
 

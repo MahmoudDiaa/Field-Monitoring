@@ -4,7 +4,6 @@ import 'package:mobx/mobx.dart';
 part 'error_store.g.dart';
 
 class ErrorStore = _ErrorStore with _$ErrorStore;
-@Injectable()
 abstract class _ErrorStore with Store {
 
   // disposers

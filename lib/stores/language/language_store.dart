@@ -12,7 +12,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 part 'language_store.g.dart';
 
 class LanguageStore = _LanguageStore with _$LanguageStore;
-@Singleton()
 abstract class _LanguageStore with Store {
   static const String TAG = "LanguageStore";
 

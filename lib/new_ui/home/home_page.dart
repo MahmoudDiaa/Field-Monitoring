@@ -2,6 +2,7 @@ import 'package:Field_Monitoring/stores/language/language_store.dart';
 import 'package:Field_Monitoring/stores/user/user_store.dart';
 import 'package:Field_Monitoring/ui/constants/colors.dart';
 import 'package:Field_Monitoring/widets_new/home/home_incedent_list_item/HomeIncednetListItem.dart';
+import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -181,8 +182,16 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
               ),
               flex: 3,
             ),
+            Observer(builder: (BuildContext ctx) {
+              if (_incidentStore.errorStore.errorMessage.isNotEmpty) {
+                _userStore.logout();
+              }
+              return Container();
+            }),
+
             Observer(
-                builder: (BuildContext context) => !_incidentStore.loading
+                builder: (BuildContext context) => !_incidentStore.loading &&
+                        _incidentStore.incidentList != null
                     ? Expanded(
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(18, 50, 18, 0),
@@ -353,7 +362,9 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                                                           .incidents![index]
                                                           .incidentSubCategoryArabicName ??
                                                       "",
-                                            incident: _incidentStore.incidentList!.incidents![index],
+                                                  incident: _incidentStore
+                                                      .incidentList!
+                                                      .incidents![index],
                                                 )
                                               : SizedBox()),
                                 ),
@@ -363,7 +374,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                         ),
                         flex: 6,
                       )
-                    : CircularProgressIndicator())
+                    : Center(child: CircularProgressIndicator()))
           ],
         ),
         Positioned(
@@ -500,7 +511,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
             ))
       ]),
       bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(30, 0, 8, 8),
@@ -531,7 +542,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
               ],
             ),
           ),
-          Spacer(),
+
           _userStore.getUser().isHasCreatedPermission()
               ? Column(
                   mainAxisSize: MainAxisSize.min,
@@ -559,7 +570,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                   ],
                 )
               : SizedBox(),
-          Spacer(),
+
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 30, 8),
             child: Column(
@@ -590,6 +601,8 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
               ],
             ),
           ),
+
+
         ],
       ),
     );

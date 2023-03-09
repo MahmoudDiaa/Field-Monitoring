@@ -68,13 +68,14 @@ mixin _$IncidentStore on _IncidentStore, Store {
       Atom(name: '_IncidentStore.fetchIncidentFuture', context: context);
 
   @override
-  ObservableFuture<Incident?> get fetchIncidentFuture {
+  ObservableFuture<IncidentDetailsResponseData?> get fetchIncidentFuture {
     _$fetchIncidentFutureAtom.reportRead();
     return super.fetchIncidentFuture;
   }
 
   @override
-  set fetchIncidentFuture(ObservableFuture<Incident?> value) {
+  set fetchIncidentFuture(
+      ObservableFuture<IncidentDetailsResponseData?> value) {
     _$fetchIncidentFutureAtom.reportWrite(value, super.fetchIncidentFuture, () {
       super.fetchIncidentFuture = value;
     });
@@ -100,13 +101,13 @@ mixin _$IncidentStore on _IncidentStore, Store {
       Atom(name: '_IncidentStore.incident', context: context);
 
   @override
-  Incident? get incident {
+  IncidentDetailsResponseData? get incident {
     _$incidentAtom.reportRead();
     return super.incident;
   }
 
   @override
-  set incident(Incident? value) {
+  set incident(IncidentDetailsResponseData? value) {
     _$incidentAtom.reportWrite(value, super.incident, () {
       super.incident = value;
     });

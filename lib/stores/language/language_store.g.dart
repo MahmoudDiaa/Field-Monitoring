@@ -33,10 +33,10 @@ mixin _$LanguageStore on _LanguageStore, Store {
   }
 
   late final _$languageAtom =
-      Atom(name: '_LanguageStore.language', context: context) ;
+      Atom(name: '_LanguageStore.language', context: context);
 
   @override
-   AppLocalizations get language {
+  AppLocalizations get language {
     _$languageAtom.reportRead();
     return super.language!;
   }

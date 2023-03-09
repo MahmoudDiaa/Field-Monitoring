@@ -10,7 +10,6 @@ import '../../utils/dio/dio_error_util.dart';
 part 'category_store.g.dart';
 
 class CategoryStore = _CategoryStore with _$CategoryStore;
-@Singleton()
 abstract class _CategoryStore with Store {
   // repository instance
   late CategoryRepository _categoryRepository;
